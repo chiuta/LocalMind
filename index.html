@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LocalMind — AI în browser</title>
+<meta name="description" content="Run AI language models entirely in your browser. No server, no account, no telemetry. One HTML file.">
+<meta name="author" content="A.I. Chiuță — chiuta.github.io">
+<style>
+:root{
+  --bg:#06090f;--bg2:#0b1120;--bg3:#101b30;
+  --sf:#111d35;--sf2:#17253f;
+  --bd:#1d2e4a;--bd2:#253a5c;
+  --ac:#36d4a8;--ac2:#29a882;
+  --am:#f0943a;--bl:#5a9cf8;
+  --tx:#dde8f5;--tx2:#8ea4c0;--tx3:#4a6280;
+  --er:#ff6b7a;--gtok:#a8d8b8;
+  --r:10px;--sw:276px;--hh:52px;--sh:30px;
+  --fm:system-ui,-apple-system,'Segoe UI',sans-serif;
+  --fd:'Trebuchet MS','Gill Sans Nova','Gill Sans',system-ui,sans-serif;
+  --fc:'SFMono-Regular',Consolas,'Liberation Mono',Menlo,ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--tx);font-family:var(--fm);font-size:14px;line-height:1.6;display:flex;flex-direction:column}
+::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:2px}
+
+/* HEADER */
+#hdr{height:var(--hh);min-height:var(--hh);background:var(--bg2);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 16px;gap:10px;z-index:20}
+#logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:4px}
+#lic{width:28px;height:28px;background:linear-gradient(135deg,var(--ac),var(--bl));border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--fc);font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
+#ltx{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--tx)}
+#ltx b{color:var(--ac);font-weight:800}
+.hsp{flex:1}
+.bdg{display:flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.3px;font-family:var(--fc);white-space:nowrap}
+.bg{background:rgba(54,212,168,.1);color:var(--ac);border:1px solid rgba(54,212,168,.22)}
+.ba{background:rgba(240,148,58,.1);color:var(--am);border:1px solid rgba(240,148,58,.22)}
+.bb{background:rgba(90,156,248,.1);color:var(--bl);border:1px solid rgba(90,156,248,.22)}
+#mbtn{display:none;background:none;border:1px solid var(--bd);border-radius:6px;color:var(--tx2);padding:4px 9px;cursor:pointer;font-size:15px;line-height:1;flex-shrink:0;-webkit-appearance:none;appearance:none}
+#mbtn:hover{border-color:var(--ac);color:var(--ac)}
+
+/* LAYOUT */
+#app{flex:1;display:flex;overflow:hidden}
+
+/* SIDEBAR */
+#sidebar{width:var(--sw);min-width:var(--sw);background:var(--bg2);border-right:1px solid var(--bd);display:flex;flex-direction:column;overflow-y:auto;transition:transform .22s ease}
+.ss{padding:14px;border-bottom:1px solid var(--bd)}
+.sl{font-family:var(--fc);font-size:9.5px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--tx3);margin-bottom:9px}
+.mc{background:var(--bg3);border:1px solid var(--bd);border-radius:var(--r);padding:10px 12px;margin-bottom:6px;cursor:pointer;transition:border-color .12s,background .12s;position:relative}
+.mc:hover{border-color:var(--bd2);background:var(--sf)}
+.mc.sel{border-color:var(--ac);background:rgba(54,212,168,.06)}
+.mc.sel::after{content:'✓';position:absolute;top:9px;right:10px;color:var(--ac);font-size:11px;font-weight:700}
+.mn{font-family:var(--fd);font-size:12.5px;font-weight:600;color:var(--tx);margin-bottom:3px}
+.mm{font-family:var(--fc);font-size:10px;color:var(--tx3)}
+.mt{display:inline-block;padding:1px 5px;border-radius:3px;font-size:9px;font-weight:600;font-family:var(--fc);margin-right:3px}
+.tf{background:rgba(54,212,168,.13);color:var(--ac)}
+.tg{background:rgba(90,156,248,.13);color:var(--bl)}
+.ts{background:rgba(240,148,58,.13);color:var(--am)}
+#lbtn{width:100%;background:linear-gradient(135deg,var(--ac2),var(--ac));color:#fff;border:none;border-radius:8px;padding:9px 0;font-family:var(--fd);font-size:13px;font-weight:700;cursor:pointer;margin-top:4px;transition:opacity .12s,transform .1s;letter-spacing:.2px;-webkit-appearance:none;appearance:none}
+#lbtn:hover{opacity:.86;transform:translateY(-1px)}
+#lbtn:active{transform:translateY(0)}
+#lbtn:disabled{opacity:.33;cursor:not-allowed;transform:none}
+.pr{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.pk{font-size:12px;color:var(--tx2);flex:1}
+.pv{font-family:var(--fc);font-size:11px;color:var(--ac);width:30px;text-align:right}
+input[type=range]{flex:1.3;height:3px;accent-color:var(--ac);cursor:pointer}
+#sysp{width:100%;background:var(--bg3);border:1px solid var(--bd);border-radius:7px;color:var(--tx);font-family:var(--fc);font-size:10.5px;padding:7px 9px;resize:vertical;min-height:62px;max-height:120px;line-height:1.5;outline:none;transition:border-color .12s}
+#sysp:focus{border-color:var(--ac)}
+.sr{display:flex;justify-content:space-between;margin-bottom:5px}
+.sk{color:var(--tx3);font-family:var(--fc);font-size:10px}
+.sv{color:var(--tx);font-family:var(--fc);font-size:10.5px}
+.sv.g{color:var(--ac)}
+
+/* Sidebar footer with links */
+.sbft{margin-top:auto;padding:12px 14px 10px;border-top:1px solid var(--bd)}
+.sbft-links{display:flex;flex-direction:column;gap:5px;margin-bottom:8px}
+.sbft-link{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:7px;text-decoration:none;font-size:11.5px;font-weight:500;color:var(--tx2);background:var(--bg3);border:1px solid var(--bd);transition:border-color .12s,color .12s}
+.sbft-link:hover{border-color:var(--bd2);color:var(--tx)}
+.sbft-link.patreon:hover{border-color:#f96854;color:#f96854}
+.sbft-link.bmac:hover{border-color:#FFDD00;color:#FFDD00}
+.sbft-link .ico{font-size:13px;width:16px;text-align:center}
+.sbft-meta{font-size:10px;color:var(--tx3);line-height:1.6}
+.sbft-meta a{color:var(--tx3);text-decoration:none}
+.sbft-meta a:hover{color:var(--ac)}
+
+/* MAIN */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative}
+
+/* LOADING OVERLAY */
+#lov{position:absolute;inset:0;z-index:100;background:rgba(6,9,15,.94);display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;backdrop-filter:blur(4px)}
+#lov.vis{display:flex}
+.lspin{width:48px;height:48px;border:3px solid var(--bd2);border-top-color:var(--ac);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#ltit{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--tx)}
+#lstat{font-family:var(--fc);font-size:11px;color:var(--tx3);max-width:330px;text-align:center;word-break:break-all}
+#pbw{width:290px;height:3px;background:var(--sf2);border-radius:2px;overflow:hidden}
+#pb{height:100%;background:linear-gradient(90deg,var(--ac2),var(--ac));border-radius:2px;width:0%;transition:width .18s ease}
+#ppct{font-family:var(--fc);font-size:12px;font-weight:600;color:var(--ac)}
+
+/* WELCOME */
+#wlc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;padding:28px;text-align:center}
+.wi{width:58px;height:58px;background:linear-gradient(135deg,rgba(54,212,168,.17),rgba(90,156,248,.17));border:1px solid var(--bd2);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:25px}
+.wt{font-family:var(--fd);font-size:20px;font-weight:800;color:var(--tx)}
+.ws{font-size:13.5px;color:var(--tx2);max-width:350px;line-height:1.7}
+.chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:6px}
+.chip{padding:5px 12px;background:var(--sf);border:1px solid var(--bd2);border-radius:20px;font-size:11.5px;color:var(--tx2);cursor:pointer;transition:border-color .12s,color .12s;font-family:var(--fm);line-height:1.6;-webkit-appearance:none;appearance:none}
+.mc:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.chip:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.chip:hover{border-color:var(--ac);color:var(--ac)}
+
+/* CHAT */
+#ca{flex:1;overflow-y:auto;padding:19px 21px;display:flex;flex-direction:column;gap:15px}
+#ca.hidden{display:none}
+#wlc.hidden{display:none}
+.msg{display:flex;gap:11px;animation:fu .2s ease}
+@keyframes fu{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.av{width:28px;height:28px;min-width:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;font-family:var(--fc);margin-top:2px}
+.uav{background:rgba(90,156,248,.17);color:var(--bl);border:1px solid rgba(90,156,248,.27)}
+.aav{background:rgba(54,212,168,.12);color:var(--ac);border:1px solid rgba(54,212,168,.22)}
+.mb{flex:1;min-width:0}
+.mrl{font-family:var(--fc);font-size:9.5px;font-weight:600;letter-spacing:.9px;text-transform:uppercase;margin-bottom:4px}
+.mrl.u{color:var(--bl)}.mrl.a{color:var(--ac)}
+.mtx{color:var(--tx);line-height:1.76;word-break:break-word;white-space:pre-wrap}
+.mtx code{font-family:var(--fc);font-size:12px;background:var(--sf2);padding:1px 5px;border-radius:3px;color:var(--gtok)}
+.mtx pre{background:var(--bg3);border:1px solid var(--bd);border-radius:7px;padding:10px 13px;margin:6px 0;overflow-x:auto;font-family:var(--fc);font-size:11.5px;color:var(--gtok);line-height:1.55}
+.mft{margin-top:4px;font-family:var(--fc);font-size:9.5px;color:var(--tx3)}
+.emsg{color:var(--er)!important}
+.cur{display:inline-block;width:2px;height:13px;background:var(--ac);border-radius:1px;vertical-align:middle;margin-left:1px;animation:bk .7s step-end infinite}
+@keyframes bk{50%{opacity:0}}
+
+/* INPUT */
+#ia{padding:12px 18px 14px;border-top:1px solid var(--bd);background:var(--bg2);flex-shrink:0}
+#ir{display:flex;gap:9px;align-items:flex-end}
+#ui{flex:1;background:var(--bg3);border:1px solid var(--bd);border-radius:9px;color:var(--tx);font-family:var(--fm);font-size:14px;padding:9px 13px;resize:none;min-height:40px;max-height:148px;outline:none;line-height:1.5;transition:border-color .12s}
+#ui:focus{border-color:var(--ac)}
+#ui::placeholder{color:var(--tx3)}
+#snd,#stp{width:40px;height:40px;min-width:40px;border:none;border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;transition:opacity .12s,transform .1s;-webkit-appearance:none;appearance:none}
+#snd{background:var(--ac)}
+#snd:hover{opacity:.83;transform:translateY(-1px)}
+#snd:disabled{opacity:.27;cursor:not-allowed;transform:none}
+#stp{background:var(--er);display:none}
+#stp:hover{opacity:.83}
+.ih{font-size:10.5px;color:var(--tx3);margin-top:6px;display:flex}
+kbd{font-family:var(--fc);font-size:9.5px;background:var(--sf);border:1px solid var(--bd2);border-radius:3px;padding:1px 5px;color:var(--tx3)}
+#mhint{margin-left:auto}
+
+/* OVERLAY — hidden by default on all viewports; shown only via .vis inside media query */
+#sb-overlay{display:none}
+
+/* STATUS */
+#stb{height:var(--sh);min-height:var(--sh);background:var(--bg);border-top:1px solid var(--bd);display:flex;align-items:center;padding:0 14px;gap:11px;font-family:var(--fc);font-size:10px;color:var(--tx3);overflow:hidden}
+.sp2{color:var(--bd2)}
+#smsg{color:var(--tx3);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+#smsg.ok{color:var(--ac)}
+#smsg.err{color:var(--er)}
+.sr2{margin-left:auto;display:flex;gap:11px}
+.tbtn{background:none;border:none;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:10px;padding:0;transition:color .1s;-webkit-appearance:none;appearance:none}
+.tbtn:hover{color:var(--ac)}.tbtn.red:hover{color:var(--er)}
+
+@media(max-width:700px){
+  :root{--sw:100%}
+  #mbtn{display:flex}
+  #sidebar{position:fixed;top:var(--hh);left:0;bottom:0;z-index:50;transform:translateX(-100%)}
+  #sidebar.open{transform:translateX(0);box-shadow:4px 0 24px rgba(0,0,0,.55)}
+  #ca{padding:12px 13px}
+  #ia{padding:9px 12px 11px}
+  .bdg:not(#dbdg){display:none}
+  /* BUG-E fix: inset:var(--hh) 0 0 0 — overlay starts below header */
+  #sb-overlay{display:none;position:fixed;inset:var(--hh) 0 0 0;z-index:49;background:rgba(0,0,0,.4)}
+  #sb-overlay.vis{display:block}
+}
+</style>
+</head>
+<body>
+
+<div id="hdr">
+  <a id="logo" href="https://chiuta.github.io" target="_blank" rel="noopener noreferrer">
+    <div id="lic">LM</div>
+    <span id="ltx">Local<b>Mind</b></span>
+  </a>
+  <div class="bdg bg">⬡ ZERO TELEMETRY</div>
+  <div class="bdg bg">⬡ NO ACCOUNT</div>
+  <div class="bdg bb" id="dbdg">◈ DETECTING…</div>
+  <div class="hsp"></div>
+  <button type="button" id="mbtn" onclick="toggleSb()">☰</button>
+</div>
+
+<div id="sb-overlay" onclick="toggleSb()"></div>
+
+<div id="app">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar" role="complementary" aria-label="Settings">
+    <div class="ss">
+      <div class="sl">Model</div>
+      <div class="mc sel" data-model="onnx-community/LFM2-1.2B-ONNX"
+           tabindex="0" role="button"
+           onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
+        <div class="mn">LFM2 1.2B</div>
+        <div class="mm"><span class="mt tf">FAST</span>~700 MB · CPU/GPU</div>
+      </div>
+      <div class="mc" data-model="onnx-community/Qwen3-1.7B-ONNX"
+           tabindex="0" role="button"
+           onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
+        <div class="mn">Qwen3 1.7B</div>
+        <div class="mm"><span class="mt tf">BALANCED</span>~1.3 GB · CPU/GPU</div>
+      </div>
+      <div class="mc" data-model="onnx-community/gemma-4-E2B-it-ONNX"
+           tabindex="0" role="button"
+           onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
+        <div class="mn">Gemma 4 E2B</div>
+        <div class="mm"><span class="mt ts">SMART</span>~2 GB · GPU rec.</div>
+      </div>
+      <div class="mc" data-model="onnx-community/Qwen3-4B-ONNX"
+           tabindex="0" role="button"
+           onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
+        <div class="mn">Qwen3 4B</div>
+        <div class="mm"><span class="mt tg">BEST</span>~2.5 GB · GPU rec.</div>
+      </div>
+      <button type="button" id="lbtn" onclick="doLoad()" aria-label="Load selected model">⬇ Load Model</button>
+    </div>
+
+    <div class="ss">
+      <div class="sl">Parameters</div>
+      <div class="pr">
+        <span class="pk">Temperature</span>
+        <input type="range" id="tsl" min="0" max="1" step="0.05" value="0.7"
+          aria-label="Temperature"
+          oninput="document.getElementById('tv').textContent=this.value">
+        <span class="pv" id="tv">0.7</span>
+      </div>
+      <div class="pr">
+        <span class="pk">Max tokens</span>
+        <input type="range" id="tksl" min="64" max="1024" step="64" value="512"
+          aria-label="Max tokens"
+          oninput="document.getElementById('tkv').textContent=this.value">
+        <span class="pv" id="tkv">512</span>
+      </div>
+    </div>
+
+    <div class="ss">
+      <div class="sl">System Prompt</div>
+      <textarea id="sysp" rows="4" aria-label="System prompt">You are LocalMind, a helpful AI assistant running entirely in the user's browser. No server is involved. Be concise and accurate.</textarea>
+    </div>
+
+    <div class="ss">
+      <div class="sl">Stats</div>
+      <div class="sr"><span class="sk">MODEL</span><span class="sv" id="s-m">—</span></div>
+      <div class="sr"><span class="sk">DEVICE</span><span class="sv g" id="s-d">—</span></div>
+      <div class="sr"><span class="sk">SPEED</span><span class="sv g" id="s-sp">—</span></div>
+      <div class="sr"><span class="sk">MESSAGES</span><span class="sv" id="s-ms">0</span></div>
+      <div class="sr"><span class="sk">TOKENS OUT</span><span class="sv" id="s-tk">0</span></div>
+    </div>
+
+    <!-- Footer with all links -->
+    <div class="sbft">
+      <div class="sbft-links">
+        <a class="sbft-link" href="https://alexio.tf" target="_blank" rel="noopener noreferrer">
+          <span class="ico">🌐</span> alexio.tf
+        </a>
+        <a class="sbft-link" href="https://chiuta.github.io" target="_blank" rel="noopener noreferrer">
+          <span class="ico">⬡</span> chiuta.github.io
+        </a>
+        <a class="sbft-link patreon" href="https://www.patreon.com/c/alexio_tf" target="_blank" rel="noopener noreferrer">
+          <span class="ico">🅿</span> Patreon — alexio_tf
+        </a>
+        <a class="sbft-link bmac" href="https://buymeacoffee.com/echo.of.the.strings" target="_blank" rel="noopener noreferrer">
+          <span class="ico">☕</span> Buy Me a Coffee
+        </a>
+      </div>
+      <div class="sbft-meta">
+        Powered by <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener noreferrer">transformers.js v3</a> + WebGPU.<br>
+        Model cached locally after first load.
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main" role="main">
+
+    <div id="lov" role="alertdialog" aria-modal="true" aria-label="Loading model" aria-describedby="lstat">
+      <div class="lspin"></div>
+      <div id="ltit">Loading…</div>
+      <div id="lstat">Starting…</div>
+      <div id="pbw"><div id="pb"></div></div>
+      <div id="ppct">0%</div>
+    </div>
+
+    <div id="wlc">
+      <div class="wi">🧠</div>
+      <div class="wt">AI runs here. In your browser.</div>
+      <div class="ws">Pick a model and click <strong>Load Model</strong>. No API key, no server, no account. The model downloads once and runs locally forever.</div>
+      <div class="chips">
+        <button type="button" class="chip" onclick="useChip(this)">Explain quantum entanglement simply</button>
+        <button type="button" class="chip" onclick="useChip(this)">Write a haiku about the night sky</button>
+        <button type="button" class="chip" onclick="useChip(this)">What is the Fermi paradox?</button>
+        <button type="button" class="chip" onclick="useChip(this)">How does WebGPU work?</button>
+        <button type="button" class="chip" onclick="useChip(this)">Python function to reverse a string</button>
+        <button type="button" class="chip" onclick="useChip(this)">Translate "hello world" in 5 languages</button>
+      </div>
+    </div>
+
+    <div id="ca" class="hidden"></div>
+
+    <div id="ia">
+      <div id="ir">
+        <textarea id="ui" placeholder="Load a model first…" rows="1"
+          onkeydown="onKey(event)" oninput="resizeTA(this)" disabled
+          autocomplete="off" aria-label="Message input"></textarea>
+        <button type="button" id="snd" onclick="doSend()" disabled title="Send (Enter)" aria-label="Send message">➤</button>
+        <button type="button" id="stp" onclick="doStop()" title="Stop" aria-label="Stop generation">■</button>
+      </div>
+      <div class="ih">
+        <span><kbd>Enter</kbd> send &nbsp;<kbd>Shift+Enter</kbd> newline</span>
+        <span id="mhint">← load a model to begin</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="stb">
+  <span id="smsg" aria-live="polite" aria-atomic="true">Select a model → Load Model</span>
+  <span class="sp2" aria-hidden="true">|</span>
+  <span>One HTML file · zero telemetry</span>
+  <span class="sp2" aria-hidden="true">|</span>
+  <span>© 2026 <a href="https://alexio.tf" target="_blank" rel="noopener noreferrer" style="color:var(--tx3);text-decoration:none">alexio.tf</a></span>
+  <div class="sr2">
+    <button type="button" class="tbtn red" onclick="clearChat()">✕ clear</button>
+    <button type="button" class="tbtn" onclick="exportChat()">↓ export</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FIX: Load transformers.js directly in the main thread.
+     Blob module workers fail because transformers.js spawns
+     its own internal workers (for ONNX/WASM) using URLs
+     relative to the worker script — which resolve to
+     blob:null/... and don't exist. Running in the main thread
+     avoids this entirely. Inference is async (ONNX uses
+     internal workers), so the UI stays responsive between tokens.
+     ═══════════════════════════════════════════════════════════ -->
+<script type="module">
+
+import { pipeline, TextStreamer, env }
+  from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0/dist/transformers.min.js';
+
+env.allowLocalModels = false;
+env.useBrowserCache  = true;
+
+// ── State ──────────────────────────────────────────────
+let pipe        = null;
+let ready       = false;
+let generating  = false;
+let stopFlag    = false;
+let chosenMdl   = 'onnx-community/LFM2-1.2B-ONNX';
+let history     = [];
+let totTok      = 0;
+let totMsg      = 0;
+let curEl       = null;
+let curTxt      = '';
+
+// ── WebGPU detection ───────────────────────────────────
+async function detectDevice() {
+  try {
+    if (navigator.gpu) {
+      const a = await navigator.gpu.requestAdapter();
+      if (a) return 'webgpu';
+    }
+  } catch (_) {}
+  return 'wasm';
+}
+
+// ── Boot — store Promise so doLoad always awaits correct device ───
+// BUG-D fix: was async IIFE storing to window._detectedDev which
+// doLoad read synchronously — race if user clicks Load before await resolved.
+const deviceReady = detectDevice().then(dev => {
+  const b = document.getElementById('dbdg');
+  if (dev === 'webgpu') { b.textContent = '⬡ WEBGPU';   b.className = 'bdg bg'; }
+  else                  { b.textContent = '◈ CPU/WASM'; b.className = 'bdg ba'; }
+  document.getElementById('s-d').textContent = dev.toUpperCase();
+  return dev;
+}).catch(() => 'wasm');   // JS-01: if detection or DOM ops throw, fall back to WASM safely
+
+// ── Helpers ────────────────────────────────────────────
+function setSt(msg, cls) {
+  const e = document.getElementById('smsg');
+  e.textContent = msg; e.className = cls || '';
+}
+
+function showLov(mdl) {
+  document.getElementById('ltit').textContent  = 'Loading ' + mdl.split('/').pop() + '…';
+  document.getElementById('lstat').textContent = 'Importing transformers.js…';
+  document.getElementById('pb').style.width    = '0%';
+  document.getElementById('ppct').textContent  = '0%';
+  document.getElementById('lov').classList.add('vis');
+}
+function hideLov() { document.getElementById('lov').classList.remove('vis'); }
+
+function setProgress(pct, label) {
+  document.getElementById('pb').style.width    = pct + '%';
+  document.getElementById('ppct').textContent  = pct + '%';
+  document.getElementById('lstat').textContent = label || '…';
+}
+
+function scrollBot() {
+  const c = document.getElementById('ca');
+  // BUG-F: only force-scroll if user is already near bottom (≤120px away)
+  // so they can read earlier messages during generation without interruption
+  if (c.scrollHeight - c.scrollTop - c.clientHeight <= 120) {
+    c.scrollTop = c.scrollHeight;
+  }
+}
+
+function appendMsg(role, text) {
+  const wlc = document.getElementById('wlc');
+  const ca  = document.getElementById('ca');
+  if (!wlc.classList.contains('hidden')) {
+    wlc.classList.add('hidden');
+    ca.classList.remove('hidden');
+  }
+  const isU = role === 'user';
+  const wrap = document.createElement('div'); wrap.className = 'msg';
+  const av = document.createElement('div');
+  av.className = 'av ' + (isU ? 'uav' : 'aav');
+  av.textContent = isU ? 'U' : 'AI';
+  const bd = document.createElement('div'); bd.className = 'mb';
+  const rl = document.createElement('div');
+  rl.className = 'mrl ' + (isU ? 'u' : 'a');
+  rl.textContent = isU ? 'You' : 'LocalMind';
+  const tx = document.createElement('div'); tx.className = 'mtx';
+  tx.textContent = text;
+  bd.appendChild(rl); bd.appendChild(tx);
+  wrap.appendChild(av); wrap.appendChild(bd);
+  ca.appendChild(wrap); scrollBot();
+  return tx;
+}
+
+function endGen() {
+  document.getElementById('snd').style.display = '';
+  document.getElementById('stp').style.display = 'none';
+  if (ready) document.getElementById('lbtn').disabled = false;  // BUG-5
+  const ui = document.getElementById('ui');
+  ui.disabled = false;
+  // JS-06: don't open virtual keyboard right after generation on touch devices
+  // (user is reading the response; they'll tap when ready)
+  if (!navigator.maxTouchPoints) ui.focus();
+}
+
+// ── Model select ───────────────────────────────────────
+window.selMdl = function(card) {
+  if (loading || generating) return;  // C-20: block during load too — prevents wrong model on WASM fallback
+  document.querySelectorAll('.mc').forEach(c => c.classList.remove('sel'));
+  card.classList.add('sel');
+  chosenMdl = card.dataset.model;
+};
+
+// ── Load model ─────────────────────────────────────────
+// module-level so onReady and error paths can clear it
+let loadTimeout = null;
+let loading = false;  // BUG-4: prevent concurrent doLoad calls
+let loadToken = 0;    // BUG-APP3: stale-load guard — each attempt gets unique token
+
+window.doLoad = async function() {
+  // BUG-4: guard against concurrent loads; BUG-5: guard against load during generation
+  if (loading) return;
+  if (generating) { setSt('Stop generation before loading a new model.', 'err'); return; }
+  loading = true;
+  const myToken = ++loadToken;   // capture: this specific load's identity
+
+  // RACE-FIX: lock UI and kill pipe SYNCHRONOUSLY before any await.
+  // Previously these ran after `await deviceReady`, leaving a gap where
+  // ready=true and doSend() could fire with the old (now null'd) pipe.
+  pipe  = null;    // invalidate stale model immediately
+  ready = false;   // block doSend() before we ever yield
+  showLov(chosenMdl);
+  setSt('Loading ' + chosenMdl.split('/').pop() + '…');
+  document.getElementById('lbtn').disabled = true;
+  document.getElementById('snd').disabled  = true;
+  const _ui = document.getElementById('ui');
+  _ui.disabled   = true;
+  // PLACEHOLDER-FIX: reset so a failed reload doesn't leave stale 'Message LocalMind…'
+  // on a disabled textarea when no model is loaded (model A success → model B fail scenario)
+  _ui.placeholder = 'Load a model first…';
+
+  const dev = await deviceReady;   // BUG-D: safe to await now — UI already locked
+
+  // BUG-H: safety timeout — re-enable Load if pipeline() never resolves (hung network)
+  clearTimeout(loadTimeout);
+  loadTimeout = setTimeout(() => {
+    if (!ready) {
+      ++loadToken;   // TOKEN-FIX: invalidate myToken so a late-resolving pipeline
+                     // can't call onReady after the timeout has already fired
+      loading = false;
+      hideLov();
+      pipe = null;
+      setSt('Load timed out — check network and try again.', 'err');
+      document.getElementById('lbtn').disabled = false;
+    }
+  }, 300000); // 5 minutes
+
+  const tryLoad = async (device) => {
+    // BUG-APP2: device-specific dtype — q4f16 best for WebGPU (4-bit weights + fp16 activations),
+    // q4 for WASM (4-bit weights + fp32, more compatible with CPU inference)
+    const dtype = device === 'webgpu' ? 'q4f16' : 'q4';
+    pipe = await pipeline('text-generation', chosenMdl, {
+      device,
+      dtype,
+      progress_callback: ({ status, progress, file }) => {
+        if (status === 'progress') {
+          const pct   = progress != null ? Math.round(progress) : 0;
+          const label = (file || 'Downloading…').split('/').pop();
+          setProgress(pct, label);
+        }
+      }
+    });
+    return device;
+  };
+
+  try {
+    const usedDev = await tryLoad(dev);
+    // BUG-APP3: only proceed if this is still the active load (not superseded by timeout+retry)
+    if (myToken !== loadToken) return;
+    clearTimeout(loadTimeout);   // BUG-H
+    loading = false;             // BUG-4
+    onReady(usedDev);
+  } catch (err) {
+    if (myToken !== loadToken) return;   // BUG-APP3: stale, silently discard
+    if (dev === 'webgpu') {
+      setProgress(0, 'GPU failed — retrying with WASM…');
+      try {
+        await tryLoad('wasm');
+        if (myToken !== loadToken) return;   // BUG-APP3
+        clearTimeout(loadTimeout);   // BUG-H
+        loading = false;             // BUG-4
+        onReady('wasm');
+      } catch (e2) {
+        if (myToken !== loadToken) return;   // BUG-APP3
+        clearTimeout(loadTimeout);   // BUG-H
+        loading = false;             // BUG-4
+        hideLov();
+        setSt('Load failed: ' + (e2.message || String(e2)), 'err');
+        document.getElementById('lbtn').disabled = false;
+      }
+    } else {
+      clearTimeout(loadTimeout);   // BUG-H
+      loading = false;             // BUG-4
+      hideLov();
+      setSt('Load failed: ' + (err.message || String(err)), 'err');
+      document.getElementById('lbtn').disabled = false;
+    }
+  }
+};
+
+function onReady(dev) {
+  hideLov(); ready = true;
+  const short = chosenMdl.split('/').pop();
+  // BUG-G: re-sync card selection to actually loaded model
+  // (user may have clicked a different card during load)
+  document.querySelectorAll('.mc').forEach(c => {
+    c.classList.toggle('sel', c.dataset.model === chosenMdl);
+  });
+  document.getElementById('s-m').textContent   = short;
+  document.getElementById('s-d').textContent   = dev.toUpperCase();
+  document.getElementById('mhint').textContent = short;
+  const ui = document.getElementById('ui');
+  ui.disabled = false; ui.placeholder = 'Message LocalMind…';
+  // FOCUS-FIX: same guard as endGen — don't pop virtual keyboard on mobile
+  // right after model load; user is reading the ready state, not typing yet
+  if (!navigator.maxTouchPoints) ui.focus();
+  document.getElementById('snd').disabled = false;
+  document.getElementById('lbtn').disabled = false;
+  const b = document.getElementById('dbdg');
+  if (dev === 'webgpu') { b.textContent = '⬡ WEBGPU';   b.className = 'bdg bg'; }
+  else                  { b.textContent = '◈ CPU/WASM'; b.className = 'bdg ba'; }
+  setSt('Model ready — ' + short, 'ok');
+}
+
+// ── Send ───────────────────────────────────────────────
+window.doSend = async function() {
+  if (!ready || generating) return;
+  const ui  = document.getElementById('ui');
+  const txt = ui.value.trim(); if (!txt) return;
+  ui.value = ''; resizeTA(ui);
+
+  generating = true; stopFlag = false;
+  appendMsg('user', txt);
+  history.push({ role: 'user', content: txt });
+
+  curTxt = '';
+  const aiEl = appendMsg('assistant', '');
+  const cur  = document.createElement('span'); cur.className = 'cur'; aiEl.appendChild(cur);
+  curEl = aiEl;
+
+  document.getElementById('snd').style.display = 'none';
+  document.getElementById('stp').style.display = 'flex';
+  document.getElementById('lbtn').disabled = true;   // BUG-5: prevent load while generating
+  ui.disabled = true;
+  setSt('Generating…');
+
+  // Build context — ensure context always starts with a user message.
+  // history.slice(-10) can start with 'assistant' after 5+ exchanges
+  // (e.g. history=[u1,a1,...,u5,a5,u6] → slice(-10)=[a1,...,u6]).
+  // Chat models reject or hallucinate when context starts with assistant role.
+  const sys  = document.getElementById('sysp').value.trim();
+  const msgs = [];
+  if (sys) msgs.push({ role: 'system', content: sys });
+  let ctx = history.slice(-10);
+  if (ctx.length && ctx[0].role !== 'user') ctx = ctx.slice(1); // drop leading assistant
+  msgs.push(...ctx);
+
+  const cfg = {
+    temp:   +document.getElementById('tsl').value,
+    maxTok: +document.getElementById('tksl').value
+  };
+
+  // BUG-02: sentinel error for intentional stop — thrown from callback
+  // so ONNX actually aborts rather than running to completion
+  const STOP_ERR = Object.assign(new Error('__STOP__'), { isStop: true });
+
+  try {
+    // BUG-03: count tokens directly in callback (n++) — reliable across all models
+    // pipe.tokenizer.encode() is not guaranteed on all transformers.js v3 tokenizers
+    let n = 0;
+
+    const streamer = new TextStreamer(pipe.tokenizer, {
+      skip_prompt:         true,
+      skip_special_tokens: true,
+      callback_function: text => {
+        if (stopFlag) throw STOP_ERR;   // BUG-02: real abort
+        n++;                             // BUG-03: count here
+        curTxt += text;
+        if (curEl) {
+          const c = curEl.querySelector('.cur'); if (c) c.remove();
+          curEl.textContent = curTxt;
+          const nc = document.createElement('span'); nc.className = 'cur';
+          curEl.appendChild(nc);
+          scrollBot();
+        }
+      }
+    });
+    // BUG-08: removed dead code `const origCb = streamer.on_finalized_text || (() => {});`
+
+    const doSample = cfg.temp > 0.01;
+    const t0 = performance.now();
+
+    await pipe(msgs, {
+      max_new_tokens:     cfg.maxTok,
+      temperature:        doSample ? cfg.temp : 1.0,
+      top_p:              0.92,
+      repetition_penalty: 1.1,
+      do_sample:          doSample,
+      streamer
+    });
+
+    const sec = ((performance.now() - t0) / 1000).toFixed(1);
+    const tps = n > 0 && +sec > 0 ? (n / +sec).toFixed(1) : '—';  // JS-15: guard /0
+
+    // Finalize
+    generating = false;
+    // C-23: only record exchange if model actually produced tokens
+    if (n > 0 || curTxt.length > 0) {
+      totTok += n; totMsg++;
+      document.getElementById('s-sp').textContent = tps + ' tok/s';
+      document.getElementById('s-ms').textContent = totMsg;
+      document.getElementById('s-tk').textContent = totTok;
+      history.push({ role: 'assistant', content: curTxt });
+    }
+    if (curEl) {
+      const c = curEl.querySelector('.cur'); if (c) c.remove();
+      const f = document.createElement('div'); f.className = 'mft';
+      f.textContent = n > 0 ? tps + ' tok/s · ' + sec + 's · ' + n + ' tokens' : '[no output]';
+      curEl.parentElement.appendChild(f);
+    }
+    curEl = null; curTxt = '';
+    setSt(n > 0 ? 'Done · ' + tps + ' tok/s' : 'Done — empty response.', 'ok');
+    endGen();
+
+  } catch (err) {
+    generating = false;
+    const wasStop = !!err.isStop;   // JS-19: ONLY check sentinel — stopFlag alone can mask real errors
+    stopFlag = false;               // reset unconditionally so next send starts clean
+    // BUG-04: pop orphaned user message so next exchange has clean context
+    if (history.length && history[history.length - 1].role === 'user') {
+      history.pop();
+    }
+    if (curEl) {
+      const c = curEl.querySelector('.cur'); if (c) c.remove();
+      if (wasStop) {
+        curEl.textContent = curTxt || '[stopped]';
+      } else {
+        curEl.textContent = '⚠ ' + (err.message || 'Unknown error');
+        curEl.classList.add('emsg');
+      }
+    }
+    // BUG-C: on stop, user msg already popped; do NOT push partial assistant
+    // (would create [assistant, …] without preceding user → malformed context)
+    // The partial text is shown in the DOM but NOT persisted to history.
+    curEl = null; curTxt = '';
+    setSt(wasStop ? 'Stopped.' : 'Error: ' + (err.message || 'Unknown error'), wasStop ? '' : 'err');
+    endGen();
+  }
+};
+
+// ── Stop ───────────────────────────────────────────────
+window.doStop = function() {
+  stopFlag = true;
+  setSt('Stopping…');   // BUG-09: immediate feedback
+};
+
+// ── Chips ──────────────────────────────────────────────
+window.useChip = function(chip) {
+  // JS-07: guard first — don't overwrite #ui or show wrong message
+  if (generating) { setSt('Wait for generation to finish.', ''); return; }
+  if (!ready)     { setSt('Load a model first, then click a prompt.', ''); return; }
+  document.getElementById('ui').value = chip.textContent;
+  doSend();
+};
+
+// ── Clear / Export ─────────────────────────────────────
+window.clearChat = function() {
+  if (generating) return;
+  history = []; totMsg = 0; totTok = 0;
+  document.getElementById('ca').innerHTML = '';
+  document.getElementById('ca').classList.add('hidden');
+  document.getElementById('wlc').classList.remove('hidden');
+  ['s-ms','s-tk'].forEach(id => document.getElementById(id).textContent = '0');
+  document.getElementById('s-sp').textContent = '—';
+  setSt('Chat cleared.', '');
+};
+
+window.exportChat = function() {
+  if (!history.length) return;
+  const body = history.map(m =>
+    (m.role === 'user' ? '>>> YOU\n' : '<<< LOCALMIND\n') + m.content
+  ).join('\n\n---\n\n');
+  const head = 'LocalMind — Conversation Export\n' + new Date().toISOString() +
+               '\nModel: ' + chosenMdl + '\n' + '─'.repeat(44) + '\n\n';
+  const url = URL.createObjectURL(new Blob([head + body], { type: 'text/plain' }));
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'localmind-' + Date.now() + '.txt';
+  // BUG-7: Firefox requires anchor to be in DOM for .click() to trigger download
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  // BUG-07: revoke after download to free memory
+  setTimeout(() => URL.revokeObjectURL(url), 60000);
+};
+
+// ── Keyboard / resize ──────────────────────────────────
+window.onKey    = function(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (ready && !generating) doSend(); } };
+window.resizeTA = function(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 148) + 'px'; };
+window.toggleSb = function() {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('sb-overlay');
+  sb.classList.toggle('open');
+  if (ov) ov.classList.toggle('vis');
+};
+// D-04: Escape key closes mobile sidebar
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    const sb = document.getElementById('sidebar');
+    if (sb && sb.classList.contains('open')) toggleSb();
+  }
+});
+</script>
+</body>
+</html>
