@@ -193,31 +193,31 @@ kbd{font-family:var(--fc);font-size:9.5px;background:var(--sf);border:1px solid 
   <div id="sidebar" role="complementary" aria-label="Settings">
     <div class="ss">
       <div class="sl">Model</div>
-      <div class="mc sel" data-model="onnx-community/LFM2-1.2B-ONNX"
+      <div class="mc sel" data-model="onnx-community/Qwen3-0.6B-ONNX"
            tabindex="0" role="button"
            onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
-        <div class="mn">LFM2 1.2B</div>
-        <div class="mm"><span class="mt tf">FAST</span>~700 MB · CPU/GPU</div>
+        <div class="mn">Qwen3 0.6B</div>
+        <div class="mm"><span class="mt tf">RAPID</span>~550 MB · 119 limbi 🌍</div>
       </div>
       <div class="mc" data-model="onnx-community/Qwen3-1.7B-ONNX"
            tabindex="0" role="button"
            onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
         <div class="mn">Qwen3 1.7B</div>
-        <div class="mm"><span class="mt tf">BALANCED</span>~1.3 GB · CPU/GPU</div>
+        <div class="mm"><span class="mt tf">ECHILIBRAT</span>~1.3 GB · 119 limbi 🌍</div>
       </div>
       <div class="mc" data-model="onnx-community/gemma-4-E2B-it-ONNX"
            tabindex="0" role="button"
            onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
         <div class="mn">Gemma 4 E2B</div>
-        <div class="mm"><span class="mt ts">SMART</span>~2 GB · GPU rec.</div>
+        <div class="mm"><span class="mt ts">SMART</span>~2 GB · 140+ limbi 🌍</div>
       </div>
       <div class="mc" data-model="onnx-community/Qwen3-4B-ONNX"
            tabindex="0" role="button"
            onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
         <div class="mn">Qwen3 4B</div>
-        <div class="mm"><span class="mt tg">BEST</span>~2.5 GB · GPU rec.</div>
+        <div class="mm"><span class="mt tg">CEL MAI BUN</span>~2.5 GB · 119 limbi 🌍</div>
       </div>
-      <button type="button" id="lbtn" onclick="doLoad()" aria-label="Load selected model">⬇ Load Model</button>
+      <button type="button" id="lbtn" onclick="doLoad()" aria-label="Load selected model">⬇ Încarcă Modelul</button>
     </div>
 
     <div class="ss">
@@ -240,7 +240,7 @@ kbd{font-family:var(--fc);font-size:9.5px;background:var(--sf);border:1px solid 
 
     <div class="ss">
       <div class="sl">System Prompt</div>
-      <textarea id="sysp" rows="4" aria-label="System prompt">You are LocalMind, a helpful AI assistant running entirely in the user's browser. No server is involved. Be concise and accurate.</textarea>
+      <textarea id="sysp" rows="4" aria-label="System prompt">Ești LocalMind, un asistent AI multilingv care rulează direct în browser. Poți conversa în română și în peste 100 de alte limbi. Răspunde întotdeauna în limba pe care o folosește utilizatorul. Fii concis și precis.</textarea>
     </div>
 
     <div class="ss">
@@ -269,7 +269,7 @@ kbd{font-family:var(--fc);font-size:9.5px;background:var(--sf);border:1px solid 
         </a>
       </div>
       <div class="sbft-meta">
-        Powered by <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener noreferrer">transformers.js v3</a> + WebGPU.<br>
+        Powered by <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener noreferrer">transformers.js v4.2.0</a> + WebGPU.<br>
         Model cached locally after first load.
       </div>
     </div>
@@ -288,15 +288,15 @@ kbd{font-family:var(--fc);font-size:9.5px;background:var(--sf);border:1px solid 
 
     <div id="wlc">
       <div class="wi">🧠</div>
-      <div class="wt">AI runs here. In your browser.</div>
-      <div class="ws">Pick a model and click <strong>Load Model</strong>. No API key, no server, no account. The model downloads once and runs locally forever.</div>
+      <div class="wt">AI rulează aici. În browserul tău.</div>
+      <div class="ws">Alege un model și apasă <strong>Încarcă Modelul</strong>. Fără cheie API, server sau cont. Toate modelele suportă <strong>română</strong> și 100+ limbi. Modelul se descarcă o singură dată și rulează local pentru totdeauna.</div>
       <div class="chips">
-        <button type="button" class="chip" onclick="useChip(this)">Explain quantum entanglement simply</button>
-        <button type="button" class="chip" onclick="useChip(this)">Write a haiku about the night sky</button>
-        <button type="button" class="chip" onclick="useChip(this)">What is the Fermi paradox?</button>
-        <button type="button" class="chip" onclick="useChip(this)">How does WebGPU work?</button>
+        <button type="button" class="chip" onclick="useChip(this)">Explică cum funcționează inteligența artificială</button>
+        <button type="button" class="chip" onclick="useChip(this)">Scrie o poveste scurtă despre o seară de toamnă</button>
+        <button type="button" class="chip" onclick="useChip(this)">Ce este paradoxul Fermi? Explică în română</button>
+        <button type="button" class="chip" onclick="useChip(this)">Translate "bună ziua" to 10 different languages</button>
         <button type="button" class="chip" onclick="useChip(this)">Python function to reverse a string</button>
-        <button type="button" class="chip" onclick="useChip(this)">Translate "hello world" in 5 languages</button>
+        <button type="button" class="chip" onclick="useChip(this)">How does WebGPU work?</button>
       </div>
     </div>
 
@@ -352,7 +352,7 @@ let pipe        = null;
 let ready       = false;
 let generating  = false;
 let stopFlag    = false;
-let chosenMdl   = 'onnx-community/LFM2-1.2B-ONNX';
+let chosenMdl   = 'onnx-community/Qwen3-0.6B-ONNX';
 let history     = [];
 let totTok      = 0;
 let totMsg      = 0;
