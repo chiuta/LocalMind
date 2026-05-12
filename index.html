@@ -27,7 +27,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>LocalMind v45 — AI în browser</title>
+<title>LocalMind v52 — AI în browser</title>
 <meta name="description" content="Run AI language models entirely in your browser. v23: 11 presets temp, coaching/socratic/contrariu/simplu, budget atenție, adaptor complexitate, observator inferență, share P2P.">
 <meta name="author" content="A.I. Chiuță — chiuta.github.io">
 <style>
@@ -891,12 +891,30 @@ body { font-size: var(--fs, 14px); }
 .ob-step-title{font-size:13px;font-weight:600;color:var(--tx);margin-bottom:2px}
 .ob-step-desc{font-size:11px;color:var(--tx2);line-height:1.55}
 .ob-start{width:100%;padding:12px;background:var(--ac);color:#000;border:none;border-radius:8px;
-  font-family:var(--fc);font-size:14px;font-weight:700;cursor:pointer;-webkit-appearance:none;appearance:none}
+  font-family:var(--fc);font-size:14px;font-weight:700;cursor:pointer;
+  -webkit-appearance:none;appearance:none}0;cursor:pointer;-webkit-appearance:none;appearance:none}
 .ob-start:hover{background:var(--ac2);color:#fff}
+.ob-start:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .ob-skip{display:block;text-align:center;margin-top:10px;font-size:11px;
   color:var(--tx3);cursor:pointer;background:none;border:none;font-family:var(--fc);
   -webkit-appearance:none;appearance:none;width:100%}
 .ob-skip:hover{color:var(--tx2)}
+
+/* ─── Modul Simplu — toggle simplu/complet ──────────────────── */
+/* In simple mode: hide sidebar, toolbar controls, statusbar details, parameters */
+body.simple-mode #sidebar { display:none !important; }
+body.simple-mode #stb .tbtn,
+body.simple-mode #stb .tbtn-sep,
+body.simple-mode #stb .fs-ctrl,
+body.simple-mode #stb #pomo-wrap { display:none !important; }
+body.simple-mode #smsg { display:none !important; }
+body.simple-mode #dbdg { display:none !important; }
+body.simple-mode #pred-wrap { display:none !important; }
+body.simple-mode .presets { display:none !important; }
+body.simple-mode #mood-chart { display:none !important; }
+body.simple-mode #obs-panel { display:none !important; }
+/* Keep visible: header bar (with toggle), chat area, input row, load button */
+#simplu-btn.on { color:var(--ac) !important; border-color:var(--ac2) !important; }
 </style>
 </head>
 <body>
@@ -917,6 +935,12 @@ body { font-size: var(--fs, 14px); }
     border-radius:50%;width:22px;height:22px;color:var(--tx3);cursor:pointer;font-family:var(--fc);
     font-size:11px;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center;
     margin-left:6px" aria-label="Ajutor">?</button>
+  <button type="button" id="simplu-btn" onclick="toggleSimpleMode()"
+    title="Modul Simplu — ascunde comenzile avansate (toggle)"
+    style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);
+    border-radius:10px;padding:0 7px;height:22px;color:var(--tx3);cursor:pointer;font-family:var(--fc);
+    font-size:9px;font-weight:700;letter-spacing:.03em;flex-shrink:0;display:flex;align-items:center;
+    margin-left:4px" aria-label="Modul Simplu" aria-pressed="false">Simplu</button>
 </div>
 
 <button type="button" id="focus-exit" onclick="toggleFocus()">✕ Ieși din focus</button>
@@ -1439,6 +1463,16 @@ ONESTITATE — REGULA #1:
      internal workers), so the UI stays responsive between tokens.
      ═══════════════════════════════════════════════════════════ -->
 <script type="module">
+// ── Console safety shim ───────────────────────────────────────
+// In some iframe/sandboxed contexts (srcdoc, blob:, file://) the browser
+// provides a console object but with restricted/missing methods.
+// Guard all methods used in LocalMind so they never throw.
+;(function(){
+  const c = window.console = window.console || {};
+  ['log','info','warn','error','debug','dir','group','groupEnd','table'].forEach(m=>{
+    if(typeof c[m] !== 'function') c[m] = function(){};
+  });
+})();
 
 import { pipeline, TextStreamer, env, ModelRegistry }
   from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0/dist/transformers.min.js';
@@ -2471,6 +2505,21 @@ window.runCmp = async function() {
                || (e2.message||'').toLowerCase().includes('oom')
                || (e2.message||'').toLowerCase().includes('out of memory')
                || (String(e2)).includes('ERROR_CODE: 6');
+    // GatherBlockQuantized = GPU-only op; retrying on WASM will always fail
+    const isGpuOnlyOp = (e2.message||'').toLowerCase().includes('gatherblockquantized')
+               || (e2.message||'').toLowerCase().includes('kernel not found')
+               || (e2.message||'').toLowerCase().includes('cpuexecutionprovider')
+               || (e2.message||'').includes('ERROR_CODE: 9');
+    if (isGpuOnlyOp) {
+      pipe = pipeARef; ready = true; chosenMdl = cmpMdlA;
+      const shortName = mdlB.split('/').pop().replace(/-ONNX$/i,'');
+      bEl.innerHTML = `<div class="rec-bar" style="border-color:rgba(255,107,122,.3)">
+        <p>⚙️ <strong>${shortName} necesită WebGPU</strong> — nu rulează pe CPU/WASM.<br>
+        Operatorul <code>GatherBlockQuantized</code> există doar pe GPU.<br>
+        <strong>Soluție:</strong> Rulează comparația cu Model A pe WebGPU (nu WASM)
+        sau alege un model WASM-compatible (Qwen3 0.6B / 1.7B / 4B).</p></div>`;
+      btn.disabled = false; setSt('GPU-only model: necesită WebGPU pentru comparație.', 'err'); return;
+    }
 
     if (devB === 'webgpu') {
       // GPU failed → retry on WASM
@@ -3055,7 +3104,7 @@ const MDS_POPULAR = [
     ram:0.5,  dl:'~350MB',  desc:'Rapid, conversații simple, 119 limbi. ✓ Verificat' },
   { id:'onnx-community/LFM2-1.2B-ONNX',
     name:'LFM2 1.2B',     badge:'bal',  badgeLbl:'⚖ ECHILIBRAT',
-    ram:0.9,  dl:'~750MB',  desc:'Echilibrat, excelent pentru română. ✓ Verificat' },
+    ram:0.9,  dl:'~750MB',  gpuOnly:true, desc:'Echilibrat, excelent pentru română. ✓ Verificat. ⚠ Necesită WebGPU.' },
   { id:'onnx-community/Qwen3-1.7B-ONNX',
     name:'Qwen3 1.7B',    badge:'bal',  badgeLbl:'⚖ SMART',
     ram:1.2,  dl:'~1.1GB',  desc:'Smart și rapid, bun pentru cod. ✓ Verificat' },
@@ -3144,7 +3193,7 @@ function renderMdsPopular() {
           <span>💾 ${m.dl}</span>
           <span>🧠 ~${m.ram}GB RAM</span>
           ${vl ? `<span class="${vc}">${vl}</span>` : ''}
-          <span style="color:var(--tx3)">${m.desc}</span>
+          <span style="color:var(--tx3)">${m.gpuOnly ? '⚙️ GPU required · ' : ''}${m.desc}</span>
         </div>
       </div>
       <button class="mds-pop-add${added?' added':''}" ${added?'disabled':''} onclick="addFromSearch('${m.id.replace(/'/g,"\\'")}',this,{badge:'${m.badge}',badgeLbl:'${m.badgeLbl}',name:'${m.name}',dl:'${m.dl}',ram:${m.ram}})">
@@ -4169,6 +4218,23 @@ window.doLoad = async function() {
     }
   }, 300000); // 5 minutes
 
+  // ── GPU-only model check: warn if WASM device selected ─────
+  const selectedModelEntry = MDS_POPULAR.find(m => m.id === chosenMdl);
+  const isGpuOnlyModel = selectedModelEntry?.gpuOnly === true;
+  if (isGpuOnlyModel) {
+    const resolvedDev = await deviceReady;
+    if (resolvedDev === 'wasm' || resolvedDev === 'blocked') {
+      const ok = confirm(
+        `⚙️ Atenție: ${chosenMdl.split('/').pop()} folosește operatorul GatherBlockQuantized\n` +
+        `care necesită WebGPU — nu funcționează pe CPU/WASM.\n\n` +
+        `Dispozitivul tău rulează în modul CPU/WASM.\n` +
+        `Modelul se va încărca dar va eșua la inițializare.\n\n` +
+        `Recomandare: alege Qwen3 0.6B/1.7B/4B (compatibil WASM).\n\nContinuă oricum?`
+      );
+      if (!ok) return;
+    }
+  }
+
   const tryLoad = async (device) => {
     // dtype: always 'q4f16' — this is the standard quantized format shipped by
     // onnx-community repos (model_q4f16.onnx). dtype='q4' would request
@@ -4248,7 +4314,7 @@ window.doLoad = async function() {
 // Called when Chrome Android tries to load a model.
 // Chrome per-tab WASM limit (~512MB) is ALWAYS less than ONNX needs (~750MB).
 // Guides user to Samsung Internet or Firefox which work on the same device.
-function showChromeBrowserSwitch() {
+window.showChromeBrowserSwitch = function showChromeBrowserSwitch() {
   const existing = document.getElementById('chrome-switch-modal');
   if (existing) return;
   const overlay = document.createElement('div');
@@ -4302,17 +4368,37 @@ function showChromeBrowserSwitch() {
     </div>`;
   document.body.appendChild(overlay);
   setSt('⚠ Chrome Android incompatibil — schimbă browserul (Samsung Internet / Firefox)', 'err');
-}
+};
 function handleLoadError(err) {
   const msg = (err.message || String(err)).toLowerCase();
   const isAuth     = msg.includes('unauthorized') || msg.includes('403') || msg.includes('401') ||
                      msg.includes('private') || msg.includes('access denied') || msg.includes('forbidden');
   const isNotFound = msg.includes('404') || msg.includes('not found') || msg.includes('does not exist');
+  const isPipeLost = msg.includes('pipe_lost');
+  const isGpuOnly  = msg.includes('gatherblockquantized') || msg.includes('kernel not found') ||
+                     msg.includes('cpuexecutionprovider') || msg.includes('ep:') ||
+                     msg.includes('kernel for com.microsoft');
   const isNetwork  = msg.includes('failed to fetch') || msg.includes('networkerror') ||
                      msg.includes('network') || msg.includes('connection') || msg.includes('load failed') ||
                      msg.includes('offline') || msg.includes('abort') || msg.includes('timeout');
   const modelShort = chosenMdl.split('/').pop();
 
+  if (isGpuOnly) {
+    const modelName = chosenMdl ? chosenMdl.split('/').pop().replace(/-ONNX$/i,'') : 'Modelul';
+    showLoadErrorCard(
+      `⚙️ ${modelName} necesită WebGPU`,
+      `Operatorul <code>GatherBlockQuantized</code> există doar pe GPU — nu rulează pe CPU/WASM.<br>` +
+      `<strong>Soluție:</strong> Rulează LocalMind pe Chrome/Edge desktop cu WebGPU, sau alege un model compatibil WASM: Qwen3 0.6B · 1.7B · 4B · Qwen2.5 · Llama 3.2.`,
+      false, false, false
+    );
+    setSt('Model incompatibil cu CPU/WASM — necesită WebGPU.', 'err');
+    return;
+  }
+  if (isPipeLost) {
+    setSt('⚠ Conexiunea cu modelul a fost pierdută în timpul generării. Reîncarcă modelul.', 'err');
+    showLoadErrorCard('Pipeline pierdut', 'Modelul AI a dispărut din memorie în mijlocul răspunsului. Apasă <strong>Încarcă Modelul</strong> pentru a-l reiniţializa.', false, false, true);
+    return;
+  }
   if (isAuth) {
     setSt('🔒 Model cu acces restricționat — necesită cont HuggingFace.', 'err');
     showLoadErrorCard(
@@ -5560,7 +5646,7 @@ const MODEL_SHA_PREFIXES = {
   'onnx-community/Qwen2.5-1.5B-Instruct':     'q4f16:verified',
 };
 // Called after successful model load to log integrity status
-async function verifyModelIntegrity(modelId) {
+window.verifyModelIntegrity = async function verifyModelIntegrity(modelId) {
   const known = MODEL_SHA_PREFIXES[modelId];
   if(!known) { setSt('ℹ Model custom — integritate neverificată.', ''); return; }
   // Check localStorage for cached verification
@@ -5573,7 +5659,7 @@ async function verifyModelIntegrity(modelId) {
   // which transformers.js doesn't expose post-load; flag for future implementation)
   localStorage.setItem(cacheKey, '1');
   console.info('[LocalMind] Model din catalog verificat:', modelId);
-}
+};
 
 // ─── F06: Adnotări persistente ────────────────────────────────
 const ANN_KEY='lm_annotations';
@@ -5932,33 +6018,6 @@ window.closeOnboarding = function() {
   localStorage.setItem('lm_onboarded','1');
 };
 
-// ─── Boot Smoke Test ──────────────────────────────────────────
-// Runs once at startup. Logs missing functions/elements to console
-// so regressions are immediately visible in DevTools.
-(function lmSmokeTest() {
-  const fn_required = [
-    'doSend','doLoad','clearChat','toggleFocTabara','toggleDyslexia',
-    'toggleSilenzio','openMindMap','showOnboarding','startPomodoro',
-    'stopPomodoro','toggleRain','adjFont','showChromeBrowserSwitch',
-    'verifyModelIntegrity','setTemp','setPrompt','addFromSearch',
-    'openModelSearch','saveSnapshot','openMergeModal','closeMergeModal',
-    'exportMMSVG','exportChat','toggleSearch','regenMsg','runCode',
-  ];
-  const el_required = [
-    'ca','wlc','ui','snd','stb','smsg','dbdg','hdr',
-    'sidebar','pomo-wrap','pomo-arc','pred-wrap','mood-chart',
-    'sysp','tsl','tv','s-ms','s-tk','s-ctx','s-d',
-  ];
-  const missingFn = fn_required.filter(f => typeof window[f] !== 'function');
-  const missingEl = el_required.filter(id => !document.getElementById(id));
-  if (missingFn.length || missingEl.length) {
-    console.warn('[LocalMind SMOKE] Missing functions:', missingFn);
-    console.warn('[LocalMind SMOKE] Missing elements:', missingEl);
-  } else {
-    console.info('[LocalMind SMOKE] ✅ All checks passed ('+fn_required.length+' fns, '+el_required.length+' els)');
-  }
-})();
-
 // ─── Boot: init all new features ──────────────────────────────
 setTimeout(()=>{
   initAnnotations();
@@ -5971,6 +6030,12 @@ setTimeout(()=>{
   if(localStorage.getItem('lm_dyslexia')==='1') window.toggleDyslexia();
   if(localStorage.getItem('lm_foc')==='1') window.toggleFocTabara();
   if(localStorage.getItem('lm_rain')==='1') window.toggleRain();
+  // Restore Modul Simplu state
+  if(localStorage.getItem('lm_simple')==='1') {
+    document.body.classList.add('simple-mode');
+    const sb = document.getElementById('simplu-btn');
+    if(sb){ sb.classList.add('on'); sb.setAttribute('aria-pressed','true'); }
+  }
   if(localStorage.getItem('lm_silenzio')==='1') window.toggleSilenzio();
   const savedFs = localStorage.getItem('lm_fontsize');
   if (savedFs) document.documentElement.style.setProperty('--fs', savedFs+'px');
@@ -6010,9 +6075,11 @@ setTimeout(()=>{
         document.body.appendChild(b);
       }
     } else {
-      // Samsung Internet / Firefox Android: working browsers, show info banner once
+      // Samsung Internet or Firefox Android: working browsers
+      // Samsung Internet has higher per-tab limits; explicitly detect for better UX
       window._forcedDevice = 'wasm';
       if (!localStorage.getItem('lm_android_notice')) {
+        const isSamsung = isSamsungBrowser(); // true on Samsung Internet
         const b = document.createElement('div');
         b.id = 'android-notice';
         b.style.cssText = [
@@ -6023,8 +6090,9 @@ setTimeout(()=>{
           'font-family:var(--fc);font-size:11px;color:#80ffb0',
           'display:flex;align-items:center;gap:10px;line-height:1.5',
         ].join(';');
+        const browserName = isSamsung ? 'Samsung Internet' : 'Firefox Android';
         b.innerHTML = `<span style="font-size:15px;flex-shrink:0">📱</span>
-          <span style="flex:1"><strong>Mobil detectat.</strong> Folosește <strong>Qwen3 0.6B</strong> (~350MB). Modele mai mari pot depăși memoria disponibilă.</span>
+          <span style="flex:1"><strong>${browserName} detectat.</strong> Folosește <strong>Qwen3 0.6B</strong> (~350MB). Modele mai mari pot depăși memoria disponibilă.</span>
           <button onclick="localStorage.setItem('lm_android_notice','1');this.parentElement.remove()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:#00aa44;cursor:pointer;font-size:15px;padding:0;flex-shrink:0">✕</button>`;
         document.body.appendChild(b);
       }
@@ -6070,10 +6138,11 @@ window.addEventListener('error', function(e) {
 window.addEventListener('beforeunload', function() {
   try { if (typeof saveCv === 'function') saveCv(); } catch(_) {}
   try { _stopFire && _stopFire(); } catch(_) {}
+  try { _stopRain && _stopRain(); } catch(_) {}
 });
 
 // ╔══════════════════════════════════════════════════════════════╗
-// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v45            ║
+// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v52            ║
 // ║  Force-directed SVG · Zero dependencies · Trade-Free        ║
 // ║  A.I. Chiuță — alexio.tf — trade-free.org                  ║
 // ╚══════════════════════════════════════════════════════════════╝
@@ -6343,6 +6412,58 @@ document.addEventListener('keydown',e=>{
 },true);
 
 
+
+
+
+
+// ─── Modul Simplu ─────────────────────────────────────────────
+// Hides all advanced controls, keeping only conversation + input.
+// Persistent via localStorage; respects user preference across sessions.
+window.toggleSimpleMode = function() {
+  const on = document.body.classList.toggle('simple-mode');
+  const btn = document.getElementById('simplu-btn');
+  if (btn) {
+    btn.classList.toggle('on', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    btn.title = on
+      ? 'Mod Simplu activ — apasă pentru a reveni la interfața completă'
+      : 'Mod Simplu — ascunde comenzile avansate';
+  }
+  // If enabling simple mode and sidebar is open, close it
+  if (on && document.getElementById('sidebar')?.classList.contains('open')) {
+    if (typeof window.toggleSb === 'function') window.toggleSb();
+  }
+  localStorage.setItem('lm_simple', on ? '1' : '0');
+  setSt(on ? '⬡ Mod Simplu activ' : '⬡ Interfață completă', '');
+};
+
+// ─── Boot Smoke Test ──────────────────────────────────────────
+// Runs once at startup. Logs missing functions/elements to console
+// so regressions are immediately visible in DevTools.
+(function lmSmokeTest() {
+  const fn_required = [
+    'doSend','doLoad','clearChat','toggleFocTabara','toggleDyslexia',
+    'toggleSilenzio','openMindMap','showOnboarding','startPomodoro',
+    'stopPomodoro','toggleRain','adjFont','showChromeBrowserSwitch',
+    'verifyModelIntegrity','setTemp','setPrompt','addFromSearch',
+    'openModelSearch','saveSnapshot','openMergeModal','closeMergeModal',
+    'exportMMSVG','exportChat','toggleSearch','regenMsg','runCode',
+    'toggleSimpleMode',
+  ];
+  const el_required = [
+    'ca','wlc','ui','snd','stb','smsg','dbdg','hdr',
+    'sidebar','pomo-wrap','pomo-arc','pred-wrap','mood-chart',
+    'sysp','tsl','tv','s-ms','s-tk','s-ctx','s-d','simplu-btn',
+  ];
+  const missingFn = fn_required.filter(f => typeof window[f] !== 'function');
+  const missingEl = el_required.filter(id => !document.getElementById(id));
+  if (missingFn.length || missingEl.length) {
+    console.warn('[LocalMind SMOKE] Missing functions:', missingFn);
+    console.warn('[LocalMind SMOKE] Missing elements:', missingEl);
+  } else {
+    console.info('[LocalMind SMOKE] ✅ All checks passed ('+fn_required.length+' fns, '+el_required.length+' els)');
+  }
+})();
 
 </script>
 </body>
