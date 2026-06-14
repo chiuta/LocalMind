@@ -2409,8 +2409,9 @@ function renderMd(raw) {
 
       // ── KaTeX display math $$...$$ ──
       if (L === '__katex_display__') {
+        const _mEsc = b.code.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
         out += `<div class="katex-display-wrap" data-math="${b.code.replace(/"/g,'&quot;')}">` +
-               `<code class="katex-pending">$$${b.code}$$</code></div>`;
+               `<code class="katex-pending">$$${_mEsc}$$</code></div>`;
         continue;
       }
 
@@ -3594,10 +3595,12 @@ async function ensureMermaid() {
   mmdLoading = true;
   return new Promise(r => {
     const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+    s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11.15.0/dist/mermaid.min.js';
+    s.integrity = 'sha384-yQ4mmBBT+vhTAwjFH0toJXNYJ6O4usWnt6EPIdWwrRvx2V/n5lXuDZQwQFeSFydF';
+    s.crossOrigin = 'anonymous';
     s.onload = () => {
       window.mermaid.initialize({
-        startOnLoad: false, theme: 'dark',
+        startOnLoad: false, securityLevel: 'strict', theme: 'dark',
         themeVariables: {
           background: '#101b30', primaryColor: '#36d4a8',
           primaryTextColor: '#dde8f5', lineColor: '#253a5c',
@@ -4359,10 +4362,14 @@ async function ensureKatex() {
   katexLoading = true;
   const css=document.createElement('link'); css.rel='stylesheet';
   css.href='https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css';
+  css.integrity='sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV';
+  css.crossOrigin='anonymous';
   document.head.appendChild(css);
   return new Promise(r=>{
     const s=document.createElement('script');
     s.src='https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js';
+    s.integrity='sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG+vnGctmUb0ZY0l8';
+    s.crossOrigin='anonymous';
     s.onload=()=>{ katexReady=true; katexLoading=false; katexQ.forEach(fn=>fn(true)); katexQ=[]; r(true); };
     s.onerror=()=>{ katexLoading=false; katexQ.forEach(fn=>fn(false)); katexQ=[]; r(false); };
     document.head.appendChild(s);
@@ -9319,6 +9326,44 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
 // Detects patterns like `= 2+3*4` or `calc: 144/12` in user input
 // and evaluates them before sending to AI.
 // This reduces token usage for simple calculations.
+// Safe arithmetic evaluator (shunting-yard) — no eval / no new Function.
+// Supports + - * / % ^ , parentheses, unary minus and decimals.
+function _safeArith(input){
+  const toks = String(input).match(/\d+\.?\d*|\.\d+|[+\-*/%^()]/g);
+  if(!toks) throw new Error('empty');
+  const prec={'+':1,'-':1,'*':2,'/':2,'%':2,'^':3}, rightAssoc={'^':true};
+  const out=[], ops=[]; let prev=null;
+  for(const tk of toks){
+    if(/^[\d.]/.test(tk)){ out.push(parseFloat(tk)); prev='num'; }
+    else if(tk==='('){ ops.push(tk); prev='('; }
+    else if(tk===')'){
+      while(ops.length && ops[ops.length-1]!=='(') out.push(ops.pop());
+      if(!ops.length) throw new Error('paren'); ops.pop(); prev=')';
+    } else {
+      if(tk==='-' && (prev===null||prev==='('||prev==='op')) out.push(0);
+      while(ops.length && ops[ops.length-1]!=='(' &&
+            (prec[ops[ops.length-1]]>prec[tk] ||
+             (prec[ops[ops.length-1]]===prec[tk] && !rightAssoc[tk]))) out.push(ops.pop());
+      ops.push(tk); prev='op';
+    }
+  }
+  while(ops.length){ const o=ops.pop(); if(o==='(') throw new Error('paren'); out.push(o); }
+  const st=[];
+  for(const t of out){
+    if(typeof t==='number'){ st.push(t); continue; }
+    const b=st.pop(), a=st.pop();
+    if(a===undefined||b===undefined) throw new Error('operands');
+    let r; switch(t){
+      case '+': r=a+b; break; case '-': r=a-b; break;
+      case '*': r=a*b; break; case '/': r=a/b; break;
+      case '%': r=a%b; break; case '^': r=Math.pow(a,b); break;
+      default: throw new Error('op');
+    }
+    st.push(r);
+  }
+  if(st.length!==1) throw new Error('result');
+  return st[0];
+}
 function _evalInlinemath(text) {
   // Pattern: starts with = or calc: followed by math expression
   return text.replace(/`?(?:=|calc:|calcul:)\s*([0-9+\-*/%.^()\s]+)`?/gi, (match, expr) => {
@@ -9326,8 +9371,8 @@ function _evalInlinemath(text) {
       // Safe eval: only allow math chars
       const safe = expr.replace(/[^0-9+\-*/%.^()\s]/g,'');
       if (!safe.trim()) return match;
-      // Use Function for safe evaluation (no external access)
-      const result = new Function('return (' + safe.replace(/\^/g,'**') + ')')();
+      // Safe arithmetic evaluation — no eval / no new Function (see _safeArith)
+      const result = _safeArith(safe.replace(/\^/g,'^'));
       if (typeof result !== 'number' || !isFinite(result)) return match;
       return match + ' **= ' + (Number.isInteger(result) ? result : result.toFixed(6).replace(/0+$/,''));
     } catch(_) { return match; }
@@ -9691,7 +9736,7 @@ window.toggleQRModal = function() {
   const qrScriptExists = document.querySelector('script[src*="qrcode.min.js"]');
   if (!_qrLoaded && !qrScriptExists) {
     const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js';
+    script.src = './vendor/qrcode.min.js';
     script.onload = () => { _qrLoaded = true; _renderQRWithLib(payload); };
     script.onerror = () => { _renderQR(); };
     document.head.appendChild(script);
