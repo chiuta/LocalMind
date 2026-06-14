@@ -49,6 +49,7 @@
 }
 </style>
 <meta charset="UTF-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co blob: data:">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>LocalMind v117— AI în browser</title>
 <meta name="theme-color" content="#007848">
@@ -2327,7 +2328,7 @@ ONESTITATE — REGULA #1:
 })();
 
 import { pipeline, TextStreamer, env, ModelRegistry }
-  from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@4.2.0/dist/transformers.min.js';
+  from './vendor/transformers/transformers.min.js';
 
 env.allowLocalModels = false;
 env.useBrowserCache  = true;
@@ -2359,6 +2360,8 @@ function getCtxMax() { return CTX_MAP[chosenMdl] || 32768; }
 function estTok(s) { return Math.ceil((s || '').length / 4); }
 
 // ── Markdown renderer (zero dependencies) ──────────────
+function _lmEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]);});}
+function _sanitizeSvg(svg){try{var d=new DOMParser().parseFromString(String(svg||''),'image/svg+xml');if(d.querySelector('parsererror'))return _lmEsc(svg);d.querySelectorAll('script,foreignObject,iframe,object,embed').forEach(function(n){n.remove();});d.querySelectorAll('*').forEach(function(el){[].slice.call(el.attributes).forEach(function(a){var n=a.name.toLowerCase(),v=(a.value||'').trim().toLowerCase();if(n.indexOf('on')===0)el.removeAttribute(a.name);else if((n==='href'||n==='xlink:href'||n==='src')&&(v.indexOf('javascript:')===0||v.indexOf('data:text/html')===0))el.removeAttribute(a.name);});});var r=d.documentElement;return r&&r.nodeName.toLowerCase()==='svg'?r.outerHTML:_lmEsc(svg);}catch(e){return _lmEsc(svg);}}
 function renderMd(raw) {
   // Strip Qwen3 chain-of-thought blocks (<think>…</think>) — shown even with /no_think
   // These are model internals and should never appear in the chat UI
@@ -2430,7 +2433,7 @@ function renderMd(raw) {
       // ── Raw SVG passthrough ──
       if (L === 'svg') {
         out += `<div class="rich-wrap"><div class="rich-hdr"><span class="rich-lbl">🖼 SVG</span></div>`
-             + `<div class="rich-body">${b.code}</div></div>`;
+             + `<div class="rich-body">${_sanitizeSvg(b.code)}</div></div>`;
         continue;
       }
 
@@ -3725,9 +3728,9 @@ async function extractPdfText(file) {
   try {
     // Dynamic import is the only correct way to get ES module exports
     if (!_pdfMod) {
-      _pdfMod = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.min.mjs');
+      _pdfMod = await import('./vendor/pdfjs/pdf.min.mjs');
       _pdfMod.GlobalWorkerOptions.workerSrc =
-        'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.4.168/build/pdf.worker.min.mjs';
+        './vendor/pdfjs/pdf.worker.min.mjs';
     }
     const ab = await file.arrayBuffer();
     const pdf = await _pdfMod.getDocument({ data: ab }).promise;
@@ -9362,8 +9365,8 @@ function _renderConvList() {
     item.className = 'ch-item';
     const accentDot = conv.accent != null ? (ACCENT_PRESETS[conv.accent]?.ac || '#00a868') : '#00a868';
     const _forkBadge = conv.forked ? ' 🌿' : '';
-    item.innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:${accentDot};flex-shrink:0;display:inline-block;margin-right:3px"></span><span class="ch-item-title" title="${conv.title}">${conv.title}${_forkBadge}</span>
-      <span class="ch-item-meta">${conv.msgs}m · ${new Date(conv.ts).toLocaleDateString('ro-RO')}${conv.tags?.length ? ' · ' + conv.tags.join(' ') : ''}</span>
+    item.innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:${accentDot};flex-shrink:0;display:inline-block;margin-right:3px"></span><span class="ch-item-title" title="${_lmEsc(conv.title)}">${_lmEsc(conv.title)}${_forkBadge}</span>
+      <span class="ch-item-meta">${conv.msgs}m · ${new Date(conv.ts).toLocaleDateString('ro-RO')}${conv.tags?.length ? ' · ' + conv.tags.map(_lmEsc).join(' ') : ''}</span>
       <button type="button" class="ch-del" title="Șterge" onclick="deleteConv(${idx})">🗑</button>`;
     item.onclick = e => { if (e.target.classList.contains('ch-del')) return; loadConv(idx); };
     el.appendChild(item);
