@@ -1,6 +1,10 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
 <!--
   ╔══════════════════════════════════════════════════════════════╗
-  ║              L O C A L M I N D  v116                         ║
+  ║              L O C A L M I N D  v117                         ║
   ║        AI în browser — un singur fișier HTML                ║
   ╠══════════════════════════════════════════════════════════════╣
   ║  LICENȚĂ TRADE-FREE                                         ║
@@ -22,7 +26,6 @@
   ║  „Nu cerem nimic. Doar facem."                              ║
   ╚══════════════════════════════════════════════════════════════╝
 -->
-<!DOCTYPE html>
 <!--
   ============================================================================
   LocalMind
@@ -40,23 +43,21 @@
     Buy Me a Coffee: https://buymeacoffee.com/echo.of.the.strings
   ============================================================================
 -->
-<html lang="ro">
-<head>
+
 <style id="tf-a11y-motion">
 /* Accesibilitate: respectă preferința utilizatorului pentru mai puțină mișcare (TROM/a11y). */
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-<meta charset="UTF-8">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self' data:; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co blob: data:">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>LocalMind v117— AI în browser</title>
+<title>LocalMind v117 — AI în browser</title>
 <meta name="theme-color" content="#007848">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LocalMind">
-<meta name="description" content="Rulează modele AI local în browser — offline, fără cont, fără date colectate. v52: Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.">
+<meta name="description" content="Rulează modele AI local în browser — offline, fără cont, fără date colectate. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.">
 <meta name="author" content="A.I. Chiuță — chiuta.github.io">
 <style>
 :root{
@@ -2327,11 +2328,32 @@ ONESTITATE — REGULA #1:
   });
 })();
 
+// AUDIT: localStorage poate arunca SecurityError (iframe sandbox / date blocate) sau QuotaExceededError.
+// Fallback în memorie + setItem care nu mai aruncă, ca inițializarea să nu se oprească la prima citire.
+;(function(){
+  let ok = true;
+  try { window.localStorage.getItem('__lm_probe'); } catch(_) { ok = false; }
+  if (!ok) {
+    const m = new Map();
+    const mem = { getItem:k=>m.has(String(k))?m.get(String(k)):null, setItem:(k,v)=>{m.set(String(k),String(v));},
+      removeItem:k=>{m.delete(String(k));}, clear:()=>m.clear(), key:i=>Array.from(m.keys())[i]??null, get length(){return m.size;} };
+    try { Object.defineProperty(window,'localStorage',{value:mem,configurable:true}); } catch(_) {}
+  } else {
+    try {
+      const _si = Storage.prototype.setItem;
+      Storage.prototype.setItem = function(k,v){ try { _si.call(this,k,v); } catch(e){ console.warn('[LocalMind] storage:', e && e.name); } };
+    } catch(_) {}
+  }
+})();
+
 import { pipeline, TextStreamer, env, ModelRegistry }
   from './vendor/transformers/transformers.min.js';
 
 env.allowLocalModels = false;
 env.useBrowserCache  = true;
+
+// AUDIT: citire JSON din localStorage fără a opri inițializarea dacă valoarea e coruptă
+function _lsJSON(k, d) { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); return v == null ? d : v; } catch(_) { return d; } }
 
 // ── State ──────────────────────────────────────────────
 let pipe        = null;
@@ -2361,7 +2383,7 @@ function estTok(s) { return Math.ceil((s || '').length / 4); }
 
 // ── Markdown renderer (zero dependencies) ──────────────
 function _lmEsc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]);});}
-function _sanitizeSvg(svg){try{var d=new DOMParser().parseFromString(String(svg||''),'image/svg+xml');if(d.querySelector('parsererror'))return _lmEsc(svg);d.querySelectorAll('script,foreignObject,iframe,object,embed').forEach(function(n){n.remove();});d.querySelectorAll('*').forEach(function(el){[].slice.call(el.attributes).forEach(function(a){var n=a.name.toLowerCase(),v=(a.value||'').trim().toLowerCase();if(n.indexOf('on')===0)el.removeAttribute(a.name);else if((n==='href'||n==='xlink:href'||n==='src')&&(v.indexOf('javascript:')===0||v.indexOf('data:text/html')===0))el.removeAttribute(a.name);});});var r=d.documentElement;return r&&r.nodeName.toLowerCase()==='svg'?r.outerHTML:_lmEsc(svg);}catch(e){return _lmEsc(svg);}}
+function _sanitizeSvg(svg){try{var d=new DOMParser().parseFromString(String(svg||''),'image/svg+xml');if(d.querySelector('parsererror'))return _lmEsc(svg);d.querySelectorAll('script,foreignObject,iframe,object,embed').forEach(function(n){n.remove();});d.querySelectorAll('animate,set').forEach(function(n){var t=(n.getAttribute('attributeName')||'').toLowerCase();if(t==='href'||t==='xlink:href'||t.indexOf('on')===0)n.remove();});d.querySelectorAll('*').forEach(function(el){[].slice.call(el.attributes).forEach(function(a){var n=a.name.toLowerCase(),v=(a.value||'').replace(/[\x00-\x20\u00a0\u2028\u2029]+/g,'').toLowerCase();if(n.indexOf('on')===0)el.removeAttribute(a.name);else if((n==='href'||n==='xlink:href'||n==='src')&&(v.indexOf('javascript:')===0||v.indexOf('data:text/html')===0))el.removeAttribute(a.name);});});var r=d.documentElement;return r&&r.nodeName.toLowerCase()==='svg'?r.outerHTML:_lmEsc(svg);}catch(e){return _lmEsc(svg);}}
 function renderMd(raw) {
   // Strip Qwen3 chain-of-thought blocks (<think>…</think>) — shown even with /no_think
   // These are model internals and should never appear in the chat UI
@@ -2529,7 +2551,8 @@ function renderMd(raw) {
 
 // Inline markdown (bold, italic, code, links, strikethrough)
 function inl(s) {
-  function esc(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  // AUDIT: escapăm și ghilimelele — altfel [x](https://a" onmouseover="…) ieșea din atributul href (XSS din ieșirea modelului)
+  function esc(t){ return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
   return esc(s)
     .replace(/`([^`]+)`/g, '<code>$1</code>')
     .replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
@@ -3154,8 +3177,9 @@ function hlCode(raw, lang) {
   const e = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const sp = (c,s) => `<span class="hl-${c}">${s}</span>`;
   const saved = [];
-  const S = html => { saved.push(html); return `\x01${saved.length-1}\x01`; };
-  const R = s => s.replace(/\x01(\d+)\x01/g, (_,i) => saved[+i]);
+  // AUDIT: indexul placeholderului e codat cu caractere private-use (nu cifre), altfel regexul de numere îl corupea
+  const S = html => { saved.push(html); return '\x01' + String(saved.length-1).replace(/\d/g, d => String.fromCharCode(0xE000 + (+d))) + '\x01'; };
+  const R = s => { for (let k=0;k<4;k++) s = s.replace(/\x01([\uE000-\uE009]+)\x01/g, (_,i) => saved[+i.replace(/[\uE000-\uE009]/g, c => c.charCodeAt(0)-0xE000)]); return s; };
 
   let s = e(raw);  // escape entire source first
 
@@ -3453,7 +3477,7 @@ window.runCmp = async function() {
   if (!_effSysBase.trim() && typeof _activePersona !== 'undefined' && _activePersona?.sys) {
     _effSysBase = _activePersona.sys;
   }
-  const _effSys = _expandSysVars([_effSysBase, _lenInstr, _getLangInstr(), _getFormatInstr()].filter(Boolean).join('\n\n'));
+  const _effSys = _expandSysVars([_effSysBase, _getLenInstr(), _getLangInstr(), _getFormatInstr()].filter(Boolean).join('\n\n'));
   if (_effSys) msgs.push({ role: 'system', content: _effSys });
   msgs.push({ role: 'user', content: cmpUserMsg });
 
@@ -3643,8 +3667,8 @@ function renderChart(raw) {
   const lines  = raw.trim().split('\n');
   const get    = k => { const l = lines.find(x => x.trim().startsWith(k+':')); return l ? l.split(':').slice(1).join(':').trim() : ''; };
   const type   = (get('type') || 'bar').toLowerCase();
-  const title  = get('title') || '';
-  const labels = get('labels').split(',').map(s => s.trim()).filter(Boolean);
+  const title  = _lmEsc(get('title') || '');
+  const labels = get('labels').split(',').map(s => _lmEsc(s.trim())).filter(Boolean);
   const vals   = get('values').split(',').map(s => +s.trim()).filter(n => !isNaN(n));
   const colors = ['#36d4a8','#5a9cf8','#f0943a','#ff6b7a','#a78bfa','#34d399','#fbbf24','#60a5fa'];
 
@@ -4773,6 +4797,8 @@ function appendMsg(role, text) {
     eb.onclick = () => window.editMsg(eb);
     wrap.appendChild(eb);
   }
+  // AUDIT: `acts` nu era declarat => ReferenceError în appendMsg la FIECARE mesaj (chatul nu mai trimitea nimic).
+  const acts = document.createElement('div'); acts.className = 'msg-acts'; acts.style.cssText = 'display:flex;gap:4px;flex-wrap:wrap';
   // Diff button (AI messages) — shows changes from previous version
   if (!isU && typeof window.toggleDiff === 'function') {
     const dfb = document.createElement('button');
@@ -4848,6 +4874,7 @@ function appendMsg(role, text) {
     });
     wrap.appendChild(qr);
   }
+  if (acts.childElementCount) bd.appendChild(acts);
   scrollBot();
   return tx;
 }
@@ -5193,6 +5220,15 @@ window.doLoad = async function() {
   // BUG-4: guard against concurrent loads; BUG-5: guard against load during generation
   if (loading) return;
   if (generating) { setSt('Stop generation before loading a new model.', 'err'); return; }
+  // AUDIT: avertisment de dimensiune înainte de descărcarea unui model mare care nu e încă în cache
+  {
+    const _e = MDS_POPULAR.find(m => m.id === chosenMdl);
+    let _cached = false;
+    try { _cached = !!localStorage.getItem(LM_DL_PFX + repoKey(chosenMdl)); } catch(_) {}
+    if (_e && _e.ram >= 1.2 && !_cached && !confirm(
+      `Se vor descărca ${_e.dl} de pe huggingface.co (o singură dată; rămân în cache-ul browserului).\n` +
+      `Necesită ~${_e.ram}GB RAM/VRAM în timpul rulării — pe un dispozitiv slab fila se poate bloca.\n\nContinuă?`)) return;
+  }
   loading = true;
   const myToken = ++loadToken;   // capture: this specific load's identity
 
@@ -5240,7 +5276,13 @@ window.doLoad = async function() {
         `Modelul se va încărca dar va eșua la inițializare.\n\n` +
         `Recomandare: alege Qwen3 0.6B/1.7B/4B (compatibil WASM).\n\nContinuă oricum?`
       );
-      if (!ok) return;
+      if (!ok) {
+        // AUDIT: anulare => eliberăm UI-ul (înainte rămânea blocat până la timeout-ul de 5 min)
+        clearTimeout(loadTimeout); loading = false; ++loadToken; hideLov();
+        document.getElementById('lbtn').disabled = false;
+        setSt('Încărcare anulată.', '');
+        return;
+      }
     }
   }
 
@@ -5781,7 +5823,9 @@ window.doSend = async function() {
     stopFlag = false;
     // BUG-04: pop orphaned user message
     if (history.length && history[history.length - 1].role === 'user') {
-      history.pop();
+      // AUDIT: la Stop păstrăm textul parțial în istoric (altfel mesajul user dispărea din context, dar rămânea în UI)
+      if (wasStop && curTxt) { history.push({ role: 'assistant', content: curTxt, ts: Date.now() }); updateCtx(); saveCv(); }
+      else history.pop();
     }
     if (curEl) {
       const c = curEl.querySelector('.cur'); if (c) c.remove();
@@ -5936,7 +5980,7 @@ window.onKey = function(e) {
     e.preventDefault(); window.copyAsMarkdown && window.copyAsMarkdown(); return;
   }
   // Ctrl+Z → undo last exchange (when not in input)
-  if (e.ctrlKey && !e.shiftKey && !e.altKey && e.key === 'z' && !inInput) {
+  if (e.ctrlKey && !e.shiftKey && !e.altKey && e.key === 'z' && !['INPUT','TEXTAREA','SELECT'].includes((document.activeElement || {}).tagName)) {
     e.preventDefault(); window.undoLastExchange && window.undoLastExchange(); return;
   }
   // Ctrl+Alt+N → new conversation (clear chat)
@@ -6398,12 +6442,13 @@ window.runCode = async function(btn, cid) {
         try {
           // Redirect stdout/stderr before running user code
           pyodideInstance.runPython('import sys, io\n_lm_out=io.StringIO()\n_lm_err=io.StringIO()\nsys.stdout=_lm_out\nsys.stderr=_lm_err');
-          try { result = pyodideInstance.runPython(code); } catch(_) { result = undefined; }
+          let _pyExc = ''; try { result = pyodideInstance.runPython(code); } catch(pe) { result = undefined; _pyExc = String((pe && pe.message) || pe); }
           let out_v = '', err_v = '';
           try {
             out_v = pyodideInstance.runPython('_lm_out.getvalue()') || '';
             err_v = pyodideInstance.runPython('_lm_err.getvalue()') || '';
           } catch(_) {}
+          if (_pyExc) err_v += (err_v ? '\n' : '') + _pyExc; // AUDIT: excepțiile Python nu mai sunt înghițite
           try { pyodideInstance.runPython('sys.stdout=sys.__stdout__\nsys.stderr=sys.__stderr__'); } catch(_) {}
           resolve({ out_v, err_v, result });
         } catch(e) { reject(e); }
@@ -6787,7 +6832,7 @@ window.toggleRain = function() {
   _rainMode=!_rainMode;
   document.getElementById('rain-btn')?.classList.toggle('on',_rainMode);
   const rsvol = document.getElementById('sound-vols');
-  if(rsvol) rsvol.style.display = (_focMode || _rainMode) ? 'flex' : 'none';
+  if(rsvol) rsvol.style.display = (document.body.classList.contains('foc-tabara') || _rainMode) ? 'flex' : 'none';
   if(_rainMode) { const s=document.getElementById('rain-vol-sl'); if(s) s.value=localStorage.getItem('lm_rain_vol')??'0.6'; }
   if(_rainMode) { _startRain(); setSt('🌧 Ploaie activată',''); }
   else { _stopRain(); setSt('Ploaie dezactivată',''); }
@@ -6833,7 +6878,12 @@ window.verifyModelIntegrity = async function verifyModelIntegrity(modelId) {
       const onnxKey = keys.find(r => r.url.includes('model_q4f16.onnx') || r.url.includes('onnx'));
       if (onnxKey) {
         const resp = await cache.match(onnxKey);
-        if (resp) { modelBlob = await resp.arrayBuffer(); foundUrl = onnxKey.url; break; }
+        if (resp) {
+          // AUDIT: arrayBuffer() pe un model de GB-uri dublează memoria (OOM) — verificăm doar fișiere cu dimensiune cunoscută <= 600MB
+          const _len = +(resp.headers.get('content-length') || 0);
+          if (!(_len > 0 && _len <= 600 * 1024 * 1024)) { console.info('[LocalMind] Model mare / dimensiune necunoscută — hash SHA-256 omis (evită OOM)'); return; }
+          modelBlob = await resp.arrayBuffer(); foundUrl = onnxKey.url; break;
+        }
       }
     }
     if (!modelBlob) {
@@ -6850,7 +6900,7 @@ window.verifyModelIntegrity = async function verifyModelIntegrity(modelId) {
       // First time: store as baseline (self-bootstrapping)
       localStorage.setItem(cacheKey, hashHex);
       console.info('[LocalMind] ✅ Integritate model stabilită (baseline):', shortHash + '…', foundUrl.split('/').slice(-2).join('/'));
-      setSt('✓ Integritate model verificată · SHA-256: ' + shortHash + '…', '');
+      setSt('SHA-256 model (referință locală, prima descărcare; NU e comparat cu sursa oficială): ' + shortHash + '…', '');
     } else if (storedHash === hashHex) {
       // Hash matches baseline
       console.info('[LocalMind] ✅ Integritate model OK:', shortHash + '…');
@@ -7194,7 +7244,7 @@ window.showOnboarding = function showOnboarding() {
           <div class="ob-step-desc">
             Apasă <strong>Încarcă Modelul</strong> (bara de jos).
             Prima descărcare: 350MB–2GB (o singură dată).
-            După, funcționează <strong>complet offline</strong>.
+            După, modelul rămâne în cache-ul browserului și poți conversa <strong>fără internet</strong> (ONNX Runtime WASM se descarcă tot din CDN la prima rulare și trebuie să fie în cache).
           </div>
         </div>
       </div>
@@ -7368,7 +7418,7 @@ window.toggleOfflineMode = function() {
       console.warn('[LocalMind Offline] Blocked:', u.slice(0,80));
       return Promise.reject(new Error('Offline mode — blocked: ' + u.slice(0,60)));
     };
-    setSt('🔒 Mod Offline activ — toate cererile externe blocate (excepție: HF Hub)', 'ok');
+    setSt('🔒 Mod Offline activ — cererile fetch către alte domenii decât HF Hub / jsDelivr sunt blocate (nu și imagini, scripturi sau WebRTC)', 'ok');
   } else {
     if (window._realFetch) { window.fetch = window._realFetch; window._realFetch = null; }
     setSt('🌐 Mod Online restaurat.', '');
@@ -8414,20 +8464,21 @@ function _addCopyButtons(container) {
 window.exportAsHTML = function() {
   if (!history.length) { setSt('Nicio conversație de exportat.', ''); return; }
   const title = document.title.replace(' — LocalMind', '') || 'Conversație LocalMind';
+  const escT = title.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const msgs = history.map(m => {
     const isU = m.role === 'user';
     const text = (m.content||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
       .replace(/\n/g,'<br>').replace(/`([^`]+)`/g,'<code>$1</code>')
       .replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
     const time = m.ts ? new Date(m.ts).toLocaleTimeString('ro-RO', {hour:'2-digit',minute:'2-digit'}) : '';
-    return `<div class="msg \${isU?'user':'ai'}">
-      <div class="role">\${isU ? '👤 Tu' : '🤖 LocalMind'}\${time ? ' <span class="time">'+time+'</span>' : ''}</div>
-      <div class="body">\${text}</div>
+    return `<div class="msg ${isU?'user':'ai'}">
+      <div class="role">${isU ? '👤 Tu' : '🤖 LocalMind'}${time ? ' <span class="time">'+time+'</span>' : ''}</div>
+      <div class="body">${text}</div>
     </div>`;
   }).join('\n');
   const html = `<!DOCTYPE html>
 <html lang="ro"><head><meta charset="UTF-8">
-<title>\${title}</title>
+<title>${escT}</title>
 <style>
 body{font-family:system-ui,sans-serif;max-width:720px;margin:40px auto;padding:0 20px;
   background:#f8f9fa;color:#1a2840;line-height:1.7}
@@ -8444,6 +8495,26 @@ code{background:#f0f0f0;padding:1px 5px;border-radius:3px;font-family:monospace;
 strong{font-weight:600}
 footer{margin-top:40px;font-size:11px;color:#aaa;text-align:center;
   border-top:1px solid #eee;padding-top:12px}
+</style>
+</head><body>
+<h1>${escT}</h1>
+<div class="meta">Exportat din LocalMind v117 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
+${msgs}
+<footer>Generat cu LocalMind — AI local, offline, trade-free · alexio.tf</footer>
+</body></html>`;
+  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = title.slice(0,40).replace(/[^a-zA-Z0-9-_ ]/g,'_') + '.html';
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
+  setSt('✓ Export HTML descărcat.', 'ok');
+};
+
+// NOTA AUDIT: blocul de mai jos (CSS + HTML pentru ~50 panouri: istoric conversații, QR, manager context,
+// note de sesiune, mind-map etc.) fusese inserat din greșeală în interiorul șablonului exportAsHTML().
+// Panourile NU există în DOM-ul real, deci funcțiile lor (toggleConvHistory, toggleQRModal, …) sunt inerte.
+// Păstrat aici neschimbat, ca să nu se piardă; mutarea lui în <head>/<body> trebuie testată vizual.
+const _LM_ORPHAN_UI_UNUSED = `<style>
 
 /* ─── Conversation History ────────────────────────────────── */
 #conv-hist-panel{position:fixed;inset:0;z-index:912;background:rgba(2,3,6,.95);
@@ -8983,11 +9054,6 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
   color:var(--tx3);padding:0 4px;flex-shrink:0;white-space:nowrap}
 #wpm-badge.active{display:inline}
 </style>
-</head><body>
-<h1>\${title}</h1>
-<div class="meta">Exportat din LocalMind v117· \${new Date().toLocaleDateString('ro-RO')} · \${history.length} mesaje · Trade-free</div>
-\${msgs}
-<footer>Generat cu LocalMind — AI local, offline, trade-free · alexio.tf</footer>
 
 <!-- Conversation History Panel -->
 <div id="conv-hist-panel" role="dialog" aria-modal="true" aria-label="Istoricul conversațiilor"
@@ -9312,14 +9378,7 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
 </div>
 <div id="word-goal-bar" aria-hidden="true"></div>
 <div id="session-pill" class="session-pill" aria-live="polite"></div>
-</body></html>`;
-  const blob = new Blob([html], {type:'text/html'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = title.slice(0,40).replace(/[^a-zA-Z0-9-_ ]/g,'_') + '.html';
-  a.click(); URL.revokeObjectURL(url);
-  setSt('✓ Export HTML descărcat.', 'ok');
-};
+`;
 
 
 // ─── Inline Math Evaluator ────────────────────────────────────
@@ -9611,7 +9670,7 @@ window.exportAsJSON = function() {
   const a = document.createElement('a');
   a.href = url;
   a.download = title.slice(0,40).replace(/[^a-zA-Z0-9-_]/g,'_') + '_localmind.json';
-  a.click(); URL.revokeObjectURL(url);
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ Export JSON descărcat (' + history.length + ' mesaje).', 'ok');
 };
 
@@ -9887,7 +9946,7 @@ window.exportAsMarkdown = function() {
   const lines = [
     '# ' + title,
     '',
-    '> Exportat din **LocalMind v117* · ' + new Date().toLocaleDateString('ro-RO') +
+    '> Exportat din **LocalMind v117** · ' + new Date().toLocaleDateString('ro-RO') +
     ' · Model: `' + (chosenMdl||'necunoscut').split('/').pop() + '`',
     ''
   ];
@@ -9911,7 +9970,7 @@ window.exportAsMarkdown = function() {
   const a = document.createElement('a');
   a.href = url;
   a.download = title.slice(0,40).replace(/[^a-zA-Z0-9-_]/g,'_') + '.md';
-  a.click(); URL.revokeObjectURL(url);
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ Export Markdown descărcat.', 'ok');
 };
 
@@ -10040,8 +10099,8 @@ function _enrichURLs(container) {
         if (!url) return match;
         try {
           var host = new URL(url).hostname.replace('www.','');
-          var fav = 'https://www.google.com/s2/favicons?domain=' + host + '&sz=16';
-          var img = '<img class="url-card-favicon" src="' + fav + '" loading="lazy" alt="" onerror="this.remove()">';
+          // AUDIT: eliminat apelul către google.com/s2/favicons (scurgea domeniile din răspunsuri; oricum blocat de CSP img-src)
+          var img = '';
           return prefix + '<a class="url-card" href="' + url + '" target="_blank" rel="noopener noreferrer">' + img + host + '</a>';
         } catch(e2) { return match; }
       }
@@ -10244,7 +10303,7 @@ document.addEventListener('paste', function(e) {
     if (document.activeElement && document.activeElement !== ta) return; // only fire for #ui
     // Insert a text reference to the pasted image
     const note = '[Imagine lipită — ' + Math.round(blob.size/1024) + 'KB · ' + blob.type + ']\n' +
-      'Notă: LocalMind v117nu procesează imagini direct. ' +
+      'Notă: LocalMind v117 nu procesează imagini direct. ' +
       'Descrie imaginea în text sau consideră un model multimodal.';
     const pos = ta.selectionStart;
     ta.value = ta.value.slice(0, pos) + note + ta.value.slice(ta.selectionEnd);
@@ -10470,14 +10529,14 @@ window.exportFlashAnki = function() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url;
   a.download = 'localmind_flashcards.csv';
-  a.click(); URL.revokeObjectURL(url);
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ ' + _flashcards.length + ' flashcarduri exportate pentru Anki.', 'ok');
 };
 window.exportFlashJSON = function() {
   if (!_flashcards.length) return;
   const blob = new Blob([JSON.stringify({flashcards: _flashcards}, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob); const a = document.createElement('a');
-  a.href = url; a.download = 'localmind_flashcards.json'; a.click(); URL.revokeObjectURL(url);
+  a.href = url; a.download = 'localmind_flashcards.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ ' + _flashcards.length + ' flashcarduri exportate ca JSON.', 'ok');
 };
 
@@ -10753,7 +10812,7 @@ window.exportAsPodcast = function() {
   const lines = [
     '=== ' + title.toUpperCase() + ' ===',
     'Format: Podcast · Gazdă: Tu · Invitat: ' + model,
-    'Generat cu LocalMind v117· ' + new Date().toLocaleDateString('ro-RO'),
+    'Generat cu LocalMind v117 · ' + new Date().toLocaleDateString('ro-RO'),
     '',
     '[INTRO MUZICĂ]',
     '',
@@ -10788,7 +10847,7 @@ window.exportAsPodcast = function() {
   const a = document.createElement('a');
   a.href = url;
   a.download = title.slice(0,40).replace(/[^a-zA-Z0-9_-]/g,'_') + '_podcast.txt';
-  a.click(); URL.revokeObjectURL(url);
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ Script podcast exportat · ' + history.length + ' replici.', 'ok');
 };
 
@@ -11599,7 +11658,7 @@ window.suggestModel = function() {
 // ─── Message quality rating ───────────────────────────────────
 // Thumbs up/down per AI message. Stored in lm_ratings.
 // Exports with JSON/Markdown for fine-tuning datasets.
-const _ratings = JSON.parse(localStorage.getItem('lm_ratings')||'{}');
+const _ratings = _lsJSON('lm_ratings', {});
 function _saveRatings() { localStorage.setItem('lm_ratings', JSON.stringify(_ratings)); }
 window.rateMsg = function(btn, msgId, val) {
   const current = _ratings[msgId];
@@ -11768,7 +11827,7 @@ window.exportForPrint = function() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = title.slice(0,40).replace(/[^a-zA-Z0-9_-]/g,'_') + '_print.html';
-  a.click(); URL.revokeObjectURL(url);
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ Export print-ready descărcat · Deschide în browser și printează (Ctrl+P).', 'ok');
 };
 
@@ -11983,7 +12042,7 @@ window.exportAsJSONL = function() {
   a.href = url;
   const title = document.title.replace(' — LocalMind','').trim() || 'conv';
   a.download = title.slice(0,30).replace(/[^a-zA-Z0-9_-]/g,'_') + '_training.jsonl';
-  a.click(); URL.revokeObjectURL(url);
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ ' + pairs.length + ' perechi Q&A exportate ca JSONL pentru fine-tuning.', 'ok');
 };
 
@@ -12235,7 +12294,7 @@ if (_caEl) {
 // ─── Think tag visualization ──────────────────────────────────
 // Instead of stripping <think>...</think>, wraps them in a collapsible
 // UI block so users can inspect model reasoning.
-let _showThinkBlocks = JSON.parse(localStorage.getItem('lm_show_think')||'false');
+let _showThinkBlocks = _lsJSON('lm_show_think', false);
 window.toggleThinkMode = function() {
   _showThinkBlocks = !_showThinkBlocks;
   localStorage.setItem('lm_show_think', _showThinkBlocks);
@@ -12387,7 +12446,7 @@ window.exportAnalyticsCSV = function() {
   const a = document.createElement('a'); a.href=url;
   const title = document.title.replace(' — LocalMind','').trim()||'conv';
   a.download = title.slice(0,30).replace(/[^a-zA-Z0-9_-]/g,'_')+'_analytics.csv';
-  a.click(); URL.revokeObjectURL(url);
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ ' + history.length + ' mesaje exportate ca CSV analytics.','ok');
 };
 
@@ -12534,7 +12593,7 @@ window.setFormat = function(mode) {
     }
     sel.style.color = mode !== 'none' ? 'var(--ac2)' : '';
   }
-  setSt(mode === 'none' ? 'Format resetat.' : '✓ Format: ' + label, '');
+  setSt(mode === 'none' ? 'Format resetat.' : '✓ Format: ' + ((FORMAT_MODES[mode] || {}).label || mode), '');
 };
 function _getFormatInstr() { return FORMAT_MODES[_activeFormat]?.instr || ''; }
 
@@ -12930,7 +12989,7 @@ window.generateFlashcards = function() {
   const a2 = document.createElement('a');
   a2.href=url;
   a2.download = (document.title.replace(' — LocalMind','').trim()||'conv').slice(0,30).replace(/[^a-zA-Z0-9_-]/g,'_')+'_flashcards.txt';
-  a2.click(); URL.revokeObjectURL(url);
+  a2.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('✓ '+pairs.length+' flashcard-uri Anki exportate.','ok');
 };
 
@@ -13339,7 +13398,7 @@ window.quickExportTxt = function() {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = (document.getElementById('conv-title')?.textContent?.trim()||'conversatie') + '.txt';
-  a.click(); URL.revokeObjectURL(a.href);
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 60000);
   setSt('📄 Exportat ca TXT.', 'ok');
 };
 
@@ -13424,7 +13483,7 @@ window.quickExportJSON = function() {
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = (conv.title).replace(/[^a-zA-Z0-9_-]/g,'_') + '.json';
-  a.click(); URL.revokeObjectURL(a.href);
+  a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 60000);
   setSt('📋 Exportat ca JSON.', 'ok');
 };
 
@@ -13591,7 +13650,7 @@ window.exportAllConvs = function() {
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url; a.download = 'LocalMind-export-' + Date.now() + '.json';
-  a.click(); URL.revokeObjectURL(url);
+  a.click(); setTimeout(() => URL.revokeObjectURL(url), 60000);
   setSt('📦 Export complet: ' + list.length + ' conversații.', 'ok');
 };
 
@@ -13623,7 +13682,7 @@ window._showPinned = function() {
 // ─── Prompt history — cycle sent prompts with Alt+↑/↓ in textarea ─
 // Inspired by bash history (Ctrl+P/N) and VS Code input history.
 // Stores the last 50 prompts; Alt+↑ cycles backward, Alt+↓ forward.
-const _PH = { hist: JSON.parse(localStorage.getItem('lm_ph')||'[]'), idx: -1, draft: '' };
+const _PH = { hist: _lsJSON('lm_ph', []), idx: -1, draft: '' };
 window._phPush = function(txt) {
   if (!txt || !txt.trim() || _PH.hist[0] === txt) return;
   _PH.hist.unshift(txt.trim());
@@ -13669,7 +13728,7 @@ window.clearSilent = function() {
 // ─── Message emoji reactions ─────────────────────────────────────
 // Inspired by Slack/Discord reactions + open-webui message feedback.
 // Reactions stored per-message in localStorage as {msgId: {emoji: count}}.
-const _REACTIONS = JSON.parse(localStorage.getItem('lm_reactions')||'{}');
+const _REACTIONS = _lsJSON('lm_reactions', {});
 window._msgReaction = function(msgId, emoji) {
   if (!_REACTIONS[msgId]) _REACTIONS[msgId] = {};
   const cur = _REACTIONS[msgId][emoji] || 0;
