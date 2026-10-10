@@ -43,13 +43,25 @@ LocalMind (v117 în titlul paginii) este o interfață de chat cu modele de limb
   - transformers.js și pdf.js sunt incluse local în folderul `vendor/` din repository.
 - Aplicația afirmă „zero cereri de rețea în inferență”: după ce modelul este încărcat, generarea rulează local.
 
+## Avertisment
+
+Răspunsurile modelelor mici pot fi greșite, incomplete sau inventate („halucinații"); verificați-le. Aplicația nu oferă sfaturi medicale, juridice sau financiare. Insignele „ZERO TELEMETRY" / „NO ACCOUNT" se referă la faptul că aplicația nu trimite conversațiile sau date de utilizare către un server al autorului; pagina contactează totuși huggingface.co (descărcare modele, căutare) și cdn.jsdelivr.net (KaTeX, Mermaid, Pyodide), după cum este descris mai sus.
+
+## Componente terțe
+
+Folderul `vendor/` conține copii ale unor biblioteci cu licențe proprii, diferite de CC0: pdf.js (Mozilla, Apache-2.0 — notificarea este în antetul fișierului), transformers.js 4.2.0 (Hugging Face, Apache-2.0 conform proiectului upstream; fișierul minificat nu conține notificarea) și `qrcode.min.js` (qrcodejs, MIT conform proiectului upstream; folosit la generarea de coduri QR). Declarația CC0 se aplică codului autorului, nu componentelor terțe. Modelele descărcate de la Hugging Face au licențele lor (de ex. Qwen3 sub Apache-2.0, LFM2 sub licența Liquid AI).
+
 ## Rulare locală / offline
 
-Descarcă întregul director (nu doar `index.html`, deoarece scripturile transformers.js și pdf.js sunt în `vendor/`) și servește-l cu un server web local sau deschide `index.html`; unele funcții (module, service worker) funcționează mai bine prin `http://localhost`. Pentru prima utilizare a fiecărui model este nevoie de internet; după aceea modelul este în cache. KaTeX, Mermaid și Pyodide au nevoie de internet la prima folosire.
+Descarcă întregul director (nu doar `index.html`, deoarece scripturile transformers.js și pdf.js sunt în `vendor/`) și servește-l cu un server web local (de ex. `python3 -m http.server 8080`, apoi `http://localhost:8080/`). **Deschiderea directă a `index.html` din sistemul de fișiere (`file://`) nu funcționează în Chrome/Chromium:** importurile de module din `vendor/` sunt blocate de politica CORS și aplicația rămâne la „detectare…" (verificat 2026-10-10). Firefox și Safari pot avea restricții similare. Pentru prima utilizare a fiecărui model este nevoie de internet; după aceea modelul este în cache. KaTeX, Mermaid și Pyodide au nevoie de internet la prima folosire.
 
 ## Licență
 
 CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
+
+## Audit
+
+2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Autor
 
