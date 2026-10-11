@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--
   ╔══════════════════════════════════════════════════════════════╗
-  ║              L O C A L M I N D  v117                         ║
+  ║              L O C A L M I N D  v118                         ║
   ║        AI în browser — un singur fișier HTML                ║
   ╠══════════════════════════════════════════════════════════════╣
   ║  FILOSOFIE TRADE-FREE · LICENȚĂ CC0 1.0                     ║
@@ -50,7 +50,7 @@
 </style>
   <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>LocalMind v117 — AI în browser</title>
+<title>LocalMind v118 — AI în browser</title>
 <meta name="theme-color" content="#007848">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -80,7 +80,7 @@ body{background:var(--bg);color:var(--tx);font-family:var(--fm);font-size:14px;l
 #hdr{height:var(--hh);min-height:var(--hh);background:var(--bg2);border-bottom:1px solid var(--bd);display:flex;align-items:center;padding:0 16px;gap:10px;z-index:20}
 #logo{display:flex;align-items:center;gap:9px;text-decoration:none;margin-right:4px}
 #lic{width:28px;height:28px;background:linear-gradient(135deg,var(--ac),var(--bl));border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:var(--fc);font-size:12px;font-weight:600;color:#fff;flex-shrink:0}
-#ltx{font-family:var(--fd);font-size:17px;font-weight:700;color:var(--tx)}
+#ltx{margin:0;display:inline;font-family:var(--fd);font-size:17px;font-weight:700;color:var(--tx)}
 #ltx b{color:var(--ac);font-weight:800}
 .hsp{flex:1}
 .bdg{display:flex;align-items:center;padding:3px 8px;border-radius:20px;font-size:10px;font-weight:600;letter-spacing:.3px;font-family:var(--fc);white-space:nowrap}
@@ -149,7 +149,7 @@ input[type=range]{flex:1.3;height:3px;accent-color:var(--ac);cursor:pointer}
 #ppct{font-family:var(--fc);font-size:12px;font-weight:600;color:var(--ac)}
 
 /* WELCOME */
-#wlc{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:13px;padding:28px;text-align:center}
+#wlc{flex:1;min-height:0;overflow-y:auto;display:flex;flex-direction:column;align-items:center;justify-content:safe center;gap:13px;padding:28px;text-align:center}
 .wi{width:58px;height:58px;background:linear-gradient(135deg,rgba(54,212,168,.17),rgba(90,156,248,.17));border:1px solid var(--bd2);border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:25px}
 .wt{font-family:var(--fd);font-size:20px;font-weight:800;color:var(--tx)}
 .ws{font-size:13.5px;color:var(--tx2);max-width:350px;line-height:1.7}
@@ -836,12 +836,13 @@ body.dyslexia p,body.dyslexia li{max-width:65ch}
   #stb{
     padding:0 0 max(0px,env(safe-area-inset-bottom));
     height:auto;min-height:var(--sh);
-    flex-direction:column;
-    align-items:stretch;
+    flex-direction:row;flex-wrap:wrap;
+    align-items:center;gap:0;
     overflow:visible;
   }
-  /* Top row: status message only */
+  /* Top row: status message only; butoanele directe (context, memorie, compact) stau pe un singur rând */
   #stb>#smsg{
+    flex:1 1 100%;order:-1;
     padding:4px 10px;font-size:10px;
     border-bottom:1px solid var(--bd);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
@@ -857,7 +858,8 @@ body.dyslexia p,body.dyslexia li{max-width:65ch}
     /* hide scrollbar visually but keep scroll */
     scrollbar-width:none;
     -ms-overflow-style:none;
-    flex-shrink:0;
+    flex:1 1 100%;
+    min-width:0;
   }
   .sr2::-webkit-scrollbar{display:none}
   /* Compact touch targets */
@@ -931,7 +933,7 @@ body { font-size: var(--fs, 14px); }
 .ob-step-desc{font-size:11px;color:var(--tx2);line-height:1.55}
 .ob-start{width:100%;padding:12px;background:var(--ac);color:#000;border:none;border-radius:8px;
   font-family:var(--fc);font-size:14px;font-weight:700;cursor:pointer;
-  -webkit-appearance:none;appearance:none}0;cursor:pointer;-webkit-appearance:none;appearance:none}
+  -webkit-appearance:none;appearance:none}
 .ob-start:hover{background:var(--ac2);color:#fff}
 .ob-start:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
 .ob-skip{display:block;text-align:center;margin-top:10px;font-size:11px;
@@ -1554,13 +1556,553 @@ body.reading-mode #stb:hover,body.reading-mode #ia:hover{opacity:1;pointer-event
 #params-body{display:none}
 #params-body.open{display:block}
 </style>
+<style id="lm-panels-css">
+/* Panouri (istoric, QR, statistici, flashcarduri, benchmark…): CSS mutat din șablonul exportAsHTML în care fusese inserat din greșeală. */
+/* ─── Conversation History ────────────────────────────────── */
+#conv-hist-panel{position:fixed;inset:0;z-index:912;background:rgba(2,3,6,.95);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:40px 20px;backdrop-filter:blur(6px)}
+#conv-hist-panel.open{display:flex}
+.ch-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
+  padding:20px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
+.ch-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
+  margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.ch-save-btn{-webkit-appearance:none;appearance:none;background:var(--ac);
+  border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);
+  font-size:10px;padding:4px 10px}
+.ch-item{display:flex;align-items:center;gap:8px;padding:8px 10px;
+  border-radius:6px;cursor:pointer;transition:background .12s;margin-bottom:4px;
+  border:1px solid var(--bd)}
+.ch-item:hover{background:var(--bg3)}
+.ch-item-title{flex:1;font-family:var(--fc);font-size:11px;color:var(--tx);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ch-item-meta{font-family:var(--fc);font-size:9px;color:var(--tx3);white-space:nowrap}
+.ch-del{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-size:12px;padding:0;flex-shrink:0}
+.ch-del:hover{color:var(--er)}
+.ch-empty{font-family:var(--fc);font-size:11px;color:var(--tx3);text-align:center;padding:20px}
+
+/* ─── Ghost text autocomplete ─────────────────────────────── */
+#ghost-text{position:absolute;pointer-events:none;color:var(--tx3);opacity:.45;
+  font-family:var(--fc);font-size:13px;white-space:pre-wrap;word-break:break-word;
+  line-height:1.6;padding:7px 10px;top:0;left:0;width:100%;box-sizing:border-box;
+  overflow:hidden;border:1px solid transparent}
+.ta-wrap{position:relative}
+
+/* ─── Accent color presets ────────────────────────────────── */
+.accent-sw{-webkit-appearance:none;appearance:none;width:14px;height:14px;
+  border-radius:50%;border:2px solid transparent;cursor:pointer;flex-shrink:0;
+  transition:border-color .12s}
+.accent-sw.active,.accent-sw:hover{border-color:var(--tx)}
+#accent-row{display:flex;align-items:center;gap:5px;padding:4px 0}
+
+/* ─── Stats dashboard overlay ─────────────────────────────── */
+#stats-dash{position:fixed;bottom:70px;right:14px;z-index:800;
+  background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;
+  padding:12px 14px;min-width:200px;display:none;
+  box-shadow:0 4px 24px rgba(0,0,0,.5)}
+#stats-dash.open{display:block}
+.sd-title{font-family:var(--fc);font-size:9px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
+.sd-row{display:flex;justify-content:space-between;align-items:center;
+  padding:2px 0;border-bottom:1px solid var(--bd)}
+.sd-row:last-child{border:none}
+.sd-label{font-family:var(--fc);font-size:10px;color:var(--tx2)}
+.sd-val{font-family:var(--fc);font-size:10px;color:var(--tx);font-weight:600}
+
+/* ─── Search highlight ────────────────────────────────────── */
+mark.search-hl{background:var(--gold);color:#000;border-radius:2px;padding:0 1px}
+
+/* ─── QR Share ────────────────────────────────────────────── */
+#qr-modal{position:fixed;inset:0;z-index:920;background:rgba(2,3,6,.95);
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+#qr-modal.open{display:flex}
+.qr-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
+  padding:24px 28px;max-width:360px;width:90%;text-align:center}
+.qr-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);margin-bottom:6px}
+.qr-sub{font-family:var(--fc);font-size:10px;color:var(--tx3);margin-bottom:14px}
+#qr-canvas{border-radius:8px;margin:0 auto 12px;display:block}
+.qr-close{-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);
+  border-radius:6px;color:var(--tx3);cursor:pointer;font-family:var(--fc);
+  font-size:10px;padding:5px 14px;margin-top:4px}
+.qr-close:hover{border-color:var(--ac);color:var(--ac)}
+
+/* ─── Reading Mode ────────────────────────────────────────── */
+body.read-mode #hdr,body.read-mode #sidebar,body.read-mode #stb,
+body.read-mode #sb-overlay,body.read-mode .tbtn,body.read-mode .tbtn-sep,
+body.read-mode #pinned-bar,body.read-mode #android-notice,
+body.read-mode #focus-stat,body.read-mode #char-count,
+body.read-mode #offline-badge,body.read-mode #ctx-bar-wrap
+{ display:none !important; }
+body.read-mode #ir{display:none !important}
+body.read-mode #ca{max-width:680px;margin:0 auto;padding:20px 24px;
+  font-size:15px;line-height:1.85}
+body.read-mode .msg{max-width:100%}
+/* Exit button */
+#read-exit{display:none;position:fixed;top:14px;right:14px;z-index:800;
+  -webkit-appearance:none;appearance:none;background:var(--bg2);
+  border:1px solid var(--bd2);border-radius:100px;color:var(--tx3);
+  cursor:pointer;font-family:var(--fc);font-size:10px;padding:4px 12px;
+  backdrop-filter:blur(6px)}
+body.read-mode #read-exit{display:block}
+body.read-mode #read-exit:hover{border-color:var(--ac);color:var(--ac)}
+
+/* ─── Model download progress ─────────────────────────────── */
+#dl-progress{display:none;align-items:center;gap:6px;padding:0 8px;flex-shrink:0}
+#dl-progress.active{display:flex}
+#dl-bar{width:80px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
+#dl-fill{height:100%;background:var(--bl);border-radius:2px;transition:width .2s;width:0%}
+#dl-pct{font-family:var(--fc);font-size:8px;color:var(--tx3);white-space:nowrap}
+
+/* ─── Token speed indicator ───────────────────────────────── */
+#tps-badge{display:none;align-items:center;font-family:var(--fc);font-size:8px;
+  color:var(--ac2);padding:0 6px;white-space:nowrap;gap:2px}
+#tps-badge.active{display:flex}
+
+/* ─── Response length selector ────────────────────────────── */
+#len-row{display:flex;gap:3px;align-items:center;flex-shrink:0}
+.len-btn{-webkit-appearance:none;appearance:none;background:none;
+  border:1px solid var(--bd2);border-radius:100px;color:var(--tx3);
+  cursor:pointer;font-family:var(--fc);font-size:8px;padding:1px 7px;
+  transition:border-color .12s,color .12s}
+.len-btn:hover{border-color:var(--ac2);color:var(--tx)}
+.len-btn.on{border-color:var(--ac2);color:var(--ac2)}
+.len-btn:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+
+/* ─── Font family selector ────────────────────────────────── */
+.font-sw{-webkit-appearance:none;appearance:none;width:22px;height:22px;
+  border-radius:4px;border:1px solid var(--bd2);cursor:pointer;
+  background:var(--bg3);color:var(--tx2);font-size:11px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  transition:border-color .12s}
+.font-sw.active,.font-sw:hover{border-color:var(--ac2);color:var(--ac2)}
+.font-sw:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+#font-row{display:flex;align-items:center;gap:4px;padding:4px 0}
+
+/* ─── Personas ────────────────────────────────────────────── */
+#persona-row{display:flex;flex-wrap:wrap;gap:4px;padding:4px 0}
+.prs-persona{-webkit-appearance:none;appearance:none;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:100px;color:var(--tx2);
+  cursor:pointer;font-family:var(--fc);font-size:9px;padding:2px 9px;
+  display:flex;align-items:center;gap:4px;transition:border-color .12s}
+.prs-persona:hover{border-color:var(--ac2);color:var(--tx)}
+.prs-persona.active{border-color:var(--ac);color:var(--ac)}
+.prs-persona-del{color:var(--tx3);font-size:10px;line-height:1;border:none;
+  background:none;cursor:pointer;padding:0}
+.prs-persona-del:hover{color:var(--er)}
+#save-persona-btn{-webkit-appearance:none;appearance:none;background:none;
+  border:1px solid var(--bd2);border-radius:100px;color:var(--tx3);
+  cursor:pointer;font-family:var(--fc);font-size:9px;padding:2px 8px}
+#save-persona-btn:hover{border-color:var(--ac2);color:var(--ac2)}
+
+/* ─── URL preview cards in messages ──────────────────────────── */
+.url-card{display:inline-flex;align-items:center;gap:5px;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:5px;padding:2px 7px;
+  font-family:var(--fc);font-size:10px;color:var(--tx2);text-decoration:none;
+  margin:1px 2px;transition:border-color .12s}
+.url-card:hover{border-color:var(--ac2);color:var(--tx)}
+.url-card-favicon{width:12px;height:12px;flex-shrink:0}
+
+/* ─── Editable conversation title ────────────────────────────── */
+#conv-title{font-family:var(--fc);font-size:10px;color:var(--tx3);
+  max-width:180px;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;cursor:pointer;padding:1px 4px;border-radius:3px;
+  transition:background .12s;flex-shrink:1;min-width:0}
+#conv-title:hover{background:var(--bg3);color:var(--tx)}
+#conv-title:focus-visible{outline:2px solid var(--ac)}
+#conv-title-edit{display:none;font-family:var(--fc);font-size:10px;color:var(--tx);
+  background:var(--bg3);border:1px solid var(--ac2);border-radius:3px;
+  padding:1px 4px;width:160px;flex-shrink:1}
+
+/* ─── PWA install prompt ──────────────────────────────────── */
+#pwa-banner{display:none;position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+  z-index:900;background:var(--bg2);border:1px solid var(--bd2);border-radius:100px;
+  padding:8px 16px;font-family:var(--fc);font-size:11px;color:var(--tx);
+  align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.5)}
+#pwa-banner.show{display:flex}
+#pwa-install-btn{-webkit-appearance:none;appearance:none;background:var(--ac);
+  border:none;border-radius:100px;color:#000;cursor:pointer;
+  font-family:var(--fc);font-size:10px;padding:4px 12px;white-space:nowrap}
+#pwa-dismiss{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-size:14px;padding:0;flex-shrink:0}
+
+/* ─── Diff view ───────────────────────────────────────────── */
+.diff-btn{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-size:9px;padding:1px 4px;border-radius:3px;
+  opacity:0;transition:opacity .15s;font-family:var(--fc)}
+.msg:hover .diff-btn,.diff-btn:focus-visible{opacity:1}
+.diff-panel{margin-top:6px;padding:8px 10px;background:var(--bg3);
+  border-radius:6px;border:1px solid var(--bd);display:none}
+.diff-panel.open{display:block}
+.diff-del{background:rgba(160,0,24,.18);color:#ff6680;text-decoration:line-through;
+  border-radius:2px;padding:0 1px}
+.diff-add{background:rgba(0,120,72,.18);color:var(--ac);border-radius:2px;padding:0 1px}
+.diff-title{font-family:var(--fc);font-size:8px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:5px}
+
+/* ─── Message reactions ───────────────────────────────────── */
+.react-wrap{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.react-chip{-webkit-appearance:none;appearance:none;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:100px;cursor:pointer;
+  font-size:12px;padding:1px 6px;transition:background .12s;line-height:1.4}
+.react-chip:hover{background:var(--bg2);border-color:var(--bd2)}
+.react-chip.active{background:rgba(0,168,104,.1);border-color:var(--ac2)}
+.react-add{-webkit-appearance:none;appearance:none;background:none;
+  border:1px solid var(--bd);border-radius:100px;color:var(--tx3);
+  cursor:pointer;font-size:10px;padding:1px 7px;opacity:0;
+  transition:opacity .15s}
+.msg:hover .react-add,.react-add:focus-visible{opacity:1}
+
+/* ─── Follow-up suggestions ───────────────────────────────── */
+.followup-wrap{margin-top:6px;display:none}
+.followup-wrap.show{display:block}
+.followup-label{font-family:var(--fc);font-size:8px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--tx3);margin-bottom:4px}
+.followup-chips{display:flex;flex-wrap:wrap;gap:5px}
+.followup-chip{-webkit-appearance:none;appearance:none;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:6px;color:var(--tx2);
+  cursor:pointer;font-family:var(--fc);font-size:10px;padding:3px 9px;
+  text-align:left;line-height:1.4;transition:border-color .12s}
+.followup-chip:hover{border-color:var(--ac2);color:var(--tx)}
+.followup-chip:focus-visible{outline:2px solid var(--ac)}
+
+/* ─── Flashcard panel ─────────────────────────────────────── */
+#flash-panel{position:fixed;inset:0;z-index:915;background:rgba(2,3,6,.95);
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+#flash-panel.open{display:flex}
+.flash-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
+  padding:20px 24px;width:90%;max-width:520px;max-height:82vh;overflow-y:auto}
+.flash-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
+  margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+.flash-card{background:var(--bg3);border:1px solid var(--bd);border-radius:8px;
+  padding:10px 12px;margin-bottom:8px}
+.flash-q{font-family:var(--fc);font-size:11px;color:var(--tx3);margin-bottom:4px}
+.flash-a{font-family:var(--fc);font-size:12px;color:var(--tx);line-height:1.5}
+.flash-actions{display:flex;gap:8px;margin-top:14px}
+.flash-btn{-webkit-appearance:none;appearance:none;border-radius:6px;cursor:pointer;
+  font-family:var(--fc);font-size:10px;padding:5px 12px}
+.flash-btn-p{background:var(--ac);border:none;color:#000}
+.flash-btn-s{background:none;border:1px solid var(--bd2);color:var(--tx3)}
+.flash-btn-s:hover{border-color:var(--ac2);color:var(--ac2)}
+
+/* ─── Conversation analytics ──────────────────────────────── */
+#analytics-panel{position:fixed;bottom:60px;left:14px;z-index:800;
+  background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;
+  padding:14px 16px;min-width:240px;max-width:320px;display:none}
+#analytics-panel.open{display:block}
+.an-title{font-family:var(--fc);font-size:9px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--tx3);margin-bottom:10px;
+  display:flex;justify-content:space-between;align-items:center}
+.an-row{display:flex;justify-content:space-between;padding:3px 0;
+  border-bottom:1px solid var(--bd)}
+.an-row:last-of-type{border:none}
+.an-label{font-family:var(--fc);font-size:10px;color:var(--tx2)}
+.an-val{font-family:var(--fc);font-size:10px;color:var(--tx);font-weight:600}
+.an-topic-cloud{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
+.an-topic{background:var(--bg3);border:1px solid var(--bd);border-radius:100px;
+  font-family:var(--fc);font-size:9px;color:var(--tx2);padding:1px 7px}
+.sentiment-bar{height:3px;border-radius:2px;margin-top:6px;overflow:hidden;
+  background:var(--bg3);display:flex}
+.sent-neg{background:#a00018}
+.sent-neu{background:var(--bd2)}
+.sent-pos{background:var(--ac)}
+
+/* ─── Model warm-up status ────────────────────────────────── */
+#warmup-badge{display:none;align-items:center;gap:4px;font-family:var(--fc);
+  font-size:8px;color:var(--tx3);padding:0 6px;white-space:nowrap}
+#warmup-badge.active{display:flex;animation:pulse-wu .8s infinite alternate}
+@keyframes pulse-wu{from{opacity:.4}to{opacity:1}}
+#warmup-badge.done{animation:none;color:var(--ac2)}
+
+/* ─── Conversation replay ─────────────────────────────────── */
+#replay-bar{display:none;position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+  z-index:801;background:var(--bg2);border:1px solid var(--bd2);border-radius:100px;
+  padding:6px 16px;align-items:center;gap:10px;
+  box-shadow:0 4px 20px rgba(0,0,0,.5);font-family:var(--fc);font-size:10px}
+#replay-bar.active{display:flex}
+#replay-progress{font-size:9px;color:var(--tx3)}
+.replay-ctrl{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-size:14px;padding:0;transition:color .12s}
+.replay-ctrl:hover{color:var(--tx)}
+
+/* ─── Context Manager ─────────────────────────────────────── */
+#ctx-mgr-panel{position:fixed;inset:0;z-index:916;background:rgba(2,3,6,.95);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:40px 20px;backdrop-filter:blur(6px)}
+#ctx-mgr-panel.open{display:flex}
+.cmgr-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
+  padding:20px 24px;width:100%;max-width:540px;max-height:80vh;
+  display:flex;flex-direction:column}
+.cmgr-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
+  margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
+.cmgr-subtitle{font-family:var(--fc);font-size:10px;color:var(--tx3);margin-bottom:12px}
+.cmgr-list{flex:1;overflow-y:auto;margin-bottom:12px}
+.cmgr-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
+  border-bottom:1px solid var(--bd)}
+.cmgr-row:last-child{border:none}
+.cmgr-check{flex-shrink:0;margin-top:2px;accent-color:var(--ac);cursor:pointer}
+.cmgr-role{font-family:var(--fc);font-size:8px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--tx3);flex-shrink:0;width:28px;margin-top:2px}
+.cmgr-preview{font-family:var(--fc);font-size:11px;color:var(--tx2);
+  flex:1;line-height:1.4;cursor:default}
+.cmgr-tok{font-family:var(--fc);font-size:9px;color:var(--tx3);
+  flex-shrink:0;text-align:right;white-space:nowrap}
+.cmgr-footer{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.cmgr-total{font-family:var(--fc);font-size:10px;color:var(--tx3)}
+.cmgr-total strong{color:var(--tx)}
+
+/* ─── Word Cloud ──────────────────────────────────────────── */
+#wcloud-modal{position:fixed;inset:0;z-index:917;background:rgba(2,3,6,.95);
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+#wcloud-modal.open{display:flex}
+.wc-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
+  padding:20px 24px;width:90%;max-width:600px}
+.wc-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
+  margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
+#wcloud-canvas{width:100%;height:260px;border-radius:8px;background:var(--bg3);
+  display:block;cursor:default}
+.wc-legend{font-family:var(--fc);font-size:9px;color:var(--tx3);
+  margin-top:6px;text-align:center}
+
+/* ─── Per-message token badge ─────────────────────────────── */
+.tok-badge{font-family:var(--fc);font-size:8px;color:var(--tx3);
+  padding:0 3px;flex-shrink:0;align-self:flex-end;margin-bottom:2px;
+  opacity:0;transition:opacity .15s}
+.msg:hover .tok-badge{opacity:1}
+
+/* ─── TTS voice settings ──────────────────────────────────── */
+#tts-settings{display:none;position:fixed;bottom:70px;right:60px;z-index:800;
+  background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;
+  padding:10px 14px;font-family:var(--fc);font-size:10px}
+#tts-settings.open{display:block}
+.tts-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.tts-row:last-child{margin:0}
+.tts-label{color:var(--tx3);width:50px;flex-shrink:0}
+.tts-ctrl{-webkit-appearance:none;appearance:none;background:var(--bg3);
+  border:1px solid var(--bd);border-radius:4px;color:var(--tx);
+  font-family:var(--fc);font-size:9px;padding:2px 5px;flex:1}
+
+/* ─── Collapsible long responses ─────────────────────────── */
+.tx-overflow { display:none }
+.collapse-toggle{-webkit-appearance:none;appearance:none;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:100px;color:var(--tx3);
+  cursor:pointer;font-family:var(--fc);font-size:9px;padding:2px 10px;
+  margin-top:6px;display:block;transition:border-color .12s}
+.collapse-toggle:hover{border-color:var(--ac2);color:var(--ac2)}
+.collapse-toggle:focus-visible{outline:2px solid var(--ac)}
+
+/* ─── Benchmark panel ─────────────────────────────────────── */
+#bench-panel{position:fixed;bottom:70px;right:14px;z-index:800;
+  background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;
+  padding:12px 16px;min-width:220px;display:none}
+#bench-panel.open{display:block}
+.bench-title{font-family:var(--fc);font-size:9px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--tx3);margin-bottom:8px;
+  display:flex;justify-content:space-between}
+.bench-row{display:flex;justify-content:space-between;padding:3px 0;
+  border-bottom:1px solid var(--bd);font-family:var(--fc);font-size:10px}
+.bench-row:last-of-type{border:none}
+.bench-model{color:var(--tx2);max-width:130px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.bench-tps{color:var(--tx);font-weight:600}
+#bench-run-btn{-webkit-appearance:none;appearance:none;background:var(--ac);
+  border:none;border-radius:6px;color:#000;cursor:pointer;
+  font-family:var(--fc);font-size:9px;padding:3px 10px;margin-top:8px;
+  display:block;width:100%}
+#bench-run-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* ─── Conversation compare ────────────────────────────────── */
+#conv-cmp-panel{position:fixed;inset:0;z-index:918;background:rgba(2,3,6,.96);
+  display:none;flex-direction:column;overflow:hidden}
+#conv-cmp-panel.open{display:flex}
+.cmp-header{display:flex;align-items:center;gap:10px;padding:10px 16px;
+  border-bottom:1px solid var(--bd);flex-shrink:0;background:var(--bg2)}
+.cmp-title{font-family:var(--fc);font-size:12px;font-weight:700;color:var(--tx);flex:1}
+.cmp-body{display:flex;flex:1;overflow:hidden}
+.cmp-col{flex:1;overflow-y:auto;padding:12px 16px;border-right:1px solid var(--bd)}
+.cmp-col:last-child{border:none}
+.cmp-col-title{font-family:var(--fc);font-size:9px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
+.cmp-msg{padding:6px 8px;border-radius:6px;margin-bottom:6px;
+  font-family:var(--fc);font-size:11px;line-height:1.5}
+.cmp-user{background:rgba(0,168,104,.08);color:var(--tx2)}
+.cmp-ai{background:var(--bg3);color:var(--tx)}
+.cmp-role{font-size:8px;letter-spacing:1px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:2px}
+.cmp-sel{-webkit-appearance:none;appearance:none;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:5px;color:var(--tx);
+  font-family:var(--fc);font-size:10px;padding:3px 7px}
+
+/* ─── Uncertainty / hedging highlights ────────────────────── */
+.hedge-mark{background:rgba(255,165,0,.12);border-radius:2px;
+  cursor:help;border-bottom:1px dotted var(--am,#f5a623)}
+.confidence-badge{font-family:var(--fc);font-size:8px;
+  padding:1px 6px;border-radius:100px;margin-left:4px;
+  display:inline-block;vertical-align:middle;flex-shrink:0}
+.conf-high{background:rgba(0,168,104,.15);color:var(--ac)}
+.conf-med{background:rgba(245,166,35,.15);color:var(--am,#e8a020)}
+.conf-low{background:rgba(200,0,24,.15);color:var(--er)}
+
+/* ─── Expanders panel ──────────────────────────────────────── */
+#expanders-panel{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);
+  z-index:800;background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;
+  padding:12px 16px;min-width:280px;display:none;max-height:300px;overflow-y:auto;
+  box-shadow:0 4px 24px rgba(0,0,0,.5)}
+#expanders-panel.open{display:block}
+.exp-title{font-family:var(--fc);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--tx3);margin-bottom:8px;display:flex;justify-content:space-between}
+.exp-row{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--bd)}
+.exp-row:last-child{border:none}
+.exp-abbr{font-family:monospace;font-size:11px;color:var(--ac2);min-width:50px;font-weight:700}
+.exp-text{font-family:var(--fc);font-size:10px;color:var(--tx2);flex:1;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exp-del-btn{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-size:12px;flex-shrink:0}
+.exp-del-btn:hover{color:var(--er)}
+.exp-add-row{display:flex;gap:5px;margin-top:8px}
+.exp-input{-webkit-appearance:none;appearance:none;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:5px;color:var(--tx);
+  font-family:var(--fc);font-size:10px;padding:3px 7px}
+
+/* ─── Conversation timeline ───────────────────────────────── */
+#timeline-wrap{display:none;align-items:center;gap:8px;padding:4px 10px;
+  background:var(--bg2);border-top:1px solid var(--bd);flex-shrink:0}
+#timeline-wrap.show{display:flex}
+#timeline-slider{-webkit-appearance:none;appearance:none;flex:1;height:3px;
+  border-radius:2px;background:var(--bd2);cursor:pointer;accent-color:var(--ac)}
+#timeline-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+  width:14px;height:14px;border-radius:50%;background:var(--ac);cursor:pointer}
+#timeline-label{font-family:var(--fc);font-size:9px;color:var(--tx3);
+  white-space:nowrap;flex-shrink:0}
+.timeline-btn{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-size:11px;padding:0;flex-shrink:0}
+.timeline-btn:hover{color:var(--ac)}
+
+/* ─── Ambient / presentation mode ────────────────────────────── */
+body.ambient-mode #hdr,body.ambient-mode #sidebar,body.ambient-mode #stb,
+body.ambient-mode #sb-overlay,body.ambient-mode #ir,body.ambient-mode #android-notice,
+body.ambient-mode #focus-stat,body.ambient-mode #char-count,
+body.ambient-mode #offline-badge,body.ambient-mode #ctx-bar-wrap,
+body.ambient-mode #timeline-wrap,body.ambient-mode .tbtn,body.ambient-mode .tbtn-sep,
+body.ambient-mode #pinned-bar,body.ambient-mode .msg-meta,body.ambient-mode .msg-acts
+{ display:none !important; }
+body.ambient-mode{background:#000}
+body.ambient-mode #ca{max-width:900px;margin:0 auto;padding:40px 48px;
+  font-size:22px;line-height:2;background:#000}
+body.ambient-mode .msg .tx{font-size:22px;line-height:2}
+body.ambient-mode .msg.user-msg{opacity:.55}
+body.ambient-mode .msg.ai-msg{opacity:1;color:#fff}
+#ambient-exit{display:none;position:fixed;bottom:20px;right:20px;z-index:900;
+  -webkit-appearance:none;appearance:none;background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.2);border-radius:100px;
+  color:rgba(255,255,255,.5);cursor:pointer;font-family:var(--fc);
+  font-size:10px;padding:6px 16px;transition:opacity .3s;opacity:0}
+body.ambient-mode #ambient-exit{display:block;opacity:1}
+body.ambient-mode:hover #ambient-exit{opacity:1}
+#ambient-exit:hover{background:rgba(255,255,255,.15);color:#fff}
+
+/* ─── Global search panel ─────────────────────────────────── */
+#glob-search-panel{position:fixed;inset:0;z-index:919;background:rgba(2,3,6,.96);
+  display:none;align-items:flex-start;justify-content:center;
+  padding:60px 20px;backdrop-filter:blur(8px)}
+#glob-search-panel.open{display:flex}
+.gsrch-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
+  padding:20px 24px;width:100%;max-width:560px;max-height:75vh;display:flex;flex-direction:column}
+.gsrch-input-row{display:flex;gap:8px;margin-bottom:12px}
+.gsrch-inp{-webkit-appearance:none;appearance:none;flex:1;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:7px;color:var(--tx);
+  font-family:var(--fc);font-size:12px;padding:8px 12px}
+.gsrch-inp:focus{border-color:var(--ac);outline:none}
+.gsrch-result{padding:8px 10px;border-radius:6px;cursor:pointer;margin-bottom:5px;
+  border:1px solid var(--bd);transition:background .12s}
+.gsrch-result:hover{background:var(--bg3);border-color:var(--bd2)}
+.gsrch-conv-title{font-family:var(--fc);font-size:10px;font-weight:700;color:var(--ac2);margin-bottom:2px}
+.gsrch-snippet{font-family:var(--fc);font-size:11px;color:var(--tx2);line-height:1.4}
+.gsrch-match{background:rgba(0,168,104,.2);border-radius:2px;color:var(--ac)}
+.gsrch-empty{font-family:var(--fc);font-size:11px;color:var(--tx3);text-align:center;padding:20px}
+#gsrch-results{overflow-y:auto;flex:1}
+
+/* ─── Summary card ────────────────────────────────────────── */
+.summary-card{background:linear-gradient(135deg,var(--bg2),var(--bg3));
+  border:1px solid var(--ac2);border-radius:10px;margin:8px 0;
+  padding:14px 16px;animation:fadeIn .3s ease}
+.summary-card-title{font-family:var(--fc);font-size:10px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--ac2);margin-bottom:8px;
+  display:flex;justify-content:space-between;align-items:center}
+.summary-card-body{font-family:var(--fc);font-size:12px;color:var(--tx);
+  line-height:1.65}
+.summary-card-actions{display:flex;justify-content:flex-end;gap:6px;margin-top:8px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* ─── Multi-format copy menu ──────────────────────────────── */
+.copy-menu{position:absolute;z-index:600;background:var(--bg2);
+  border:1px solid var(--bd2);border-radius:7px;padding:4px;
+  box-shadow:0 4px 20px rgba(0,0,0,.5);display:none;min-width:130px}
+.copy-menu.open{display:block}
+.copy-menu-item{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx2);cursor:pointer;font-family:var(--fc);font-size:10px;
+  padding:5px 10px;border-radius:4px;display:block;width:100%;text-align:left;
+  transition:background .1s}
+.copy-menu-item:hover{background:var(--bg3);color:var(--tx)}
+
+/* ─── Conversation merge modal ───────────────────────────── */
+#merge-modal{position:fixed;inset:0;z-index:920;background:rgba(2,3,6,.95);
+  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+#merge-modal.open{display:flex}
+.merge-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
+  padding:22px 26px;width:90%;max-width:480px}
+.merge-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
+  margin-bottom:6px}
+.merge-sub{font-family:var(--fc);font-size:10px;color:var(--tx3);margin-bottom:14px}
+.merge-row{display:flex;gap:8px;margin-bottom:10px;align-items:center}
+.merge-label{font-family:var(--fc);font-size:10px;color:var(--tx3);width:60px;flex-shrink:0}
+.merge-sel{-webkit-appearance:none;appearance:none;flex:1;background:var(--bg3);
+  border:1px solid var(--bd2);border-radius:6px;color:var(--tx);
+  font-family:var(--fc);font-size:11px;padding:5px 9px}
+.merge-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+.merge-btn-p{-webkit-appearance:none;appearance:none;background:var(--ac);border:none;
+  border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:6px 16px}
+.merge-btn-s{-webkit-appearance:none;appearance:none;background:none;
+  border:1px solid var(--bd2);border-radius:6px;color:var(--tx3);cursor:pointer;
+  font-family:var(--fc);font-size:10px;padding:6px 14px}
+.merge-btn-s:hover{border-color:var(--ac2);color:var(--ac2)}
+
+/* ─── Message quality rating ──────────────────────────────── */
+.rate-btn{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-size:13px;padding:0 2px;
+  opacity:0;transition:opacity .15s,transform .1s}
+.msg:hover .rate-btn,.rate-btn.active{opacity:1}
+.rate-btn.active.pos{color:var(--ac)}
+.rate-btn.active.neg{color:var(--er)}
+.rate-btn:hover{transform:scale(1.2)}
+
+/* ─── Advanced generation params ─────────────────────────── */
+.param-row{display:flex;align-items:center;gap:6px;padding:2px 0}
+.param-lbl{font-family:var(--fc);font-size:9px;color:var(--tx3);width:80px;flex-shrink:0}
+.param-slider{-webkit-appearance:none;appearance:none;flex:1;height:2px;
+  border-radius:1px;background:var(--bd2);cursor:pointer;accent-color:var(--ac)}
+.param-val{font-family:var(--fc);font-size:9px;color:var(--tx3);
+  width:28px;text-align:right;flex-shrink:0}
+#params-section{margin-top:8px}
+#params-toggle{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:9px;padding:0;
+  display:flex;align-items:center;gap:4px;margin-bottom:5px}
+#params-toggle:hover{color:var(--tx)}
+#params-body{display:none}
+#params-body.open{display:block}
+
+/* ─── WPM typing indicator ─────────────────────────────────── */
+#wpm-badge{display:none;font-family:var(--fc);font-size:8px;
+  color:var(--tx3);padding:0 4px;flex-shrink:0;white-space:nowrap}
+#wpm-badge.active{display:inline}
+</style>
 </head>
 <body>
 
-<div id="hdr">
+<header id="hdr">
   <a id="logo" href="https://chiuta.github.io" target="_blank" rel="noopener noreferrer">
     <div id="lic">LM</div>
-    <span id="ltx">Local<b>Mind</b></span>
+    <h1 id="ltx">Local<b>Mind</b></h1>
   </a>
   <div class="bdg bg" title="Aplicația nu trimite conversațiile sau date de utilizare către niciun server al autorului. Notă: modelele se descarcă de la huggingface.co, iar KaTeX/Mermaid/Pyodide de la cdn.jsdelivr.net, doar când sunt necesare.">⬡ FĂRĂ TELEMETRIE</div>
   <div class="bdg bg">⬡ FĂRĂ CONT</div>
@@ -1653,7 +2195,7 @@ body.reading-mode #stb:hover,body.reading-mode #ia:hover{opacity:1;pointer-event
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">📖</button>
-</div>
+</header>
 
 <button type="button" id="focus-exit" onclick="toggleFocus()">✕ Ieși din focus</button>
 
@@ -1703,7 +2245,7 @@ body.reading-mode #stb:hover,body.reading-mode #ia:hover{opacity:1;pointer-event
       </div>
       <button type="button" id="lbtn" onclick="doLoad()" aria-label="Load selected model">⬇ Încarcă Modelul</button>
       <div class="custom-mdl-row">
-        <input type="text" id="custom-mdl-id" placeholder="onnx-community/Model-ONNX" autocomplete="off" spellcheck="false"
+        <input type="text" id="custom-mdl-id" aria-label="ID model Hugging Face" placeholder="onnx-community/Model-ONNX" autocomplete="off" spellcheck="false"
           onkeydown="if(event.key==='Enter')addCustomModel()"
           title="ID exact de model de pe HuggingFace Hub">
         <button type="button" id="mdl-search-btn" onclick="openModelSearch()" title="Caută modele ONNX pe HuggingFace Hub">🔍</button>
@@ -2068,7 +2610,7 @@ ONESTITATE — REGULA #1:
         <button type="button" id="voice-btn" onclick="toggleVoiceInput()"
     title="Dictare voce (Web Speech API)"
     aria-label="Dictare vocală" style="margin-right:4px">🎤</button>
-<button type="button" id="snd"" onclick="doSend()" disabled title="Send (Enter / Ctrl+Enter)" aria-label="Send message">➤</button>
+<button type="button" id="snd" onclick="doSend()" disabled title="Send (Enter / Ctrl+Enter)" aria-label="Send message">➤</button>
         <button type="button" id="stp" onclick="doStop()" title="Stop" aria-label="Stop generation">■</button>
       </div>
       <div class="ih">
@@ -2139,7 +2681,7 @@ ONESTITATE — REGULA #1:
   <div id="audit-list"><div class="audit-empty">✅ Zero cereri de rețea în inferență</div></div>
 </div>
 
-<div id="stb">
+<footer id="stb">
   <span id="warmup-badge" aria-live="polite" title="Preîncărcare model în fundal">⚙</span>
   <span id="tps-badge" aria-live="off" title="Viteza generare (tokeni/secundă)">⚡ <span id="tps-val">0</span> t/s</span>
   <span id="live-wc" aria-live="polite" title="Cuvinte în prompt"></span>
@@ -2244,7 +2786,7 @@ ONESTITATE — REGULA #1:
     <button type="button" class="tbtn"                   onclick="exportAsJSONL()"  title="Export JSONL pentru fine-tuning (perechi Q&A)">↓.jsonl</button>
     <button type="button" class="tbtn"                   onclick="toggleQRModal()"  title="Partajează conversația ca QR code" id="qr-btn">📲</button>
   </div>
-</div>
+</footer>
 
 <!-- ══ Mind Map + Conversation Diagram Modal ══ -->
 <div id="mindmap-modal" role="dialog" aria-label="Mind Map și Diagrama Conversației" aria-modal="true">
@@ -2331,6 +2873,278 @@ ONESTITATE — REGULA #1:
      avoids this entirely. Inference is async (ONNX uses
      internal workers), so the UI stays responsive between tokens.
      ═══════════════════════════════════════════════════════════ -->
+<!-- Panouri mutate din șablonul exportAsHTML (erau inerte); id-urile deja existente în DOM nu sunt duplicate -->
+
+<!-- Conversation History Panel -->
+<div id="conv-hist-panel" role="dialog" aria-modal="true" aria-label="Istoricul conversațiilor"
+  onclick="if(event.target===this)toggleConvHistory()">
+  <div class="ch-box">
+    <div class="ch-title">
+      <span>🗂 Conversații salvate</span>
+      <div style="display:flex;gap:6px;align-items:center">
+        <button type="button" class="ch-save-btn" onclick="saveCurrentConv()">💾 Salvează curentă</button>
+        <button type="button" class="ch-save-btn" onclick="openMergeModal()" style="background:var(--bg3);color:var(--tx3);border:1px solid var(--bd2)">🔀 Combină</button>
+        <button type="button" class="ch-save-btn" onclick="importConversation()" style="background:var(--bg3);color:var(--tx3);border:1px solid var(--bd2)">📥 Import</button>
+        <button type="button" onclick="toggleConvHistory()"
+          style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0">✕</button>
+      </div>
+    </div>
+    <input type="text" id="conv-filter"
+      placeholder="🔍 Filtrează conversații..."
+      oninput="if(typeof window.filterConvList==='function')window.filterConvList(this.value)"
+      aria-label="Filtrează conversații"
+      autocomplete="off" autocorrect="off" spellcheck="false">
+    <div id="ch-list"></div>
+  </div>
+</div>
+
+<!-- Stats Dashboard -->
+<div id="stats-dash" role="complementary" aria-label="Statistici sesiune">
+  <div class="sd-title">📊 Statistici sesiune</div>
+  <div class="stats-grid" id="stats-grid"></div>
+  <div class="sd-row"><span class="sd-label">Mesaje</span><span class="sd-val" id="sd-msgs">0</span></div>
+  <div class="sd-row"><span class="sd-label">Cuvinte AI</span><span class="sd-val" id="sd-words">0</span></div>
+  <div class="sd-row"><span class="sd-label">Timp sesiune</span><span class="sd-val" id="sd-time">0:00</span></div>
+  <div class="sd-row"><span class="sd-label">Tokeni context</span><span class="sd-val" id="sd-ctx">—</span></div>
+  <div class="sd-row"><span class="sd-label">Model</span><span class="sd-val" id="sd-model" style="font-size:8px;max-width:110px;overflow:hidden;text-overflow:ellipsis">—</span></div>
+  <div class="sd-row"><span class="sd-label">⭐ Marcate</span><span class="sd-val" id="sd-starred">0</span></div>
+</div>
+
+<!-- QR Share Modal -->
+<div id="qr-modal" role="dialog" aria-modal="true" aria-label="Partajare QR"
+  onclick="if(event.target===this)toggleQRModal()">
+  <div class="qr-box">
+    <div class="qr-title">📲 Partajează conversația</div>
+    <div class="qr-sub">Scanează cu alt dispozitiv (primele 10 mesaje, comprimat)</div>
+    <canvas id="qr-canvas" width="220" height="220"></canvas>
+    <div id="qr-size-info" style="font-family:var(--fc);font-size:9px;color:var(--tx3);margin-bottom:8px"></div>
+    <button type="button" class="qr-close" onclick="toggleQRModal()">Închide</button>
+  </div>
+</div>
+<button type="button" id="read-exit" onclick="toggleReadMode()" aria-label="Ieși din modul citire">✕ Ieși din citire</button>
+
+<!-- PWA install banner -->
+<div id="pwa-banner" role="complementary" aria-label="Instalare aplicație">
+  <span>📲 Instalează LocalMind ca aplicație</span>
+  <button type="button" id="pwa-install-btn" onclick="installPWA()">Instalează</button>
+  <button type="button" id="pwa-dismiss" onclick="dismissPWA()" aria-label="Închide">✕</button>
+</div>
+
+<!-- Flashcard Panel -->
+<div id="flash-panel" role="dialog" aria-modal="true" aria-label="Generator flashcarduri"
+  onclick="if(event.target===this)toggleFlashPanel()">
+  <div class="flash-box">
+    <div class="flash-title">
+      <span>🃏 Flashcarduri generate</span>
+      <button type="button" onclick="toggleFlashPanel()"
+        style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0">✕</button>
+    </div>
+    <div id="flash-list"></div>
+    <div class="flash-actions">
+      <button type="button" class="flash-btn flash-btn-p" onclick="exportFlashAnki()">↓ Export Anki (.csv)</button>
+      <button type="button" class="flash-btn flash-btn-s" onclick="exportFlashJSON()">↓ JSON</button>
+      <button type="button" class="flash-btn flash-btn-s" onclick="toggleFlashPanel()">Închide</button>
+    </div>
+  </div>
+</div>
+
+<!-- Analytics Panel -->
+<div id="analytics-panel" role="complementary" aria-label="Analize conversație">
+  <div class="an-title">
+    <span>📈 Analize</span>
+    <button type="button" onclick="toggleAnalytics()"
+      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
+  </div>
+  <div id="analytics-content"></div>
+</div>
+
+<!-- Context Manager Panel -->
+<div id="ctx-mgr-panel" role="dialog" aria-modal="true" aria-label="Manager context"
+  onclick="if(event.target===this)toggleCtxMgr()">
+  <div class="cmgr-box">
+    <div class="cmgr-title">
+      <span>🎛 Manager context</span>
+      <button type="button" onclick="toggleCtxMgr()"
+        style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
+    </div>
+    <div class="cmgr-subtitle">Selectează mesajele care rămân în contextul modelului · debifate = excluse</div>
+    <div id="cmgr-list" class="cmgr-list"></div>
+    <div class="cmgr-footer">
+      <span class="cmgr-total" id="cmgr-total"></span>
+      <div style="display:flex;gap:7px">
+        <button type="button" onclick="applyCtxMgr()" 
+          style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 14px">Aplică</button>
+        <button type="button" onclick="toggleCtxMgr()"
+          style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:6px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 14px">Anulează</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Word Cloud Modal -->
+<div id="wcloud-modal" role="dialog" aria-modal="true" aria-label="Nor de cuvinte"
+  onclick="if(event.target===this)toggleWordCloud()">
+  <div class="wc-box">
+    <div class="wc-title">
+      <span>☁ Nor de cuvinte</span>
+      <button type="button" onclick="toggleWordCloud()"
+        style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
+    </div>
+    <canvas id="wcloud-canvas" width="560" height="260" aria-label="Nor de cuvinte din conversație"></canvas>
+    <div class="wc-legend">Dimensiunea = frecvența · Culorile = frecvența relativă</div>
+  </div>
+</div>
+
+<!-- TTS Settings popup -->
+<div id="tts-settings" role="dialog" aria-label="Setări voce">
+  <div class="tts-row">
+    <span class="tts-label">Viteză</span>
+    <input type="range" min="0.5" max="2" step="0.1" value="1.05" id="tts-rate"
+      class="tts-ctrl" oninput="updateTTSSettings()" aria-label="Viteză voce">
+    <span id="tts-rate-val" style="font-family:var(--fc);font-size:9px;color:var(--tx3);width:25px">1.0×</span>
+  </div>
+  <div class="tts-row">
+    <span class="tts-label">Voce</span>
+    <select id="tts-voice" class="tts-ctrl" onchange="updateTTSSettings()" aria-label="Voce TTS" style="max-width:140px"></select>
+  </div>
+</div>
+
+<!-- Benchmark panel -->
+<div id="bench-panel" role="complementary" aria-label="Benchmark modele">
+  <div class="bench-title">
+    <span>⚡ Benchmark t/s</span>
+    <button type="button" onclick="toggleBenchPanel()"
+      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0" aria-label="Închide">✕</button>
+  </div>
+  <div id="bench-list"></div>
+  <button type="button" id="bench-run-btn" onclick="runBenchmark()">▶ Rulează benchmark</button>
+</div>
+
+<!-- Conversation Compare Panel -->
+<div id="conv-cmp-panel" role="dialog" aria-modal="true" aria-label="Compară conversații">
+  <div class="cmp-header">
+    <span class="cmp-title">↔ Compară conversații</span>
+    <select id="cmp-sel-a" class="cmp-sel" onchange="renderCmpPanel()" aria-label="Conversație stânga">
+      <option value="">— stânga —</option>
+    </select>
+    <select id="cmp-sel-b" class="cmp-sel" onchange="renderCmpPanel()" aria-label="Conversație dreapta">
+      <option value="">— dreapta —</option>
+    </select>
+    <button type="button" onclick="toggleConvCmp()"
+      style="-webkit-appearance:none;appearance:none;background:none;border:none;
+      color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
+  </div>
+  <div class="cmp-body">
+    <div class="cmp-col" id="cmp-col-a">
+      <div class="cmp-col-title">Stânga</div>
+      <div id="cmp-msgs-a"></div>
+    </div>
+    <div class="cmp-col" id="cmp-col-b">
+      <div class="cmp-col-title">Dreapta</div>
+      <div id="cmp-msgs-b"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Expanders panel -->
+<div id="expanders-panel" role="complementary" aria-label="Abrevieri text">
+  <div class="exp-title">
+    <span>⌨ Abrevieri /shortcut</span>
+    <button type="button" onclick="toggleExpandersPanel()"
+      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
+  </div>
+  <div id="expanders-list"></div>
+  <div class="exp-add-row">
+    <input type="text" id="exp-abbr-inp" class="exp-input" placeholder="/nou" style="width:60px" aria-label="Abreviere nouă">
+    <input type="text" id="exp-text-inp" class="exp-input" placeholder="Textul expandat…" style="flex:1" aria-label="Textul expandat">
+    <button type="button" onclick="addExpanderFromPanel()"
+      style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:5px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:3px 9px">+</button>
+  </div>
+</div>
+<button type="button" id="ambient-exit" onclick="toggleAmbientMode()" aria-label="Ieși din modul ambient">✕ Ieși</button>
+
+<!-- Global Search Panel -->
+<div id="glob-search-panel" role="dialog" aria-modal="true" aria-label="Căutare globală"
+  onclick="if(event.target===this)toggleGlobSearch()">
+  <div class="gsrch-box">
+    <div class="gsrch-input-row">
+      <input type="search" id="gsrch-inp" class="gsrch-inp"
+        placeholder="🔍 Caută în toate conversațiile salvate…"
+        oninput="_runGlobSearch(this.value)"
+        aria-label="Căutare globală în conversații">
+      <button type="button" onclick="toggleGlobSearch()"
+        style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0 4px" aria-label="Închide">✕</button>
+    </div>
+    <div id="gsrch-results"><div class="gsrch-empty">Tastează pentru a căuta în toate conversațiile salvate.</div></div>
+  </div>
+</div>
+
+<div id="chain-panel" role="complementary" aria-label="Lanț de prompturi">
+  <div class="chain-title"><span>⛓ Lanț prompturi</span>
+    <button type="button" onclick="toggleChainPanel()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
+  </div>
+  <div id="chain-list"></div>
+  <div class="chain-add-row">
+    <input type="text" id="chain-inp" class="chain-inp" placeholder="Adaugă prompt…" aria-label="Prompt nou">
+    <button type="button" onclick="addChainPrompt()" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:5px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:4px 10px">+</button>
+  </div>
+  <div style="display:flex;gap:6px;margin-top:8px">
+    <button type="button" onclick="runChain()" id="chain-run-btn" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 12px;flex:1">▶ Rulează lanț</button>
+  </div>
+</div>
+<div id="lang-menu" role="listbox" aria-label="Limbă răspuns"></div>
+
+<!-- Health check panel -->
+<div id="health-panel" role="complementary" aria-label="Sănătatea conversației"></div>
+
+<!-- Mindmap panel -->
+<div id="mindmap-panel" role="dialog" aria-modal="true" aria-label="Hartă conversație">
+  <div id="mindmap-header">
+    <span id="mindmap-title">🗺 Hartă conversație</span>
+    <button type="button" onclick="toggleMindmap()"
+      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
+  </div>
+  <div id="mindmap-svg"></div>
+</div>
+
+<!-- Personas panel -->
+<div id="persona-panel" role="listbox" aria-label="Personalități AI">
+  <div class="persona-title">
+    <span>🎭 Personalități AI</span>
+    <button type="button" onclick="togglePersonaPanel()"
+      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
+  </div>
+  <div id="persona-list"></div>
+</div>
+
+<!-- QR panel -->
+<div id="qr-panel" role="dialog" aria-modal="true" aria-label="QR Code"
+  onclick="if(event.target===this)toggleQRPanel()">
+  <div id="qr-box">
+    <h3>📲 Partajează QR</h3>
+    <canvas id="qr-canvas" width="180" height="180" aria-label="QR Code"></canvas>
+    <div id="qr-url"></div>
+    <button type="button" onclick="toggleQRPanel()"
+      style="-webkit-appearance:none;appearance:none;margin-top:12px;background:none;border:1px solid var(--bd2);border-radius:5px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:10px;padding:4px 14px">Închide</button>
+  </div>
+</div>
+
+<!-- Session memory notes panel -->
+<div id="memory-panel" aria-label="Note de sesiune">
+  <div class="mem-title">
+    <span>📌 Note persistente</span>
+    <button type="button" onclick="toggleMemoryPanel()"
+      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
+  </div>
+  <textarea id="memory-ta" placeholder="Notează informații importante — persistă între sesiuni..." aria-label="Note de sesiune"></textarea>
+  <div class="mem-actions">
+    <button type="button" class="mem-btn" onclick="saveMemoryNotes()">💾 Salvează</button>
+    <button type="button" class="mem-btn" onclick="injectMemoryToPrompt()">↑ Injectează în prompt</button>
+  </div>
+</div>
+<div id="word-goal-bar" aria-hidden="true"></div>
+<div id="session-pill" class="session-pill" aria-live="polite"></div>
+
 <script type="module">
 // ── Console safety shim ───────────────────────────────────────
 // In some iframe/sandboxed contexts (srcdoc, blob:, file://) the browser
@@ -2361,11 +3175,24 @@ ONESTITATE — REGULA #1:
   }
 })();
 
-import { pipeline, TextStreamer, env, ModelRegistry }
-  from './vendor/transformers/transformers.min.js';
-
-env.allowLocalModels = false;
-env.useBrowserCache  = true;
+// transformers.js se încarcă la cerere (import dinamic). Pe file:// browserul blochează modulele ES
+// (CORS), deci interfața pornește oricum (handlerele inline rămân definite), iar încărcarea modelului
+// afișează un mesaj clar în loc să lase interfața inertă.
+let pipeline, TextStreamer, env, ModelRegistry;
+const FILE_PROTO_MSG = 'Rulezi de pe file://: browserul blochează modulele ES, deci modelele nu pot fi încărcate. Servește folderul cu un server local (ex. „python3 -m http.server 8080” → http://localhost:8080/) sau folosește pagina publicată.';
+let _tfP = null;
+function loadTransformers() {
+  if (!_tfP) {
+    if (location.protocol === 'file:') { _tfP = Promise.reject(new Error(FILE_PROTO_MSG)); _tfP.catch(() => {}); }
+    else _tfP = import('./vendor/transformers/transformers.min.js').then(m => {
+      ({ pipeline, TextStreamer, env, ModelRegistry } = m);
+      env.allowLocalModels = false;
+      env.useBrowserCache  = true;
+      return m;
+    }).catch(e => { _tfP = null; throw e; });
+  }
+  return _tfP;
+}
 
 // AUDIT: citire JSON din localStorage fără a opri inițializarea dacă valoarea e coruptă
 function _lsJSON(k, d) { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); return v == null ? d : v; } catch(_) { return d; } }
@@ -3420,6 +4247,7 @@ window.runCmp = async function() {
   const shortB = mdlB.split('/').pop().replace(/-ONNX$/i,'');
 
   const tryLoadB = async (device) => {
+    await loadTransformers();
     return await pipeline('text-generation', mdlB, {
       device, dtype: 'q4f16',
       progress_callback: ({ status, progress }) => {
@@ -3594,6 +4422,7 @@ async function clearModelCache(mdlId) {
     }
     // Also try ModelRegistry v4 API
     try {
+      await loadTransformers();
       await ModelRegistry.clear_pipeline_cache('text-generation', mdlId, { dtype: 'q4f16' });
     } catch(_) {}
   } catch(e) { console.warn('Cache clear:', e); }
@@ -4038,7 +4867,7 @@ let mdsResults = []; // cache for filter changes
 
 // Curated list: tested, works well offline, various sizes
 // ── Verified public ONNX models (no HF auth required) ────────
-// Tested with transformers.js 4.2+ · Updated: Mai 2026
+// Tested with transformers.js 4.2+ · Updated: octombrie 2026
 // REMOVED: gemma-2-2b-it (Google terms gate), SmolLM2 (path), DeepSeek (no public ONNX)
 const MDS_POPULAR = [
   { id:'onnx-community/Qwen3-0.6B-ONNX',
@@ -5235,6 +6064,7 @@ window.doLoad = async function() {
   // BUG-4: guard against concurrent loads; BUG-5: guard against load during generation
   if (loading) return;
   if (generating) { setSt('Stop generation before loading a new model.', 'err'); return; }
+  if (location.protocol === 'file:') { setSt(FILE_PROTO_MSG, 'err'); try { alert(FILE_PROTO_MSG); } catch(_) {} return; }
   // AUDIT: avertisment de dimensiune înainte de descărcarea unui model mare care nu e încă în cache
   {
     const _e = MDS_POPULAR.find(m => m.id === chosenMdl);
@@ -5307,6 +6137,7 @@ window.doLoad = async function() {
     // model_q4.onnx which does NOT exist → HTTP 404 → load fails.
     // q4f16 works fine on WASM (INT4 weights + FP16 scales via WASM ops).
     const dtype = 'q4f16';
+    await loadTransformers();
     pipe = await pipeline('text-generation', chosenMdl, {
       device,
       dtype,
@@ -5565,7 +6396,7 @@ function onReady(dev) {
   _hideDlProgress();
   localStorage.setItem('lm_last_model', chosenMdl);
   setSt('✓ ' + short + ' gata', 'ok');
-  _autoTitled = false; document.title = 'LocalMind v117 — AI în browser';
+  _autoTitled = false; document.title = 'LocalMind v118 — AI în browser';
   stampCached(chosenMdl);
   updateMemBadge();
   verifyModelIntegrity(chosenMdl); // verify on WASM path
@@ -5588,7 +6419,7 @@ function onReady(dev) {
       _hideDlProgress();
   localStorage.setItem('lm_last_model', chosenMdl);
   setSt('✓ ' + short + ' gata · GPU pregătit', 'ok');
-      _autoTitled = false; document.title = 'LocalMind v117 — AI în browser';
+      _autoTitled = false; document.title = 'LocalMind v118 — AI în browser';
       verifyModelIntegrity(chosenMdl);
     } catch(_) {
       setSt('✓ ' + short + ' gata', 'ok');
@@ -7461,7 +8292,7 @@ window.addEventListener('beforeunload', function() {
 });
 
 // ╔══════════════════════════════════════════════════════════════╗
-// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v117           ║
+// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v118           ║
 // ║  Force-directed SVG · Zero dependencies · Trade-Free        ║
 // ║  A.I. Chiuță — alexio.tf — trade-free.org                  ║
 // ╚══════════════════════════════════════════════════════════════╝
@@ -8513,7 +9344,7 @@ footer{margin-top:40px;font-size:11px;color:#aaa;text-align:center;
 </style>
 </head><body>
 <h1>${escT}</h1>
-<div class="meta">Exportat din LocalMind v117 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
+<div class="meta">Exportat din LocalMind v118 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
 ${msgs}
 <footer>Generat cu LocalMind — AI local, offline, trade-free · alexio.tf</footer>
 </body></html>`;
@@ -8525,875 +9356,6 @@ ${msgs}
   setSt('✓ Export HTML descărcat.', 'ok');
 };
 
-// NOTA AUDIT: blocul de mai jos (CSS + HTML pentru ~50 panouri: istoric conversații, QR, manager context,
-// note de sesiune, mind-map etc.) fusese inserat din greșeală în interiorul șablonului exportAsHTML().
-// Panourile NU există în DOM-ul real, deci funcțiile lor (toggleConvHistory, toggleQRModal, …) sunt inerte.
-// Păstrat aici neschimbat, ca să nu se piardă; mutarea lui în <head>/<body> trebuie testată vizual.
-const _LM_ORPHAN_UI_UNUSED = `<style>
-
-/* ─── Conversation History ────────────────────────────────── */
-#conv-hist-panel{position:fixed;inset:0;z-index:912;background:rgba(2,3,6,.95);
-  display:none;align-items:flex-start;justify-content:center;
-  padding:40px 20px;backdrop-filter:blur(6px)}
-#conv-hist-panel.open{display:flex}
-.ch-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
-  padding:20px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
-.ch-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
-  margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.ch-save-btn{-webkit-appearance:none;appearance:none;background:var(--ac);
-  border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);
-  font-size:10px;padding:4px 10px}
-.ch-item{display:flex;align-items:center;gap:8px;padding:8px 10px;
-  border-radius:6px;cursor:pointer;transition:background .12s;margin-bottom:4px;
-  border:1px solid var(--bd)}
-.ch-item:hover{background:var(--bg3)}
-.ch-item-title{flex:1;font-family:var(--fc);font-size:11px;color:var(--tx);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ch-item-meta{font-family:var(--fc);font-size:9px;color:var(--tx3);white-space:nowrap}
-.ch-del{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx3);cursor:pointer;font-size:12px;padding:0;flex-shrink:0}
-.ch-del:hover{color:var(--er)}
-.ch-empty{font-family:var(--fc);font-size:11px;color:var(--tx3);text-align:center;padding:20px}
-
-/* ─── Ghost text autocomplete ─────────────────────────────── */
-#ghost-text{position:absolute;pointer-events:none;color:var(--tx3);opacity:.45;
-  font-family:var(--fc);font-size:13px;white-space:pre-wrap;word-break:break-word;
-  line-height:1.6;padding:7px 10px;top:0;left:0;width:100%;box-sizing:border-box;
-  overflow:hidden;border:1px solid transparent}
-.ta-wrap{position:relative}
-
-/* ─── Accent color presets ────────────────────────────────── */
-.accent-sw{-webkit-appearance:none;appearance:none;width:14px;height:14px;
-  border-radius:50%;border:2px solid transparent;cursor:pointer;flex-shrink:0;
-  transition:border-color .12s}
-.accent-sw.active,.accent-sw:hover{border-color:var(--tx)}
-#accent-row{display:flex;align-items:center;gap:5px;padding:4px 0}
-
-/* ─── Stats dashboard overlay ─────────────────────────────── */
-#stats-dash{position:fixed;bottom:70px;right:14px;z-index:800;
-  background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;
-  padding:12px 14px;min-width:200px;display:none;
-  box-shadow:0 4px 24px rgba(0,0,0,.5)}
-#stats-dash.open{display:block}
-.sd-title{font-family:var(--fc);font-size:9px;letter-spacing:1.5px;
-  text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
-.sd-row{display:flex;justify-content:space-between;align-items:center;
-  padding:2px 0;border-bottom:1px solid var(--bd)}
-.sd-row:last-child{border:none}
-.sd-label{font-family:var(--fc);font-size:10px;color:var(--tx2)}
-.sd-val{font-family:var(--fc);font-size:10px;color:var(--tx);font-weight:600}
-
-/* ─── Search highlight ────────────────────────────────────── */
-mark.search-hl{background:var(--gold);color:#000;border-radius:2px;padding:0 1px}
-
-/* ─── QR Share ────────────────────────────────────────────── */
-#qr-modal{position:fixed;inset:0;z-index:920;background:rgba(2,3,6,.95);
-  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-#qr-modal.open{display:flex}
-.qr-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
-  padding:24px 28px;max-width:360px;width:90%;text-align:center}
-.qr-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);margin-bottom:6px}
-.qr-sub{font-family:var(--fc);font-size:10px;color:var(--tx3);margin-bottom:14px}
-#qr-canvas{border-radius:8px;margin:0 auto 12px;display:block}
-.qr-close{-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);
-  border-radius:6px;color:var(--tx3);cursor:pointer;font-family:var(--fc);
-  font-size:10px;padding:5px 14px;margin-top:4px}
-.qr-close:hover{border-color:var(--ac);color:var(--ac)}
-
-/* ─── Reading Mode ────────────────────────────────────────── */
-body.read-mode #hdr,body.read-mode #sidebar,body.read-mode #stb,
-body.read-mode #sb-overlay,body.read-mode .tbtn,body.read-mode .tbtn-sep,
-body.read-mode #pinned-bar,body.read-mode #android-notice,
-body.read-mode #focus-stat,body.read-mode #char-count,
-body.read-mode #offline-badge,body.read-mode #ctx-bar-wrap
-{ display:none !important; }
-body.read-mode #ir{display:none !important}
-body.read-mode #ca{max-width:680px;margin:0 auto;padding:20px 24px;
-  font-size:15px;line-height:1.85}
-body.read-mode .msg{max-width:100%}
-/* Exit button */
-#read-exit{display:none;position:fixed;top:14px;right:14px;z-index:800;
-  -webkit-appearance:none;appearance:none;background:var(--bg2);
-  border:1px solid var(--bd2);border-radius:100px;color:var(--tx3);
-  cursor:pointer;font-family:var(--fc);font-size:10px;padding:4px 12px;
-  backdrop-filter:blur(6px)}
-body.read-mode #read-exit{display:block}
-body.read-mode #read-exit:hover{border-color:var(--ac);color:var(--ac)}
-
-/* ─── Model download progress ─────────────────────────────── */
-#dl-progress{display:none;align-items:center;gap:6px;padding:0 8px;flex-shrink:0}
-#dl-progress.active{display:flex}
-#dl-bar{width:80px;height:3px;background:var(--bg3);border-radius:2px;overflow:hidden}
-#dl-fill{height:100%;background:var(--bl);border-radius:2px;transition:width .2s;width:0%}
-#dl-pct{font-family:var(--fc);font-size:8px;color:var(--tx3);white-space:nowrap}
-
-/* ─── Token speed indicator ───────────────────────────────── */
-#tps-badge{display:none;align-items:center;font-family:var(--fc);font-size:8px;
-  color:var(--ac2);padding:0 6px;white-space:nowrap;gap:2px}
-#tps-badge.active{display:flex}
-
-/* ─── Response length selector ────────────────────────────── */
-#len-row{display:flex;gap:3px;align-items:center;flex-shrink:0}
-.len-btn{-webkit-appearance:none;appearance:none;background:none;
-  border:1px solid var(--bd2);border-radius:100px;color:var(--tx3);
-  cursor:pointer;font-family:var(--fc);font-size:8px;padding:1px 7px;
-  transition:border-color .12s,color .12s}
-.len-btn:hover{border-color:var(--ac2);color:var(--tx)}
-.len-btn.on{border-color:var(--ac2);color:var(--ac2)}
-.len-btn:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-
-/* ─── Font family selector ────────────────────────────────── */
-.font-sw{-webkit-appearance:none;appearance:none;width:22px;height:22px;
-  border-radius:4px;border:1px solid var(--bd2);cursor:pointer;
-  background:var(--bg3);color:var(--tx2);font-size:11px;
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  transition:border-color .12s}
-.font-sw.active,.font-sw:hover{border-color:var(--ac2);color:var(--ac2)}
-.font-sw:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-#font-row{display:flex;align-items:center;gap:4px;padding:4px 0}
-
-/* ─── Personas ────────────────────────────────────────────── */
-#persona-row{display:flex;flex-wrap:wrap;gap:4px;padding:4px 0}
-.prs-persona{-webkit-appearance:none;appearance:none;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:100px;color:var(--tx2);
-  cursor:pointer;font-family:var(--fc);font-size:9px;padding:2px 9px;
-  display:flex;align-items:center;gap:4px;transition:border-color .12s}
-.prs-persona:hover{border-color:var(--ac2);color:var(--tx)}
-.prs-persona.active{border-color:var(--ac);color:var(--ac)}
-.prs-persona-del{color:var(--tx3);font-size:10px;line-height:1;border:none;
-  background:none;cursor:pointer;padding:0}
-.prs-persona-del:hover{color:var(--er)}
-#save-persona-btn{-webkit-appearance:none;appearance:none;background:none;
-  border:1px solid var(--bd2);border-radius:100px;color:var(--tx3);
-  cursor:pointer;font-family:var(--fc);font-size:9px;padding:2px 8px}
-#save-persona-btn:hover{border-color:var(--ac2);color:var(--ac2)}
-
-/* ─── URL preview cards in messages ──────────────────────────── */
-.url-card{display:inline-flex;align-items:center;gap:5px;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:5px;padding:2px 7px;
-  font-family:var(--fc);font-size:10px;color:var(--tx2);text-decoration:none;
-  margin:1px 2px;transition:border-color .12s}
-.url-card:hover{border-color:var(--ac2);color:var(--tx)}
-.url-card-favicon{width:12px;height:12px;flex-shrink:0}
-
-/* ─── Editable conversation title ────────────────────────────── */
-#conv-title{font-family:var(--fc);font-size:10px;color:var(--tx3);
-  max-width:180px;overflow:hidden;text-overflow:ellipsis;
-  white-space:nowrap;cursor:pointer;padding:1px 4px;border-radius:3px;
-  transition:background .12s;flex-shrink:1;min-width:0}
-#conv-title:hover{background:var(--bg3);color:var(--tx)}
-#conv-title:focus-visible{outline:2px solid var(--ac)}
-#conv-title-edit{display:none;font-family:var(--fc);font-size:10px;color:var(--tx);
-  background:var(--bg3);border:1px solid var(--ac2);border-radius:3px;
-  padding:1px 4px;width:160px;flex-shrink:1}
-
-/* ─── PWA install prompt ──────────────────────────────────── */
-#pwa-banner{display:none;position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
-  z-index:900;background:var(--bg2);border:1px solid var(--bd2);border-radius:100px;
-  padding:8px 16px;font-family:var(--fc);font-size:11px;color:var(--tx);
-  display:flex;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.5)}
-#pwa-banner.show{display:flex}
-#pwa-install-btn{-webkit-appearance:none;appearance:none;background:var(--ac);
-  border:none;border-radius:100px;color:#000;cursor:pointer;
-  font-family:var(--fc);font-size:10px;padding:4px 12px;white-space:nowrap}
-#pwa-dismiss{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx3);cursor:pointer;font-size:14px;padding:0;flex-shrink:0}
-
-/* ─── Diff view ───────────────────────────────────────────── */
-.diff-btn{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx3);cursor:pointer;font-size:9px;padding:1px 4px;border-radius:3px;
-  opacity:0;transition:opacity .15s;font-family:var(--fc)}
-.msg:hover .diff-btn,.diff-btn:focus-visible{opacity:1}
-.diff-panel{margin-top:6px;padding:8px 10px;background:var(--bg3);
-  border-radius:6px;border:1px solid var(--bd);display:none}
-.diff-panel.open{display:block}
-.diff-del{background:rgba(160,0,24,.18);color:#ff6680;text-decoration:line-through;
-  border-radius:2px;padding:0 1px}
-.diff-add{background:rgba(0,120,72,.18);color:var(--ac);border-radius:2px;padding:0 1px}
-.diff-title{font-family:var(--fc);font-size:8px;letter-spacing:1px;text-transform:uppercase;
-  color:var(--tx3);margin-bottom:5px}
-
-/* ─── Message reactions ───────────────────────────────────── */
-.react-wrap{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
-.react-chip{-webkit-appearance:none;appearance:none;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:100px;cursor:pointer;
-  font-size:12px;padding:1px 6px;transition:background .12s;line-height:1.4}
-.react-chip:hover{background:var(--bg2);border-color:var(--bd2)}
-.react-chip.active{background:rgba(0,168,104,.1);border-color:var(--ac2)}
-.react-add{-webkit-appearance:none;appearance:none;background:none;
-  border:1px solid var(--bd);border-radius:100px;color:var(--tx3);
-  cursor:pointer;font-size:10px;padding:1px 7px;opacity:0;
-  transition:opacity .15s}
-.msg:hover .react-add,.react-add:focus-visible{opacity:1}
-
-/* ─── Follow-up suggestions ───────────────────────────────── */
-.followup-wrap{margin-top:6px;display:none}
-.followup-wrap.show{display:block}
-.followup-label{font-family:var(--fc);font-size:8px;letter-spacing:1px;
-  text-transform:uppercase;color:var(--tx3);margin-bottom:4px}
-.followup-chips{display:flex;flex-wrap:wrap;gap:5px}
-.followup-chip{-webkit-appearance:none;appearance:none;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:6px;color:var(--tx2);
-  cursor:pointer;font-family:var(--fc);font-size:10px;padding:3px 9px;
-  text-align:left;line-height:1.4;transition:border-color .12s}
-.followup-chip:hover{border-color:var(--ac2);color:var(--tx)}
-.followup-chip:focus-visible{outline:2px solid var(--ac)}
-
-/* ─── Flashcard panel ─────────────────────────────────────── */
-#flash-panel{position:fixed;inset:0;z-index:915;background:rgba(2,3,6,.95);
-  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-#flash-panel.open{display:flex}
-.flash-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
-  padding:20px 24px;width:90%;max-width:520px;max-height:82vh;overflow-y:auto}
-.flash-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
-  margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-.flash-card{background:var(--bg3);border:1px solid var(--bd);border-radius:8px;
-  padding:10px 12px;margin-bottom:8px}
-.flash-q{font-family:var(--fc);font-size:11px;color:var(--tx3);margin-bottom:4px}
-.flash-a{font-family:var(--fc);font-size:12px;color:var(--tx);line-height:1.5}
-.flash-actions{display:flex;gap:8px;margin-top:14px}
-.flash-btn{-webkit-appearance:none;appearance:none;border-radius:6px;cursor:pointer;
-  font-family:var(--fc);font-size:10px;padding:5px 12px}
-.flash-btn-p{background:var(--ac);border:none;color:#000}
-.flash-btn-s{background:none;border:1px solid var(--bd2);color:var(--tx3)}
-.flash-btn-s:hover{border-color:var(--ac2);color:var(--ac2)}
-
-/* ─── Conversation analytics ──────────────────────────────── */
-#analytics-panel{position:fixed;bottom:60px;left:14px;z-index:800;
-  background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;
-  padding:14px 16px;min-width:240px;max-width:320px;display:none}
-#analytics-panel.open{display:block}
-.an-title{font-family:var(--fc);font-size:9px;letter-spacing:1.5px;
-  text-transform:uppercase;color:var(--tx3);margin-bottom:10px;
-  display:flex;justify-content:space-between;align-items:center}
-.an-row{display:flex;justify-content:space-between;padding:3px 0;
-  border-bottom:1px solid var(--bd)}
-.an-row:last-of-type{border:none}
-.an-label{font-family:var(--fc);font-size:10px;color:var(--tx2)}
-.an-val{font-family:var(--fc);font-size:10px;color:var(--tx);font-weight:600}
-.an-topic-cloud{display:flex;flex-wrap:wrap;gap:4px;margin-top:8px}
-.an-topic{background:var(--bg3);border:1px solid var(--bd);border-radius:100px;
-  font-family:var(--fc);font-size:9px;color:var(--tx2);padding:1px 7px}
-.sentiment-bar{height:3px;border-radius:2px;margin-top:6px;overflow:hidden;
-  background:var(--bg3);display:flex}
-.sent-neg{background:#a00018}
-.sent-neu{background:var(--bd2)}
-.sent-pos{background:var(--ac)}
-
-/* ─── Model warm-up status ────────────────────────────────── */
-#warmup-badge{display:none;align-items:center;gap:4px;font-family:var(--fc);
-  font-size:8px;color:var(--tx3);padding:0 6px;white-space:nowrap}
-#warmup-badge.active{display:flex;animation:pulse-wu .8s infinite alternate}
-@keyframes pulse-wu{from{opacity:.4}to{opacity:1}}
-#warmup-badge.done{animation:none;color:var(--ac2)}
-
-/* ─── Conversation replay ─────────────────────────────────── */
-#replay-bar{display:none;position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
-  z-index:801;background:var(--bg2);border:1px solid var(--bd2);border-radius:100px;
-  padding:6px 16px;display:flex;align-items:center;gap:10px;
-  box-shadow:0 4px 20px rgba(0,0,0,.5);font-family:var(--fc);font-size:10px}
-#replay-bar.active{display:flex}
-#replay-progress{font-size:9px;color:var(--tx3)}
-.replay-ctrl{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx3);cursor:pointer;font-size:14px;padding:0;transition:color .12s}
-.replay-ctrl:hover{color:var(--tx)}
-
-/* ─── Context Manager ─────────────────────────────────────── */
-#ctx-mgr-panel{position:fixed;inset:0;z-index:916;background:rgba(2,3,6,.95);
-  display:none;align-items:flex-start;justify-content:center;
-  padding:40px 20px;backdrop-filter:blur(6px)}
-#ctx-mgr-panel.open{display:flex}
-.cmgr-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
-  padding:20px 24px;width:100%;max-width:540px;max-height:80vh;
-  display:flex;flex-direction:column}
-.cmgr-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
-  margin-bottom:4px;display:flex;justify-content:space-between;align-items:center}
-.cmgr-subtitle{font-family:var(--fc);font-size:10px;color:var(--tx3);margin-bottom:12px}
-.cmgr-list{flex:1;overflow-y:auto;margin-bottom:12px}
-.cmgr-row{display:flex;align-items:flex-start;gap:8px;padding:6px 0;
-  border-bottom:1px solid var(--bd)}
-.cmgr-row:last-child{border:none}
-.cmgr-check{flex-shrink:0;margin-top:2px;accent-color:var(--ac);cursor:pointer}
-.cmgr-role{font-family:var(--fc);font-size:8px;letter-spacing:1px;
-  text-transform:uppercase;color:var(--tx3);flex-shrink:0;width:28px;margin-top:2px}
-.cmgr-preview{font-family:var(--fc);font-size:11px;color:var(--tx2);
-  flex:1;line-height:1.4;cursor:default}
-.cmgr-tok{font-family:var(--fc);font-size:9px;color:var(--tx3);
-  flex-shrink:0;text-align:right;white-space:nowrap}
-.cmgr-footer{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.cmgr-total{font-family:var(--fc);font-size:10px;color:var(--tx3)}
-.cmgr-total strong{color:var(--tx)}
-
-/* ─── Word Cloud ──────────────────────────────────────────── */
-#wcloud-modal{position:fixed;inset:0;z-index:917;background:rgba(2,3,6,.95);
-  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-#wcloud-modal.open{display:flex}
-.wc-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
-  padding:20px 24px;width:90%;max-width:600px}
-.wc-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
-  margin-bottom:12px;display:flex;justify-content:space-between;align-items:center}
-#wcloud-canvas{width:100%;height:260px;border-radius:8px;background:var(--bg3);
-  display:block;cursor:default}
-.wc-legend{font-family:var(--fc);font-size:9px;color:var(--tx3);
-  margin-top:6px;text-align:center}
-
-/* ─── Per-message token badge ─────────────────────────────── */
-.tok-badge{font-family:var(--fc);font-size:8px;color:var(--tx3);
-  padding:0 3px;flex-shrink:0;align-self:flex-end;margin-bottom:2px;
-  opacity:0;transition:opacity .15s}
-.msg:hover .tok-badge{opacity:1}
-
-/* ─── TTS voice settings ──────────────────────────────────── */
-#tts-settings{display:none;position:fixed;bottom:70px;right:60px;z-index:800;
-  background:var(--bg2);border:1px solid var(--bd2);border-radius:8px;
-  padding:10px 14px;font-family:var(--fc);font-size:10px}
-#tts-settings.open{display:block}
-.tts-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.tts-row:last-child{margin:0}
-.tts-label{color:var(--tx3);width:50px;flex-shrink:0}
-.tts-ctrl{-webkit-appearance:none;appearance:none;background:var(--bg3);
-  border:1px solid var(--bd);border-radius:4px;color:var(--tx);
-  font-family:var(--fc);font-size:9px;padding:2px 5px;flex:1}
-
-/* ─── Collapsible long responses ─────────────────────────── */
-.tx-overflow { display:none }
-.collapse-toggle{-webkit-appearance:none;appearance:none;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:100px;color:var(--tx3);
-  cursor:pointer;font-family:var(--fc);font-size:9px;padding:2px 10px;
-  margin-top:6px;display:block;transition:border-color .12s}
-.collapse-toggle:hover{border-color:var(--ac2);color:var(--ac2)}
-.collapse-toggle:focus-visible{outline:2px solid var(--ac)}
-
-/* ─── Benchmark panel ─────────────────────────────────────── */
-#bench-panel{position:fixed;bottom:70px;right:14px;z-index:800;
-  background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;
-  padding:12px 16px;min-width:220px;display:none}
-#bench-panel.open{display:block}
-.bench-title{font-family:var(--fc);font-size:9px;letter-spacing:1.5px;
-  text-transform:uppercase;color:var(--tx3);margin-bottom:8px;
-  display:flex;justify-content:space-between}
-.bench-row{display:flex;justify-content:space-between;padding:3px 0;
-  border-bottom:1px solid var(--bd);font-family:var(--fc);font-size:10px}
-.bench-row:last-of-type{border:none}
-.bench-model{color:var(--tx2);max-width:130px;overflow:hidden;
-  text-overflow:ellipsis;white-space:nowrap}
-.bench-tps{color:var(--tx);font-weight:600}
-#bench-run-btn{-webkit-appearance:none;appearance:none;background:var(--ac);
-  border:none;border-radius:6px;color:#000;cursor:pointer;
-  font-family:var(--fc);font-size:9px;padding:3px 10px;margin-top:8px;
-  display:block;width:100%}
-#bench-run-btn:disabled{opacity:.5;cursor:not-allowed}
-
-/* ─── Conversation compare ────────────────────────────────── */
-#conv-cmp-panel{position:fixed;inset:0;z-index:918;background:rgba(2,3,6,.96);
-  display:none;flex-direction:column;overflow:hidden}
-#conv-cmp-panel.open{display:flex}
-.cmp-header{display:flex;align-items:center;gap:10px;padding:10px 16px;
-  border-bottom:1px solid var(--bd);flex-shrink:0;background:var(--bg2)}
-.cmp-title{font-family:var(--fc);font-size:12px;font-weight:700;color:var(--tx);flex:1}
-.cmp-body{display:flex;flex:1;overflow:hidden}
-.cmp-col{flex:1;overflow-y:auto;padding:12px 16px;border-right:1px solid var(--bd)}
-.cmp-col:last-child{border:none}
-.cmp-col-title{font-family:var(--fc);font-size:9px;letter-spacing:1px;
-  text-transform:uppercase;color:var(--tx3);margin-bottom:8px}
-.cmp-msg{padding:6px 8px;border-radius:6px;margin-bottom:6px;
-  font-family:var(--fc);font-size:11px;line-height:1.5}
-.cmp-user{background:rgba(0,168,104,.08);color:var(--tx2)}
-.cmp-ai{background:var(--bg3);color:var(--tx)}
-.cmp-role{font-size:8px;letter-spacing:1px;text-transform:uppercase;
-  color:var(--tx3);margin-bottom:2px}
-.cmp-sel{-webkit-appearance:none;appearance:none;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:5px;color:var(--tx);
-  font-family:var(--fc);font-size:10px;padding:3px 7px}
-
-/* ─── Uncertainty / hedging highlights ────────────────────── */
-.hedge-mark{background:rgba(255,165,0,.12);border-radius:2px;
-  cursor:help;border-bottom:1px dotted var(--am,#f5a623)}
-.confidence-badge{font-family:var(--fc);font-size:8px;
-  padding:1px 6px;border-radius:100px;margin-left:4px;
-  display:inline-block;vertical-align:middle;flex-shrink:0}
-.conf-high{background:rgba(0,168,104,.15);color:var(--ac)}
-.conf-med{background:rgba(245,166,35,.15);color:var(--am,#e8a020)}
-.conf-low{background:rgba(200,0,24,.15);color:var(--er)}
-
-/* ─── Expanders panel ──────────────────────────────────────── */
-#expanders-panel{position:fixed;bottom:70px;left:50%;transform:translateX(-50%);
-  z-index:800;background:var(--bg2);border:1px solid var(--bd2);border-radius:10px;
-  padding:12px 16px;min-width:280px;display:none;max-height:300px;overflow-y:auto;
-  box-shadow:0 4px 24px rgba(0,0,0,.5)}
-#expanders-panel.open{display:block}
-.exp-title{font-family:var(--fc);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;
-  color:var(--tx3);margin-bottom:8px;display:flex;justify-content:space-between}
-.exp-row{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--bd)}
-.exp-row:last-child{border:none}
-.exp-abbr{font-family:monospace;font-size:11px;color:var(--ac2);min-width:50px;font-weight:700}
-.exp-text{font-family:var(--fc);font-size:10px;color:var(--tx2);flex:1;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.exp-del-btn{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx3);cursor:pointer;font-size:12px;flex-shrink:0}
-.exp-del-btn:hover{color:var(--er)}
-.exp-add-row{display:flex;gap:5px;margin-top:8px}
-.exp-input{-webkit-appearance:none;appearance:none;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:5px;color:var(--tx);
-  font-family:var(--fc);font-size:10px;padding:3px 7px}
-
-/* ─── Conversation timeline ───────────────────────────────── */
-#timeline-wrap{display:none;align-items:center;gap:8px;padding:4px 10px;
-  background:var(--bg2);border-top:1px solid var(--bd);flex-shrink:0}
-#timeline-wrap.show{display:flex}
-#timeline-slider{-webkit-appearance:none;appearance:none;flex:1;height:3px;
-  border-radius:2px;background:var(--bd2);cursor:pointer;accent-color:var(--ac)}
-#timeline-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
-  width:14px;height:14px;border-radius:50%;background:var(--ac);cursor:pointer}
-#timeline-label{font-family:var(--fc);font-size:9px;color:var(--tx3);
-  white-space:nowrap;flex-shrink:0}
-.timeline-btn{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx3);cursor:pointer;font-size:11px;padding:0;flex-shrink:0}
-.timeline-btn:hover{color:var(--ac)}
-
-/* ─── Ambient / presentation mode ────────────────────────────── */
-body.ambient-mode #hdr,body.ambient-mode #sidebar,body.ambient-mode #stb,
-body.ambient-mode #sb-overlay,body.ambient-mode #ir,body.ambient-mode #android-notice,
-body.ambient-mode #focus-stat,body.ambient-mode #char-count,
-body.ambient-mode #offline-badge,body.ambient-mode #ctx-bar-wrap,
-body.ambient-mode #timeline-wrap,body.ambient-mode .tbtn,body.ambient-mode .tbtn-sep,
-body.ambient-mode #pinned-bar,body.ambient-mode .msg-meta,body.ambient-mode .msg-acts
-{ display:none !important; }
-body.ambient-mode{background:#000}
-body.ambient-mode #ca{max-width:900px;margin:0 auto;padding:40px 48px;
-  font-size:22px;line-height:2;background:#000}
-body.ambient-mode .msg .tx{font-size:22px;line-height:2}
-body.ambient-mode .msg.user-msg{opacity:.55}
-body.ambient-mode .msg.ai-msg{opacity:1;color:#fff}
-#ambient-exit{display:none;position:fixed;bottom:20px;right:20px;z-index:900;
-  -webkit-appearance:none;appearance:none;background:rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.2);border-radius:100px;
-  color:rgba(255,255,255,.5);cursor:pointer;font-family:var(--fc);
-  font-size:10px;padding:6px 16px;transition:opacity .3s;opacity:0}
-body.ambient-mode #ambient-exit{display:block;opacity:1}
-body.ambient-mode:hover #ambient-exit{opacity:1}
-#ambient-exit:hover{background:rgba(255,255,255,.15);color:#fff}
-
-/* ─── Global search panel ─────────────────────────────────── */
-#glob-search-panel{position:fixed;inset:0;z-index:919;background:rgba(2,3,6,.96);
-  display:none;align-items:flex-start;justify-content:center;
-  padding:60px 20px;backdrop-filter:blur(8px)}
-#glob-search-panel.open{display:flex}
-.gsrch-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
-  padding:20px 24px;width:100%;max-width:560px;max-height:75vh;display:flex;flex-direction:column}
-.gsrch-input-row{display:flex;gap:8px;margin-bottom:12px}
-.gsrch-inp{-webkit-appearance:none;appearance:none;flex:1;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:7px;color:var(--tx);
-  font-family:var(--fc);font-size:12px;padding:8px 12px}
-.gsrch-inp:focus{border-color:var(--ac);outline:none}
-.gsrch-result{padding:8px 10px;border-radius:6px;cursor:pointer;margin-bottom:5px;
-  border:1px solid var(--bd);transition:background .12s}
-.gsrch-result:hover{background:var(--bg3);border-color:var(--bd2)}
-.gsrch-conv-title{font-family:var(--fc);font-size:10px;font-weight:700;color:var(--ac2);margin-bottom:2px}
-.gsrch-snippet{font-family:var(--fc);font-size:11px;color:var(--tx2);line-height:1.4}
-.gsrch-match{background:rgba(0,168,104,.2);border-radius:2px;color:var(--ac)}
-.gsrch-empty{font-family:var(--fc);font-size:11px;color:var(--tx3);text-align:center;padding:20px}
-#gsrch-results{overflow-y:auto;flex:1}
-
-/* ─── Summary card ────────────────────────────────────────── */
-.summary-card{background:linear-gradient(135deg,var(--bg2),var(--bg3));
-  border:1px solid var(--ac2);border-radius:10px;margin:8px 0;
-  padding:14px 16px;animation:fadeIn .3s ease}
-.summary-card-title{font-family:var(--fc);font-size:10px;letter-spacing:1px;
-  text-transform:uppercase;color:var(--ac2);margin-bottom:8px;
-  display:flex;justify-content:space-between;align-items:center}
-.summary-card-body{font-family:var(--fc);font-size:12px;color:var(--tx);
-  line-height:1.65}
-.summary-card-actions{display:flex;justify-content:flex-end;gap:6px;margin-top:8px}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-
-/* ─── Multi-format copy menu ──────────────────────────────── */
-.copy-menu{position:absolute;z-index:600;background:var(--bg2);
-  border:1px solid var(--bd2);border-radius:7px;padding:4px;
-  box-shadow:0 4px 20px rgba(0,0,0,.5);display:none;min-width:130px}
-.copy-menu.open{display:block}
-.copy-menu-item{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx2);cursor:pointer;font-family:var(--fc);font-size:10px;
-  padding:5px 10px;border-radius:4px;display:block;width:100%;text-align:left;
-  transition:background .1s}
-.copy-menu-item:hover{background:var(--bg3);color:var(--tx)}
-
-/* ─── Conversation merge modal ───────────────────────────── */
-#merge-modal{position:fixed;inset:0;z-index:920;background:rgba(2,3,6,.95);
-  display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
-#merge-modal.open{display:flex}
-.merge-box{background:var(--bg2);border:1px solid var(--bd2);border-radius:12px;
-  padding:22px 26px;width:90%;max-width:480px}
-.merge-title{font-family:var(--fc);font-size:13px;font-weight:700;color:var(--tx);
-  margin-bottom:6px}
-.merge-sub{font-family:var(--fc);font-size:10px;color:var(--tx3);margin-bottom:14px}
-.merge-row{display:flex;gap:8px;margin-bottom:10px;align-items:center}
-.merge-label{font-family:var(--fc);font-size:10px;color:var(--tx3);width:60px;flex-shrink:0}
-.merge-sel{-webkit-appearance:none;appearance:none;flex:1;background:var(--bg3);
-  border:1px solid var(--bd2);border-radius:6px;color:var(--tx);
-  font-family:var(--fc);font-size:11px;padding:5px 9px}
-.merge-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
-.merge-btn-p{-webkit-appearance:none;appearance:none;background:var(--ac);border:none;
-  border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:6px 16px}
-.merge-btn-s{-webkit-appearance:none;appearance:none;background:none;
-  border:1px solid var(--bd2);border-radius:6px;color:var(--tx3);cursor:pointer;
-  font-family:var(--fc);font-size:10px;padding:6px 14px}
-.merge-btn-s:hover{border-color:var(--ac2);color:var(--ac2)}
-
-/* ─── Message quality rating ──────────────────────────────── */
-.rate-btn{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx3);cursor:pointer;font-size:13px;padding:0 2px;
-  opacity:0;transition:opacity .15s,transform .1s}
-.msg:hover .rate-btn,.rate-btn.active{opacity:1}
-.rate-btn.active.pos{color:var(--ac)}
-.rate-btn.active.neg{color:var(--er)}
-.rate-btn:hover{transform:scale(1.2)}
-
-/* ─── Advanced generation params ─────────────────────────── */
-.param-row{display:flex;align-items:center;gap:6px;padding:2px 0}
-.param-lbl{font-family:var(--fc);font-size:9px;color:var(--tx3);width:80px;flex-shrink:0}
-.param-slider{-webkit-appearance:none;appearance:none;flex:1;height:2px;
-  border-radius:1px;background:var(--bd2);cursor:pointer;accent-color:var(--ac)}
-.param-val{font-family:var(--fc);font-size:9px;color:var(--tx3);
-  width:28px;text-align:right;flex-shrink:0}
-#params-section{margin-top:8px}
-#params-toggle{-webkit-appearance:none;appearance:none;background:none;border:none;
-  color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:9px;padding:0;
-  display:flex;align-items:center;gap:4px;margin-bottom:5px}
-#params-toggle:hover{color:var(--tx)}
-#params-body{display:none}
-#params-body.open{display:block}
-
-/* ─── WPM typing indicator ─────────────────────────────────── */
-#wpm-badge{display:none;font-family:var(--fc);font-size:8px;
-  color:var(--tx3);padding:0 4px;flex-shrink:0;white-space:nowrap}
-#wpm-badge.active{display:inline}
-</style>
-
-<!-- Conversation History Panel -->
-<div id="conv-hist-panel" role="dialog" aria-modal="true" aria-label="Istoricul conversațiilor"
-  onclick="if(event.target===this)toggleConvHistory()">
-  <div class="ch-box">
-    <div class="ch-title">
-      <span>🗂 Conversații salvate</span>
-      <div style="display:flex;gap:6px;align-items:center">
-        <button type="button" class="ch-save-btn" onclick="saveCurrentConv()">💾 Salvează curentă</button>
-        <button type="button" class="ch-save-btn" onclick="openMergeModal()" style="background:var(--bg3);color:var(--tx3);border:1px solid var(--bd2)">🔀 Combină</button>
-        <button type="button" class="ch-save-btn" onclick="importConversation()" style="background:var(--bg3);color:var(--tx3);border:1px solid var(--bd2)">📥 Import</button>
-        <button type="button" onclick="toggleConvHistory()"
-          style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0">✕</button>
-      </div>
-    </div>
-    <input type="text" id="conv-filter"
-      placeholder="🔍 Filtrează conversații..."
-      oninput="if(typeof window.filterConvList==='function')window.filterConvList(this.value)"
-      aria-label="Filtrează conversații"
-      autocomplete="off" autocorrect="off" spellcheck="false">
-    <div id="ch-list"></div>
-  </div>
-</div>
-
-<!-- Stats Dashboard -->
-<div id="stats-dash" role="complementary" aria-label="Statistici sesiune">
-  <div class="sd-title">📊 Statistici sesiune</div>
-  <div class="stats-grid" id="stats-grid"></div>
-  <div class="sd-row"><span class="sd-label">Mesaje</span><span class="sd-val" id="sd-msgs">0</span></div>
-  <div class="sd-row"><span class="sd-label">Cuvinte AI</span><span class="sd-val" id="sd-words">0</span></div>
-  <div class="sd-row"><span class="sd-label">Timp sesiune</span><span class="sd-val" id="sd-time">0:00</span></div>
-  <div class="sd-row"><span class="sd-label">Tokeni context</span><span class="sd-val" id="sd-ctx">—</span></div>
-  <div class="sd-row"><span class="sd-label">Model</span><span class="sd-val" id="sd-model" style="font-size:8px;max-width:110px;overflow:hidden;text-overflow:ellipsis">—</span></div>
-  <div class="sd-row"><span class="sd-label">⭐ Marcate</span><span class="sd-val" id="sd-starred">0</span></div>
-</div>
-
-<!-- QR Share Modal -->
-<div id="qr-modal" role="dialog" aria-modal="true" aria-label="Partajare QR"
-  onclick="if(event.target===this)toggleQRModal()">
-  <div class="qr-box">
-    <div class="qr-title">📲 Partajează conversația</div>
-    <div class="qr-sub">Scanează cu alt dispozitiv (primele 10 mesaje, comprimat)</div>
-    <canvas id="qr-canvas" width="220" height="220"></canvas>
-    <div id="qr-size-info" style="font-family:var(--fc);font-size:9px;color:var(--tx3);margin-bottom:8px"></div>
-    <button type="button" class="qr-close" onclick="toggleQRModal()">Închide</button>
-  </div>
-</div>
-<button type="button" id="read-exit" onclick="toggleReadMode()" aria-label="Ieși din modul citire">✕ Ieși din citire</button>
-
-<!-- PWA install banner -->
-<div id="pwa-banner" role="complementary" aria-label="Instalare aplicație">
-  <span>📲 Instalează LocalMind ca aplicație</span>
-  <button type="button" id="pwa-install-btn" onclick="installPWA()">Instalează</button>
-  <button type="button" id="pwa-dismiss" onclick="dismissPWA()" aria-label="Închide">✕</button>
-</div>
-
-<!-- Flashcard Panel -->
-<div id="flash-panel" role="dialog" aria-modal="true" aria-label="Generator flashcarduri"
-  onclick="if(event.target===this)toggleFlashPanel()">
-  <div class="flash-box">
-    <div class="flash-title">
-      <span>🃏 Flashcarduri generate</span>
-      <button type="button" onclick="toggleFlashPanel()"
-        style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0">✕</button>
-    </div>
-    <div id="flash-list"></div>
-    <div class="flash-actions">
-      <button type="button" class="flash-btn flash-btn-p" onclick="exportFlashAnki()">↓ Export Anki (.csv)</button>
-      <button type="button" class="flash-btn flash-btn-s" onclick="exportFlashJSON()">↓ JSON</button>
-      <button type="button" class="flash-btn flash-btn-s" onclick="toggleFlashPanel()">Închide</button>
-    </div>
-  </div>
-</div>
-
-<!-- Analytics Panel -->
-<div id="analytics-panel" role="complementary" aria-label="Analize conversație">
-  <div class="an-title">
-    <span>📈 Analize</span>
-    <button type="button" onclick="toggleAnalytics()"
-      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
-  </div>
-  <div id="analytics-content"></div>
-</div>
-
-<!-- Replay bar -->
-<div id="replay-bar" role="status" aria-live="polite">
-  <span id="replay-progress">0/0</span>
-  <button type="button" class="replay-ctrl" id="replay-pause-btn" onclick="toggleReplayPause()" title="Pauză/Continuă">⏸</button>
-  <button type="button" class="replay-ctrl" onclick="stopReplay()" title="Oprește replay">⏹</button>
-  <select id="replay-speed" onchange="setReplaySpeed(this.value)"
-    style="-webkit-appearance:none;appearance:none;background:var(--bg3);border:1px solid var(--bd2);
-    border-radius:4px;color:var(--tx2);font-family:var(--fc);font-size:9px;padding:2px 6px">
-    <option value="50">0.5×</option>
-    <option value="30" selected>1×</option>
-    <option value="15">2×</option>
-    <option value="5">4×</option>
-  </select>
-</div>
-
-<!-- Context Manager Panel -->
-<div id="ctx-mgr-panel" role="dialog" aria-modal="true" aria-label="Manager context"
-  onclick="if(event.target===this)toggleCtxMgr()">
-  <div class="cmgr-box">
-    <div class="cmgr-title">
-      <span>🎛 Manager context</span>
-      <button type="button" onclick="toggleCtxMgr()"
-        style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
-    </div>
-    <div class="cmgr-subtitle">Selectează mesajele care rămân în contextul modelului · debifate = excluse</div>
-    <div id="cmgr-list" class="cmgr-list"></div>
-    <div class="cmgr-footer">
-      <span class="cmgr-total" id="cmgr-total"></span>
-      <div style="display:flex;gap:7px">
-        <button type="button" onclick="applyCtxMgr()" 
-          style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 14px">Aplică</button>
-        <button type="button" onclick="toggleCtxMgr()"
-          style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:6px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 14px">Anulează</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Word Cloud Modal -->
-<div id="wcloud-modal" role="dialog" aria-modal="true" aria-label="Nor de cuvinte"
-  onclick="if(event.target===this)toggleWordCloud()">
-  <div class="wc-box">
-    <div class="wc-title">
-      <span>☁ Nor de cuvinte</span>
-      <button type="button" onclick="toggleWordCloud()"
-        style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
-    </div>
-    <canvas id="wcloud-canvas" width="560" height="260" aria-label="Nor de cuvinte din conversație"></canvas>
-    <div class="wc-legend">Dimensiunea = frecvența · Culorile = frecvența relativă</div>
-  </div>
-</div>
-
-<!-- TTS Settings popup -->
-<div id="tts-settings" role="dialog" aria-label="Setări voce">
-  <div class="tts-row">
-    <span class="tts-label">Viteză</span>
-    <input type="range" min="0.5" max="2" step="0.1" value="1.05" id="tts-rate"
-      class="tts-ctrl" oninput="updateTTSSettings()" aria-label="Viteză voce">
-    <span id="tts-rate-val" style="font-family:var(--fc);font-size:9px;color:var(--tx3);width:25px">1.0×</span>
-  </div>
-  <div class="tts-row">
-    <span class="tts-label">Voce</span>
-    <select id="tts-voice" class="tts-ctrl" onchange="updateTTSSettings()" aria-label="Voce TTS" style="max-width:140px"></select>
-  </div>
-</div>
-
-<!-- Benchmark panel -->
-<div id="bench-panel" role="complementary" aria-label="Benchmark modele">
-  <div class="bench-title">
-    <span>⚡ Benchmark t/s</span>
-    <button type="button" onclick="toggleBenchPanel()"
-      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0" aria-label="Închide">✕</button>
-  </div>
-  <div id="bench-list"></div>
-  <button type="button" id="bench-run-btn" onclick="runBenchmark()">▶ Rulează benchmark</button>
-</div>
-
-<!-- Conversation Compare Panel -->
-<div id="conv-cmp-panel" role="dialog" aria-modal="true" aria-label="Compară conversații">
-  <div class="cmp-header">
-    <span class="cmp-title">↔ Compară conversații</span>
-    <select id="cmp-sel-a" class="cmp-sel" onchange="renderCmpPanel()" aria-label="Conversație stânga">
-      <option value="">— stânga —</option>
-    </select>
-    <select id="cmp-sel-b" class="cmp-sel" onchange="renderCmpPanel()" aria-label="Conversație dreapta">
-      <option value="">— dreapta —</option>
-    </select>
-    <button type="button" onclick="toggleConvCmp()"
-      style="-webkit-appearance:none;appearance:none;background:none;border:none;
-      color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
-  </div>
-  <div class="cmp-body">
-    <div class="cmp-col" id="cmp-col-a">
-      <div class="cmp-col-title">Stânga</div>
-      <div id="cmp-msgs-a"></div>
-    </div>
-    <div class="cmp-col" id="cmp-col-b">
-      <div class="cmp-col-title">Dreapta</div>
-      <div id="cmp-msgs-b"></div>
-    </div>
-  </div>
-</div>
-
-<!-- Expanders panel -->
-<div id="expanders-panel" role="complementary" aria-label="Abrevieri text">
-  <div class="exp-title">
-    <span>⌨ Abrevieri /shortcut</span>
-    <button type="button" onclick="toggleExpandersPanel()"
-      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
-  </div>
-  <div id="expanders-list"></div>
-  <div class="exp-add-row">
-    <input type="text" id="exp-abbr-inp" class="exp-input" placeholder="/nou" style="width:60px" aria-label="Abreviere nouă">
-    <input type="text" id="exp-text-inp" class="exp-input" placeholder="Textul expandat…" style="flex:1" aria-label="Textul expandat">
-    <button type="button" onclick="addExpanderFromPanel()"
-      style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:5px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:3px 9px">+</button>
-  </div>
-</div>
-<button type="button" id="ambient-exit" onclick="toggleAmbientMode()" aria-label="Ieși din modul ambient">✕ Ieși</button>
-
-<!-- Global Search Panel -->
-<div id="glob-search-panel" role="dialog" aria-modal="true" aria-label="Căutare globală"
-  onclick="if(event.target===this)toggleGlobSearch()">
-  <div class="gsrch-box">
-    <div class="gsrch-input-row">
-      <input type="search" id="gsrch-inp" class="gsrch-inp"
-        placeholder="🔍 Caută în toate conversațiile salvate…"
-        oninput="_runGlobSearch(this.value)"
-        aria-label="Căutare globală în conversații">
-      <button type="button" onclick="toggleGlobSearch()"
-        style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0 4px" aria-label="Închide">✕</button>
-    </div>
-    <div id="gsrch-results"><div class="gsrch-empty">Tastează pentru a căuta în toate conversațiile salvate.</div></div>
-  </div>
-</div>
-
-<!-- Merge conversations modal -->
-<div id="merge-modal" role="dialog" aria-modal="true" aria-label="Combină conversații"
-  onclick="if(event.target===this)closeMergeModal()">
-  <div class="merge-box">
-    <div class="merge-title">🔀 Combină conversații</div>
-    <div class="merge-sub">Concatenează două conversații salvate într-una singură nouă.</div>
-    <div class="merge-row">
-      <span class="merge-label">Prima</span>
-      <select id="merge-sel-a" class="merge-sel" aria-label="Prima conversație"></select>
-    </div>
-    <div class="merge-row">
-      <span class="merge-label">A doua</span>
-      <select id="merge-sel-b" class="merge-sel" aria-label="A doua conversație"></select>
-    </div>
-    <div class="merge-row">
-      <span class="merge-label">Titlu nou</span>
-      <input type="text" id="merge-title-inp" class="merge-sel" placeholder="Titlul conversației combinate…" aria-label="Titlu nou">
-    </div>
-    <div class="merge-actions">
-      <button type="button" class="merge-btn-p" onclick="executeMerge()">🔀 Combină</button>
-      <button type="button" class="merge-btn-s" onclick="closeMergeModal()">Anulează</button>
-    </div>
-  </div>
-</div>
-
-<div id="chain-panel" role="complementary" aria-label="Lanț de prompturi">
-  <div class="chain-title"><span>⛓ Lanț prompturi</span>
-    <button type="button" onclick="toggleChainPanel()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
-  </div>
-  <div id="chain-list"></div>
-  <div class="chain-add-row">
-    <input type="text" id="chain-inp" class="chain-inp" placeholder="Adaugă prompt…" aria-label="Prompt nou">
-    <button type="button" onclick="addChainPrompt()" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:5px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:4px 10px">+</button>
-  </div>
-  <div style="display:flex;gap:6px;margin-top:8px">
-    <button type="button" onclick="runChain()" id="chain-run-btn" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 12px;flex:1">▶ Rulează lanț</button>
-  </div>
-</div>
-<div id="lang-menu" role="listbox" aria-label="Limbă răspuns"></div>
-
-<!-- Health check panel -->
-<div id="health-panel" role="complementary" aria-label="Sănătatea conversației"></div>
-
-<!-- Mindmap panel -->
-<div id="mindmap-panel" role="dialog" aria-modal="true" aria-label="Hartă conversație">
-  <div id="mindmap-header">
-    <span id="mindmap-title">🗺 Hartă conversație</span>
-    <button type="button" onclick="toggleMindmap()"
-      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
-  </div>
-  <div id="mindmap-svg"></div>
-</div>
-
-<!-- Personas panel -->
-<div id="persona-panel" role="listbox" aria-label="Personalități AI">
-  <div class="persona-title">
-    <span>🎭 Personalități AI</span>
-    <button type="button" onclick="togglePersonaPanel()"
-      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
-  </div>
-  <div id="persona-list"></div>
-</div>
-
-<!-- Context manager panel -->
-<div id="ctx-mgr-panel" role="complementary" aria-label="Manager context AI">
-  <div class="ctx-header">
-    <span>📋 Context AI</span>
-    <button type="button" onclick="toggleCtxMgr()"
-      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:14px;padding:0" aria-label="Închide">✕</button>
-  </div>
-  <div id="ctx-list"></div>
-  <div class="ctx-bar-wrap">
-    <div id="ctx-bar-label"><span>Tokeni în context</span><span id="ctx-tok-count">0</span></div>
-    <div class="ctx-bar-bg"><div id="ctx-bar-fill" class="ctx-bar-fill" style="width:0%"></div></div>
-  </div>
-</div>
-
-<!-- QR panel -->
-<div id="qr-panel" role="dialog" aria-modal="true" aria-label="QR Code"
-  onclick="if(event.target===this)toggleQRPanel()">
-  <div id="qr-box">
-    <h3>📲 Partajează QR</h3>
-    <canvas id="qr-canvas" width="180" height="180" aria-label="QR Code"></canvas>
-    <div id="qr-url"></div>
-    <button type="button" onclick="toggleQRPanel()"
-      style="-webkit-appearance:none;appearance:none;margin-top:12px;background:none;border:1px solid var(--bd2);border-radius:5px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:10px;padding:4px 14px">Închide</button>
-  </div>
-</div>
-
-<!-- Session memory notes panel -->
-<div id="memory-panel" aria-label="Note de sesiune">
-  <div class="mem-title">
-    <span>📌 Note persistente</span>
-    <button type="button" onclick="toggleMemoryPanel()"
-      style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
-  </div>
-  <textarea id="memory-ta" placeholder="Notează informații importante — persistă între sesiuni..." aria-label="Note de sesiune"></textarea>
-  <div class="mem-actions">
-    <button type="button" class="mem-btn" onclick="saveMemoryNotes()">💾 Salvează</button>
-    <button type="button" class="mem-btn" onclick="injectMemoryToPrompt()">↑ Injectează în prompt</button>
-  </div>
-</div>
-<div id="word-goal-bar" aria-hidden="true"></div>
-<div id="session-pill" class="session-pill" aria-live="polite"></div>
-`;
 
 
 // ─── Inline Math Evaluator ────────────────────────────────────
@@ -9657,7 +9619,7 @@ window.exportAsJSON = function() {
       title,
       model: chosenMdl || 'unknown',
       exported_at: new Date().toISOString(),
-      version: 'LocalMind v117',
+      version: 'LocalMind v118',
       messages_count: history.length,
       starred_count: starred.length,
       pinned_count: pinned.length,
@@ -9961,7 +9923,7 @@ window.exportAsMarkdown = function() {
   const lines = [
     '# ' + title,
     '',
-    '> Exportat din **LocalMind v117** · ' + new Date().toLocaleDateString('ro-RO') +
+    '> Exportat din **LocalMind v118** · ' + new Date().toLocaleDateString('ro-RO') +
     ' · Model: `' + (chosenMdl||'necunoscut').split('/').pop() + '`',
     ''
   ];
@@ -10318,7 +10280,7 @@ document.addEventListener('paste', function(e) {
     if (document.activeElement && document.activeElement !== ta) return; // only fire for #ui
     // Insert a text reference to the pasted image
     const note = '[Imagine lipită — ' + Math.round(blob.size/1024) + 'KB · ' + blob.type + ']\n' +
-      'Notă: LocalMind v117 nu procesează imagini direct. ' +
+      'Notă: LocalMind v118 nu procesează imagini direct. ' +
       'Descrie imaginea în text sau consideră un model multimodal.';
     const pos = ta.selectionStart;
     ta.value = ta.value.slice(0, pos) + note + ta.value.slice(ta.selectionEnd);
@@ -10827,7 +10789,7 @@ window.exportAsPodcast = function() {
   const lines = [
     '=== ' + title.toUpperCase() + ' ===',
     'Format: Podcast · Gazdă: Tu · Invitat: ' + model,
-    'Generat cu LocalMind v117 · ' + new Date().toLocaleDateString('ro-RO'),
+    'Generat cu LocalMind v118 · ' + new Date().toLocaleDateString('ro-RO'),
     '',
     '[INTRO MUZICĂ]',
     '',

@@ -6,9 +6,11 @@ Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont ș
 
 ![Captura de ecran](screenshot.png)
 
+**Ultima actualizare:** 11 octombrie 2026 · versiune v118
+
 ## Ce este
 
-LocalMind (v117 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „FĂRĂ TELEMETRIE” și „FĂRĂ CONT” (în versiunile anterioare: „ZERO TELEMETRY” / „NO ACCOUNT”; reformulate pentru a fi precise — vezi „Avertisment”).
+LocalMind (v118 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „FĂRĂ TELEMETRIE” și „FĂRĂ CONT” (în versiunile anterioare: „ZERO TELEMETRY” / „NO ACCOUNT”; reformulate pentru a fi precise — vezi „Avertisment”).
 
 ## Funcții
 
@@ -53,7 +55,7 @@ Folderul `vendor/` conține copii ale unor biblioteci cu licențe proprii, difer
 
 ## Rulare locală / offline
 
-Descarcă întregul director (nu doar `index.html`, deoarece scripturile transformers.js și pdf.js sunt în `vendor/`) și servește-l cu un server web local (de ex. `python3 -m http.server 8080`, apoi `http://localhost:8080/`). **Deschiderea directă a `index.html` din sistemul de fișiere (`file://`) nu funcționează în Chrome/Chromium:** importurile de module din `vendor/` sunt blocate de politica CORS și aplicația rămâne la „detectare…" (verificat 2026-10-10). Firefox și Safari pot avea restricții similare. Pentru prima utilizare a fiecărui model este nevoie de internet; după aceea modelul este în cache. KaTeX, Mermaid și Pyodide au nevoie de internet la prima folosire.
+Descarcă întregul director (nu doar `index.html`, deoarece scripturile transformers.js și pdf.js sunt în `vendor/`) și servește-l cu un server web local (de ex. `python3 -m http.server 8080`, apoi `http://localhost:8080/`). **Deschiderea directă a `index.html` din sistemul de fișiere (`file://`):** interfața pornește acum normal, dar încărcarea modelelor este blocată de browser (module ES din `vendor/`, politica CORS); aplicația afișează un mesaj clar cu pașii pentru serverul local, în loc de o interfață inertă (verificat 2026-10-11). Firefox și Safari pot avea restricții similare. Pentru prima utilizare a fiecărui model este nevoie de internet; după aceea modelul este în cache. KaTeX, Mermaid și Pyodide au nevoie de internet la prima folosire.
 
 ## Licență
 
@@ -64,6 +66,15 @@ CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE. Antetul `index.ht
 2026-10-11 (rundă 2): licență unificată spre CC0 în antet; insigne reformulate; tema luminoasă reparată (variabilele `--sf`, `--sf2`, `--tx3` definite pentru `body.light-mode`: butoanele-sugestie, `kbd` și celelalte suprafețe nu mai rămân întunecate); panoul „Parametri avansați” (CSS rămas într-un bloc nefolosit) se ascunde acum corect, cu `aria-hidden` adevărat.
 
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
+
+## Istoric / Changelog
+
+### v118 — 11 octombrie 2026
+- Reparat: pe `file://` interfața nu mai este inertă (ReferenceError doLoad/setTemp/useChip): transformers.js se încarcă la cerere (import dinamic), iar „Încarcă Modelul” afișează un mesaj explicativ.
+- Reparat: blocul de CSS și HTML pentru ~24 de panouri (istoric conversații, QR, statistici, analize, flashcarduri, benchmark, căutare globală, hartă etc.), care fusese inserat din greșeală în șablonul `exportAsHTML()`, este acum în `<head>`/`<body>`; funcțiile lor nu mai sunt inerte, iar câmpul de titlu al conversației nu mai apare ca dreptunghi alb.
+- Reparat: pe mobil, zona de chat nu mai este acoperită de bara de stare (bară compactă pe 3 rânduri, ecranul de bun venit derulează în loc să împingă câmpul de mesaj); bannerul „Instalează” și bara de redare nu mai sunt afișate permanent.
+- Reparat: o regulă CSS coruptă, `<h1>` pentru titlul aplicației, `<header>`/`<footer>` și etichetă pentru câmpul de ID model; 0 violări axe-core la 1280 și 360 px.
+- Neschimbat: handlerele `onclick` inline (≈300) și `eval`/`new Function` din rularea blocurilor de cod rămân (CSP permite `'unsafe-inline'`); eliminarea lor cere o refactorizare mai amplă.
 
 ## Autor
 
