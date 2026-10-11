@@ -7,17 +7,15 @@
   ║              L O C A L M I N D  v117                         ║
   ║        AI în browser — un singur fișier HTML                ║
   ╠══════════════════════════════════════════════════════════════╣
-  ║  LICENȚĂ TRADE-FREE                                         ║
-  ║  Acest software este trade-free: nu cere nimic în schimb.   ║
-  ║  Nicio taxă · Nicio reclamă · Nicio colectare de date       ║
-  ║  Nicio înregistrare · Nicio telemetrie · Niciun server      ║
+  ║  FILOSOFIE TRADE-FREE · LICENȚĂ CC0 1.0                     ║
+  ║  Acest software este oferit trade-free: nu cere nimic în    ║
+  ║  schimb. Fără taxe · fără reclame · fără înregistrare ·     ║
+  ║  fără telemetrie · fără server propriu al autorului.        ║
   ║                                                             ║
-  ║  Poți folosi, copia, modifica și distribui acest fișier     ║
-  ║  fără nicio restricție — cu condiția să rămână trade-free   ║
-  ║  în toate formele derivate (fără reclame, fără paywall,     ║
-  ║  fără colectare de date, fără login obligatoriu).           ║
-  ║                                                             ║
-  ║  TRADE-FREE LICENSE v1.0                                    ║
+  ║  Licență: CC0 1.0 Universal (domeniu public) — poți         ║
+  ║  folosi, copia, modifica și distribui fără restricții;      ║
+  ║  vezi fișierul LICENSE. Spiritul trade-free este o          ║
+  ║  invitație, nu o condiție legală.                           ║
   ║  Inspirat de: trade-free.org · tromsite.com                 ║
   ║                                                             ║
   ║  Autor: A.I. Chiuță — alexio.tf · chiuta.github.io         ║
@@ -30,7 +28,7 @@
   ============================================================================
   LocalMind
   Autor: Alexandru-Ionuț Chiuță (Alexio · „Ecoul Stringurilor")
-  Aplicație single-file, offline-first, fără telemetrie.
+  Aplicație single-file; inferența rulează local după descărcarea modelului (de pe Hugging Face); fără telemetrie.
 
   LICENȚĂ — TRADE-FREE + CC0 1.0 (Public Domain Dedication)
   Oferită liber, fără troc, în spiritul mișcării TROM (trom.tf). În măsura
@@ -57,7 +55,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="LocalMind">
-<meta name="description" content="Rulează modele AI local în browser — offline, fără cont, fără date colectate. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.">
+<meta name="description" content="Rulează modele AI local în browser, fără cont și fără telemetrie; modelele se descarcă o singură dată de la Hugging Face. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.">
 <meta name="author" content="A.I. Chiuță — chiuta.github.io">
 <style>
 :root{
@@ -1007,8 +1005,9 @@ body.simple-mode #len-row    { display:none !important; }
 /* ─── Tema Luminoasă (Light Mode) ─────────────────────────── */
 body.light-mode {
   --bg:#f4f6f9;--bg2:#edf0f4;--bg3:#e5e9f0;
+  --sf:#e9edf3;--sf2:#dde3ec;
   --bd:#d0d8e4;--bd2:#b8c4d4;
-  --tx:#1a2840;--tx2:#3a5070;--tx3:#8098b8;
+  --tx:#1a2840;--tx2:#3a5070;--tx3:#4a5f7c;
   --ac:#005f38;--ac2:#004028;
   --am:#8c2c00;--bl:#0028a0;--pu:#2800a0;
   --er:#a00018;
@@ -1539,6 +1538,21 @@ body.reading-mode #stb:hover,body.reading-mode #ia:hover{opacity:1;pointer-event
   display:none;align-items:center;gap:4px;cursor:pointer;transition:color .15s}
 #ph-badge.on{display:inline-flex;color:var(--tx2)}
 #ph-badge:hover{color:var(--ac2)}
+/* parametri avansați (mutat din blocul orfan; fără el panoul nu se ascundea) */
+/* ─── Advanced generation params ─────────────────────────── */
+.param-row{display:flex;align-items:center;gap:6px;padding:2px 0}
+.param-lbl{font-family:var(--fc);font-size:9px;color:var(--tx3);width:80px;flex-shrink:0}
+.param-slider{-webkit-appearance:none;appearance:none;flex:1;height:2px;
+  border-radius:1px;background:var(--bd2);cursor:pointer;accent-color:var(--ac)}
+.param-val{font-family:var(--fc);font-size:9px;color:var(--tx3);
+  width:28px;text-align:right;flex-shrink:0}
+#params-section{margin-top:8px}
+#params-toggle{-webkit-appearance:none;appearance:none;background:none;border:none;
+  color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:9px;padding:0;
+  display:flex;align-items:center;gap:4px;margin-bottom:5px}
+#params-toggle:hover{color:var(--tx)}
+#params-body{display:none}
+#params-body.open{display:block}
 </style>
 </head>
 <body>
@@ -1548,8 +1562,8 @@ body.reading-mode #stb:hover,body.reading-mode #ia:hover{opacity:1;pointer-event
     <div id="lic">LM</div>
     <span id="ltx">Local<b>Mind</b></span>
   </a>
-  <div class="bdg bg">⬡ ZERO TELEMETRY</div>
-  <div class="bdg bg">⬡ NO ACCOUNT</div>
+  <div class="bdg bg" title="Aplicația nu trimite conversațiile sau date de utilizare către niciun server al autorului. Notă: modelele se descarcă de la huggingface.co, iar KaTeX/Mermaid/Pyodide de la cdn.jsdelivr.net, doar când sunt necesare.">⬡ FĂRĂ TELEMETRIE</div>
+  <div class="bdg bg">⬡ FĂRĂ CONT</div>
   <div class="bdg bb" id="dbdg">⏳ detectare…</div>
   <div class="hsp"></div>
   <button type="button" id="focus-btn" onclick="toggleFocus()" title="Mod focus (F)">⊞</button>
@@ -3842,7 +3856,7 @@ function initPWA() {
   if (!document.querySelector('link[rel="manifest"]')) {
     const m = {name:'LocalMind',short_name:'LocalMind',start_url:'.',
       display:'standalone',background_color:'#06090f',theme_color:'#36d4a8',
-      description:'AI local în browser — zero cloud, zero telemetrie.',
+      description:'AI local în browser — fără telemetrie, fără cont.',
       icons:[{src:`data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%2336d4a8'/><text y='.9em' font-size='70' x='10'>🧠</text></svg>`,sizes:'any',type:'image/svg+xml'}]};
     const url = URL.createObjectURL(new Blob([JSON.stringify(m)],{type:'application/json'}));
     const l = document.createElement('link'); l.rel='manifest'; l.href=url;
@@ -7225,7 +7239,7 @@ window.showOnboarding = function showOnboarding() {
   <div class="ob-box">
     <div class="ob-logo">🧠</div>
     <div class="ob-title">Bun venit la LocalMind</div>
-    <div class="ob-sub">AI complet local · Zero cloud · Zero cont · Trade-free</div>
+    <div class="ob-sub">Inferență locală · Fără telemetrie · Fără cont · Trade-free</div>
     <div class="ob-steps">
       <div class="ob-step">
         <div class="ob-num">1</div>

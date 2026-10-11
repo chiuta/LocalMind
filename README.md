@@ -8,7 +8,7 @@ Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont ș
 
 ## Ce este
 
-LocalMind (v117 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „ZERO TELEMETRY” și „NO ACCOUNT”.
+LocalMind (v117 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „FĂRĂ TELEMETRIE” și „FĂRĂ CONT” (în versiunile anterioare: „ZERO TELEMETRY” / „NO ACCOUNT”; reformulate pentru a fi precise — vezi „Avertisment”).
 
 ## Funcții
 
@@ -45,7 +45,7 @@ LocalMind (v117 în titlul paginii) este o interfață de chat cu modele de limb
 
 ## Avertisment
 
-Răspunsurile modelelor mici pot fi greșite, incomplete sau inventate („halucinații"); verificați-le. Aplicația nu oferă sfaturi medicale, juridice sau financiare. Insignele „ZERO TELEMETRY" / „NO ACCOUNT" se referă la faptul că aplicația nu trimite conversațiile sau date de utilizare către un server al autorului; pagina contactează totuși huggingface.co (descărcare modele, căutare) și cdn.jsdelivr.net (KaTeX, Mermaid, Pyodide), după cum este descris mai sus.
+Răspunsurile modelelor mici pot fi greșite, incomplete sau inventate („halucinații"); verificați-le. Aplicația nu oferă sfaturi medicale, juridice sau financiare. Insignele „FĂRĂ TELEMETRIE” / „FĂRĂ CONT” (tooltip-ul insignei spune același lucru) se referă la faptul că aplicația nu trimite conversațiile sau date de utilizare către un server al autorului; pagina contactează totuși huggingface.co (descărcare modele, căutare) și cdn.jsdelivr.net (KaTeX, Mermaid, Pyodide), după cum este descris mai sus.
 
 ## Componente terțe
 
@@ -57,9 +57,11 @@ Descarcă întregul director (nu doar `index.html`, deoarece scripturile transfo
 
 ## Licență
 
-CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE
+CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRADE-FREE LICENSE v1.0” (cu condiția ca derivatele să rămână trade-free); a fost unificat spre CC0, iar spiritul trade-free rămâne o invitație, nu o condiție legală. Componentele din `vendor/` rămân sub licențele lor (vezi „Componente terțe”).
 
 ## Audit
+
+2026-10-11 (rundă 2): licență unificată spre CC0 în antet; insigne reformulate; tema luminoasă reparată (variabilele `--sf`, `--sf2`, `--tx3` definite pentru `body.light-mode`: butoanele-sugestie, `kbd` și celelalte suprafețe nu mai rămân întunecate); panoul „Parametri avansați” (CSS rămas într-un bloc nefolosit) se ascunde acum corect, cu `aria-hidden` adevărat.
 
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
