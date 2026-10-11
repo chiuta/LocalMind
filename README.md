@@ -6,11 +6,11 @@ Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont ș
 
 ![Captura de ecran](screenshot.png)
 
-**Ultima actualizare:** 11 octombrie 2026 · versiune v118
+**Ultima actualizare:** 11 octombrie 2026 · versiune v119
 
 ## Ce este
 
-LocalMind (v118 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „FĂRĂ TELEMETRIE” și „FĂRĂ CONT” (în versiunile anterioare: „ZERO TELEMETRY” / „NO ACCOUNT”; reformulate pentru a fi precise — vezi „Avertisment”).
+LocalMind (v119 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „FĂRĂ TELEMETRIE” și „FĂRĂ CONT” (în versiunile anterioare: „ZERO TELEMETRY” / „NO ACCOUNT”; reformulate pentru a fi precise — vezi „Avertisment”).
 
 ## Funcții
 
@@ -68,6 +68,11 @@ CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE. Antetul `index.ht
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### v119 — 11 octombrie 2026 (runda 6)
+- Securitate: toate cele ~300 de handlere inline (`onclick=`, `oninput=` etc.; 242 distincte) au fost înlocuite cu un singur dispecer delegat (`data-on-*` + un script clasic separat, fără `eval`/`Function`; pentru markup generat dinamic, argumentele trec prin `data-args` JSON și doar o listă fixă de funcții poate fi apelată). CSP-ul are acum `script-src` pe hash SHA-256 (două scripturi), fără `'unsafe-inline'`; `'unsafe-eval'` rămâne necesar pentru funcția „Rulează” a blocurilor de cod JavaScript și `'wasm-unsafe-eval'` pentru ONNX Runtime.
+- Verificat paritatea comportamentului: pe toate cele 253 de elemente cu handlere (242 handlere distincte) s-au declanșat evenimentele originale și s-au comparat apelurile, modificările de stil, DOM-ul și `defaultPrevented`, înainte și după: 0 diferențe.
+- Reparat: opt funcții folosite de handlere (`_highlightSearch`, `_seekTimelineDebounced`, `_checkPromptLength`, `_updateGhostText`, `_trackWPM`, `_checkExpander`, `_updateTypingTokens`, `_runGlobSearch`) erau definite doar în modul, deci handlerele inline aruncau `ReferenceError` (căutarea cu evidențiere, glisorul de poziție din conversație, căutarea globală și verificările la tastare nu rulau); acum sunt expuse pe `window`.
 
 ### v118 — 11 octombrie 2026
 - Reparat: pe `file://` interfața nu mai este inertă (ReferenceError doLoad/setTemp/useChip): transformers.js se încarcă la cerere (import dinamic), iar „Încarcă Modelul” afișează un mesaj explicativ.

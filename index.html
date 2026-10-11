@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--
   ╔══════════════════════════════════════════════════════════════╗
-  ║              L O C A L M I N D  v118                         ║
+  ║              L O C A L M I N D  v119                         ║
   ║        AI în browser — un singur fișier HTML                ║
   ╠══════════════════════════════════════════════════════════════╣
   ║  FILOSOFIE TRADE-FREE · LICENȚĂ CC0 1.0                     ║
@@ -48,9 +48,9 @@
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net 'sha256-KMbZwfyRlZceF9j1oEToCHIp8JP7gFGyxuv6m34YEw8=' 'sha256-aTMkah38dsuVNPMtv0LI6pnAaKgHYuTp10P1ESNw4pM='; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>LocalMind v118 — AI în browser</title>
+<title>LocalMind v119 — AI în browser</title>
 <meta name="theme-color" content="#007848">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2108,88 +2108,88 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
   <div class="bdg bg">⬡ FĂRĂ CONT</div>
   <div class="bdg bb" id="dbdg">⏳ detectare…</div>
   <div class="hsp"></div>
-  <button type="button" id="focus-btn" onclick="toggleFocus()" title="Mod focus (F)">⊞</button>
-  <button type="button" id="mbtn" onclick="toggleSb()">☰</button>
-  <span id="conv-title" onclick="startTitleEdit()" title="Click pentru a redenumi conversația" tabindex="0" role="button" aria-label="Titlu conversație"></span>
-  <input type="text" id="conv-title-edit" onblur="endTitleEdit()" onkeydown="if(event.key==='Enter')endTitleEdit();if(event.key==='Escape'){this.style.display='none';document.getElementById('conv-title').style.display=''}" aria-label="Editează titlul conversației">
-  <button type="button" onclick="showOnboarding()" title="Ajutor — cum funcționează LocalMind"
+  <button type="button" id="focus-btn" data-on-click="0" title="Mod focus (F)">⊞</button>
+  <button type="button" id="mbtn" data-on-click="1">☰</button>
+  <span id="conv-title" data-on-click="2" title="Click pentru a redenumi conversația" tabindex="0" role="button" aria-label="Titlu conversație"></span>
+  <input type="text" id="conv-title-edit" data-on-blur="3" data-on-keydown="4" aria-label="Editează titlul conversației">
+  <button type="button" data-on-click="5" title="Ajutor — cum funcționează LocalMind"
     style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);
     border-radius:50%;width:22px;height:22px;color:var(--tx3);cursor:pointer;font-family:var(--fc);
     font-size:11px;font-weight:700;flex-shrink:0;display:flex;align-items:center;justify-content:center;
     margin-left:6px" aria-label="Ajutor">?</button>
-  <button type="button" id="simplu-btn" onclick="toggleSimpleMode()"
+  <button type="button" id="simplu-btn" data-on-click="6"
     title="Modul Simplu — ascunde comenzile avansate (toggle)"
     style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);
     border-radius:10px;padding:0 7px;height:22px;color:var(--tx3);cursor:pointer;font-family:var(--fc);
     font-size:9px;font-weight:700;letter-spacing:.03em;flex-shrink:0;display:flex;align-items:center;
     margin-left:4px" aria-label="Modul Simplu" aria-pressed="false">Simplu</button>
-  <button type="button" id="theme-btn" onclick="toggleLightMode()"
+  <button type="button" id="theme-btn" data-on-click="7"
     title="Comută tema luminoasă / întunecată"
     aria-label="Comută tema"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:14px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">☀</button>
-  <button type="button" id="night-btn" onclick="toggleNightMode()"
+  <button type="button" id="night-btn" data-on-click="8"
     title="Mod Nocturn — Simplu + Pomodoro 25min + Ploaie (focus maxim)"
     aria-label="Mod Nocturn"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🌙</button>
-  <button type="button" id="cmp-btn" onclick="toggleConvCmp()"
+  <button type="button" id="cmp-btn" data-on-click="9"
     title="Compară două conversații salvate"
     aria-label="Compară conversații"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">↔</button>
-  <button type="button" id="hist-btn" onclick="toggleConvHistory()"
+  <button type="button" id="hist-btn" data-on-click="10"
     title="Istoricul conversațiilor salvate"
     aria-label="Conversații salvate"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🗂</button>
-  <button type="button" id="lang-btn" onclick="toggleLangMenu()"
+  <button type="button" id="lang-btn" data-on-click="11"
     title="Comutare limbă răspunsuri AI"
     aria-label="Limbă răspunsuri" aria-haspopup="listbox"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🌐</button>
-  <button type="button" id="auto-read-btn" onclick="toggleAutoRead()"
+  <button type="button" id="auto-read-btn" data-on-click="12"
     title="Auto-citire: citește automat fiecare răspuns AI"
     aria-label="Auto-citire"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🔊</button>
-  <button type="button" id="tts-settings-btn" onclick="toggleTTSSettings()"
+  <button type="button" id="tts-settings-btn" data-on-click="13"
     title="Setări voce TTS (viteză, voce)"
     aria-label="Setări voce" aria-haspopup="true"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🔉</button>
-  <button type="button" id="ts-btn" onclick="toggleTimestamps()"
+  <button type="button" id="ts-btn" data-on-click="14"
     title="Afișează/ascunde timestamp-urile mesajelor"
     aria-label="Toggle timestamps"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🕐</button>
-  <button type="button" id="think-btn" onclick="toggleThinkMode()"
+  <button type="button" id="think-btn" data-on-click="15"
     title="Afișează/ascunde blocurile de gândire AI <think>"
     aria-label="Toggle think blocks"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🧠</button>
-  <button type="button" id="lock-btn" onclick="toggleConvLock()"
+  <button type="button" id="lock-btn" data-on-click="16"
     title="Blochează conversația (previne ștergerea accidentală)"
     aria-label="Blocare conversație"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🔓</button>
-  <button type="button" id="ambient-btn" onclick="toggleAmbientMode()"
+  <button type="button" id="ambient-btn" data-on-click="17"
     title="Mod ambient — prezentare fullscreen (fundal negru, text mare)"
     aria-label="Mod ambient"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
     color:var(--tx3);cursor:pointer;font-size:13px;flex-shrink:0;
     display:flex;align-items:center;margin-left:4px;padding:0">🎭</button>
-  <button type="button" id="read-btn" onclick="toggleReadMode()"
+  <button type="button" id="read-btn" data-on-click="18"
     title="Mod citire — vizualizare fără distrageri (Alt+R)"
     aria-label="Mod citire"
     style="-webkit-appearance:none;appearance:none;background:none;border:none;
@@ -2197,9 +2197,9 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
     display:flex;align-items:center;margin-left:4px;padding:0">📖</button>
 </header>
 
-<button type="button" id="focus-exit" onclick="toggleFocus()">✕ Ieși din focus</button>
+<button type="button" id="focus-exit" data-on-click="0">✕ Ieși din focus</button>
 
-<div id="sb-overlay" onclick="toggleSb()"></div>
+<div id="sb-overlay" data-on-click="1"></div>
 
 <div id="app">
 
@@ -2209,47 +2209,47 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
       <div class="sl">Model</div>
       <div class="mc" data-model="onnx-community/Qwen3-0.6B-ONNX"
            tabindex="0" role="group"
-           onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
+           data-on-click="19" data-on-keydown="20">
         <div class="mn">Qwen3 0.6B</div>
         <div class="mm"><span class="mt tf">RAPID</span>~550 MB · 119 limbi 🌍</div>
         <div class="cc-date" id="cd-Qwen3-0.6B-ONNX"></div>
         <span class="cc-badge" id="cb-Qwen3-0.6B-ONNX" title="Necunoscut"></span>
-        <button type="button" class="cc-upd" onclick="event.stopPropagation();updMdl('onnx-community/Qwen3-0.6B-ONNX')" title="Șterge cache și reîncarcă (actualizare)">🗑</button>
+        <button type="button" class="cc-upd" data-on-click="21" title="Șterge cache și reîncarcă (actualizare)">🗑</button>
       </div>
       <div class="mc" data-model="onnx-community/LFM2-1.2B-ONNX"
            tabindex="0" role="group"
-           onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
+           data-on-click="19" data-on-keydown="20">
         <div class="mn">LFM2 1.2B</div>
         <div class="mm"><span class="mt tf">ECHILIBRAT</span>~700 MB · CPU 2× mai rapid</div>
         <div class="cc-date" id="cd-LFM2-1.2B-ONNX"></div>
         <span class="cc-badge" id="cb-LFM2-1.2B-ONNX" title="Necunoscut"></span>
-        <button type="button" class="cc-upd" onclick="event.stopPropagation();updMdl('onnx-community/LFM2-1.2B-ONNX')" title="Șterge cache și reîncarcă (actualizare)">🗑</button>
+        <button type="button" class="cc-upd" data-on-click="22" title="Șterge cache și reîncarcă (actualizare)">🗑</button>
       </div>
       <div class="mc" data-model="onnx-community/Qwen3-1.7B-ONNX"
            tabindex="0" role="group"
-           onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
+           data-on-click="19" data-on-keydown="20">
         <div class="mn">Qwen3 1.7B</div>
         <div class="mm"><span class="mt ts">SMART</span>~1.3 GB · 119 limbi 🌍</div>
         <div class="cc-date" id="cd-Qwen3-1.7B-ONNX"></div>
         <span class="cc-badge" id="cb-Qwen3-1.7B-ONNX" title="Necunoscut"></span>
-        <button type="button" class="cc-upd" onclick="event.stopPropagation();updMdl('onnx-community/Qwen3-1.7B-ONNX')" title="Șterge cache și reîncarcă (actualizare)">🗑</button>
+        <button type="button" class="cc-upd" data-on-click="23" title="Șterge cache și reîncarcă (actualizare)">🗑</button>
       </div>
       <div class="mc sel" data-model="onnx-community/Qwen3-4B-ONNX"
            tabindex="0" role="group"
-           onclick="selMdl(this)" onkeydown="if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}">
+           data-on-click="19" data-on-keydown="20">
         <div class="mn">Qwen3 4B</div>
         <div class="mm"><span class="mt tg">CEL MAI BUN</span>~2.5 GB · 119 limbi 🌍</div>
         <div class="cc-date" id="cd-Qwen3-4B-ONNX"></div>
         <span class="cc-badge" id="cb-Qwen3-4B-ONNX" title="Necunoscut"></span>
-        <button type="button" class="cc-upd" onclick="event.stopPropagation();updMdl('onnx-community/Qwen3-4B-ONNX')" title="Șterge cache și reîncarcă (actualizare)">🗑</button>
+        <button type="button" class="cc-upd" data-on-click="24" title="Șterge cache și reîncarcă (actualizare)">🗑</button>
       </div>
-      <button type="button" id="lbtn" onclick="doLoad()" aria-label="Load selected model">⬇ Încarcă Modelul</button>
+      <button type="button" id="lbtn" data-on-click="25" aria-label="Load selected model">⬇ Încarcă Modelul</button>
       <div class="custom-mdl-row">
         <input type="text" id="custom-mdl-id" aria-label="ID model Hugging Face" placeholder="onnx-community/Model-ONNX" autocomplete="off" spellcheck="false"
-          onkeydown="if(event.key==='Enter')addCustomModel()"
+          data-on-keydown="26"
           title="ID exact de model de pe HuggingFace Hub">
-        <button type="button" id="mdl-search-btn" onclick="openModelSearch()" title="Caută modele ONNX pe HuggingFace Hub">🔍</button>
-        <button type="button" id="custom-mdl-add" onclick="addCustomModel()" title="Adaugă model custom">＋</button>
+        <button type="button" id="mdl-search-btn" data-on-click="27" title="Caută modele ONNX pe HuggingFace Hub">🔍</button>
+        <button type="button" id="custom-mdl-add" data-on-click="28" title="Adaugă model custom">＋</button>
       </div>
     </div>
 
@@ -2260,19 +2260,19 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
       <div class="mds-title">
         <span>🔍 Descoperă modele ONNX</span>
         <span id="mds-compat-badge" style="font-family:var(--fc);font-size:9px;color:var(--ac2);display:none;border:1px solid rgba(54,212,168,.2);border-radius:3px;padding:1px 6px"></span>
-        <button type="button" class="mds-close" onclick="closeModelSearch()" aria-label="Închide">✕</button>
+        <button type="button" class="mds-close" data-on-click="29" aria-label="Închide">✕</button>
       </div>
       <input type="text" id="mds-input" placeholder="ex: Qwen3, Phi, Llama, Gemma, SmolLM…"
-        oninput="searchModels(this.value)"
-        onkeydown="if(event.key==='Escape')closeModelSearch()"
+        data-on-input="30"
+        data-on-keydown="31"
         autocomplete="off" spellcheck="false" aria-label="Caută model">
       <div class="mds-filters" id="mds-filters">
-        <button type="button" class="mds-filter on" data-tag="" onclick="setMdsFilter(this,'')">Toate</button>
-        <button type="button" class="mds-filter" data-tag="q4" onclick="setMdsFilter(this,'q4')">Q4 lite</button>
-        <button type="button" class="mds-filter" data-tag="q8" onclick="setMdsFilter(this,'q8')">Q8 calitate</button>
-        <button type="button" class="mds-filter" data-tag="instruct" onclick="setMdsFilter(this,'instruct')">Instruct</button>
-        <button type="button" class="mds-filter" data-tag="multilingual" onclick="setMdsFilter(this,'multilingual')">Multilingv</button>
-        <button type="button" class="mds-filter" id="mds-compat-filter" data-tag="" onclick="setMdsCompatFilter()" style="display:none">✓ Compatibil GPU</button>
+        <button type="button" class="mds-filter on" data-tag="" data-on-click="32">Toate</button>
+        <button type="button" class="mds-filter" data-tag="q4" data-on-click="33">Q4 lite</button>
+        <button type="button" class="mds-filter" data-tag="q8" data-on-click="34">Q8 calitate</button>
+        <button type="button" class="mds-filter" data-tag="instruct" data-on-click="35">Instruct</button>
+        <button type="button" class="mds-filter" data-tag="multilingual" data-on-click="36">Multilingv</button>
+        <button type="button" class="mds-filter" id="mds-compat-filter" data-tag="" data-on-click="37" style="display:none">✓ Compatibil GPU</button>
       </div>
       <!-- Search history pills -->
       <div id="mds-history" style="display:none;margin-top:6px;display:flex;gap:4px;flex-wrap:wrap"></div>
@@ -2289,14 +2289,14 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
 
     <div class="ss">
       <div class="sl">📄 Documente (RAG)</div>
-      <div id="rag-zone" onclick="document.getElementById('rag-input').click()"
-           ondragover="event.preventDefault();this.classList.add('drag')"
-           ondragleave="this.classList.remove('drag')"
-           ondrop="event.preventDefault();this.classList.remove('drag');handleRagDrop(event.dataTransfer.files)">
+      <div id="rag-zone" data-on-click="38"
+           data-on-dragover="39"
+           data-on-dragleave="40"
+           data-on-drop="41">
         ↑ Drop TXT / MD / CSV / PDF sau click
       </div>
       <input type="file" id="rag-input" accept=".txt,.md,.csv,.pdf" multiple style="display:none"
-             onchange="handleRagDrop(this.files)">
+             data-on-change="42">
       <div id="rag-files"></div>
       <div id="rag-badge">🔍 RAG activ</div>
     </div>
@@ -2307,28 +2307,28 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
         <span class="pk">Temperature</span>
         <input type="range" id="tsl" min="0" max="1.5" step="0.05" value="0.7"
           aria-label="Temperature"
-          oninput="setTemp(this.value)">
+          data-on-input="43">
         <span class="pv" id="tv">0.7</span>
       </div>
       <div class="presets" role="group" aria-label="Temperature presets">
-        <button type="button" class="prs" onclick="setTemp('0.05')" data-t="0.05" title="Determinist — același răspuns de fiecare dată">🔒 Exact</button>
-        <button type="button" class="prs" onclick="setTemp('0.2')"  data-t="0.2"  title="Factual precis, fără creativitate">🎯 Factual</button>
-        <button type="button" class="prs" onclick="setTemp('0.4')"  data-t="0.4"  title="Pedagogic — explicații clare, structurate">🎓 Didactic</button>
-        <button type="button" class="prs on" onclick="setTemp('0.7')" data-t="0.7" title="Conversație naturală, echilibrată">💬 Natural</button>
-        <button type="button" class="prs" onclick="setTemp('0.6')"  data-t="0.6"  title="Coaching — empatic, ghidare caldă, întrebări deschise">🧘 Coaching</button>
-        <button type="button" class="prs am" onclick="setTemp('0.9')" data-t="0.9" title="Creativ expresiv — bun pentru scriere">✨ Creativ</button>
-        <button type="button" class="prs am" onclick="setTemp('1.0')" data-t="1.0" title="Maxim divergent — idei inedite, brainstorming">💡 Brainstorm</button>
-        <button type="button" class="prs bl" onclick="setTemp('0.55')" data-t="0.55" title="Mod Socratic — AI pune întrebări, nu dă răspunsuri directe">🦅 Socratic</button>
-        <button type="button" class="prs am" onclick="setTemp('0.85')" data-t="0.85" title="Avocat al Diavolului — contraargumentează tot ce spui">⚔ Contrariu</button>
-        <button type="button" class="prs bl" onclick="setTemp('0.45')" data-t="0.45" title="Arbitru de dezbateri — evaluează argumentele și dă un verdict">⚖ Arbitru</button>
-        <button type="button" class="prs bl" onclick="setTemp('0.15')" data-t="0.15" title="Telegrafic — răspunsuri ultra-scurte, bullet points, maximă densitate">📐 Telegrafic</button>
-        <button type="button" class="prs am" onclick="setTemp('1.15')" data-t="1.15" title="Flux liber — asociații libere, poetry mode, stream of consciousness">🌊 Flux</button>
+        <button type="button" class="prs" data-on-click="44" data-t="0.05" title="Determinist — același răspuns de fiecare dată">🔒 Exact</button>
+        <button type="button" class="prs" data-on-click="45"  data-t="0.2"  title="Factual precis, fără creativitate">🎯 Factual</button>
+        <button type="button" class="prs" data-on-click="46"  data-t="0.4"  title="Pedagogic — explicații clare, structurate">🎓 Didactic</button>
+        <button type="button" class="prs on" data-on-click="47" data-t="0.7" title="Conversație naturală, echilibrată">💬 Natural</button>
+        <button type="button" class="prs" data-on-click="48"  data-t="0.6"  title="Coaching — empatic, ghidare caldă, întrebări deschise">🧘 Coaching</button>
+        <button type="button" class="prs am" data-on-click="49" data-t="0.9" title="Creativ expresiv — bun pentru scriere">✨ Creativ</button>
+        <button type="button" class="prs am" data-on-click="50" data-t="1.0" title="Maxim divergent — idei inedite, brainstorming">💡 Brainstorm</button>
+        <button type="button" class="prs bl" data-on-click="51" data-t="0.55" title="Mod Socratic — AI pune întrebări, nu dă răspunsuri directe">🦅 Socratic</button>
+        <button type="button" class="prs am" data-on-click="52" data-t="0.85" title="Avocat al Diavolului — contraargumentează tot ce spui">⚔ Contrariu</button>
+        <button type="button" class="prs bl" data-on-click="53" data-t="0.45" title="Arbitru de dezbateri — evaluează argumentele și dă un verdict">⚖ Arbitru</button>
+        <button type="button" class="prs bl" data-on-click="54" data-t="0.15" title="Telegrafic — răspunsuri ultra-scurte, bullet points, maximă densitate">📐 Telegrafic</button>
+        <button type="button" class="prs am" data-on-click="55" data-t="1.15" title="Flux liber — asociații libere, poetry mode, stream of consciousness">🌊 Flux</button>
       </div>
       <div class="pr" style="margin-top:8px">
         <span class="pk">Max tokens</span>
         <input type="range" id="tksl" min="256" max="4096" step="256" value="2048"
           aria-label="Max tokens"
-          oninput="document.getElementById('tkv').textContent=this.value">
+          data-on-input="56">
         <span class="pv" id="tkv">2048</span>
       </div>
     </div>
@@ -2336,22 +2336,22 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
     <div class="ss">
       <div class="sl">System Prompt</div>
       <div class="presets" style="margin-bottom:7px" role="group" aria-label="System prompt presets">
-        <button type="button" class="prs" onclick="setPrompt('conv')"  title="Conversație caldă, umană">🗣 Chat</button>
-        <button type="button" class="prs" onclick="setPrompt('sci')"   title="Expert științific — precizie maximă">🔬 Știință</button>
-        <button type="button" class="prs" onclick="setPrompt('code')"  title="Asistent programare">💻 Cod</button>
-        <button type="button" class="prs am" onclick="setPrompt('cre')" title="Scriitor creativ expresiv">✍️ Creativ</button>
-        <button type="button" class="prs bl" onclick="setPrompt('ron')" title="Exclusiv în română">🇷🇴 Română</button>
-        <button type="button" class="prs" onclick="setPrompt('mat')"   title="Matematică pas cu pas">🧮 Mate</button>
-        <button type="button" class="prs" onclick="setPrompt('trad')"  title="Traducător expert multilingv">🌍 Traducere</button>
-        <button type="button" class="prs" onclick="setPrompt('rez')"   title="Rezumat concis și precis">📋 Rezumat</button>
-        <button type="button" class="prs am" onclick="setPrompt('fil')" title="Dialog filozofic socratic">🧠 Filosof</button>
-        <button type="button" class="prs am" onclick="setPrompt('rpg')" title="Joc de rol imersiv">🎮 RPG</button>
-        <button type="button" class="prs" onclick="setPrompt('coach')" title="Coaching — ghidare empatică, întrebări deschise">🧘 Coach</button>
-        <button type="button" class="prs bl" onclick="setPrompt('soc')" title="Mod Socratic — nu dă răspunsuri, pune întrebări">🦅 Socratic</button>
-        <button type="button" class="prs am" onclick="setPrompt('devil')" title="Avocat al Diavolului — contraargumentează sistematic">⚔ Contrariu</button>
-        <button type="button" class="prs bl" onclick="setPrompt('arb')" title="Arbitru de dezbateri — evaluează și dă verdict pe argumente">⚖ Arbitru</button>
-        <button type="button" class="prs bl" onclick="setPrompt('simp')" title="Limbaj simplu — explicații pentru oricine">📖 Simplu</button>
-        <button type="button" class="prs" onclick="setPrompt('tel')"   title="Telegrafic — maximă densitate, minimă lungime">📐 Telegrafic</button>
+        <button type="button" class="prs" data-on-click="57"  title="Conversație caldă, umană">🗣 Chat</button>
+        <button type="button" class="prs" data-on-click="58"   title="Expert științific — precizie maximă">🔬 Știință</button>
+        <button type="button" class="prs" data-on-click="59"  title="Asistent programare">💻 Cod</button>
+        <button type="button" class="prs am" data-on-click="60" title="Scriitor creativ expresiv">✍️ Creativ</button>
+        <button type="button" class="prs bl" data-on-click="61" title="Exclusiv în română">🇷🇴 Română</button>
+        <button type="button" class="prs" data-on-click="62"   title="Matematică pas cu pas">🧮 Mate</button>
+        <button type="button" class="prs" data-on-click="63"  title="Traducător expert multilingv">🌍 Traducere</button>
+        <button type="button" class="prs" data-on-click="64"   title="Rezumat concis și precis">📋 Rezumat</button>
+        <button type="button" class="prs am" data-on-click="65" title="Dialog filozofic socratic">🧠 Filosof</button>
+        <button type="button" class="prs am" data-on-click="66" title="Joc de rol imersiv">🎮 RPG</button>
+        <button type="button" class="prs" data-on-click="67" title="Coaching — ghidare empatică, întrebări deschise">🧘 Coach</button>
+        <button type="button" class="prs bl" data-on-click="68" title="Mod Socratic — nu dă răspunsuri, pune întrebări">🦅 Socratic</button>
+        <button type="button" class="prs am" data-on-click="69" title="Avocat al Diavolului — contraargumentează sistematic">⚔ Contrariu</button>
+        <button type="button" class="prs bl" data-on-click="70" title="Arbitru de dezbateri — evaluează și dă verdict pe argumente">⚖ Arbitru</button>
+        <button type="button" class="prs bl" data-on-click="71" title="Limbaj simplu — explicații pentru oricine">📖 Simplu</button>
+        <button type="button" class="prs" data-on-click="72"   title="Telegrafic — maximă densitate, minimă lungime">📐 Telegrafic</button>
       </div>
       <textarea id="sysp" rows="8" aria-label="System prompt">/no_think
 Ești LocalMind — un prieten informat, cald și sincer, nu un robot corporatist.
@@ -2370,32 +2370,32 @@ ONESTITATE — REGULA #1:
 - Dacă subiectul îți depășește cunoștințele, recunoaște cu naturalețe și explică ce știi cu certitudine.</textarea>
         <div id="tmpl-bar" aria-label="Șabloane de prompt"></div>
         <div style="display:flex;gap:4px;margin:4px 0;flex-wrap:wrap">
-          <button type="button" onclick="startSchedule('pomodoro')" style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:4px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:8px;padding:2px 7px" title="25min muncă + 5min pauză">🍅 Pomodoro</button>
-          <button type="button" onclick="startSchedule('deep')" style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:4px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:8px;padding:2px 7px" title="50min muncă + 10min pauză">🧠 Deep</button>
-          <button type="button" onclick="startSchedule('sprint')" style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:4px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:8px;padding:2px 7px" title="15min sprint rapid">⚡ Sprint</button>
+          <button type="button" data-on-click="73" style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:4px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:8px;padding:2px 7px" title="25min muncă + 5min pauză">🍅 Pomodoro</button>
+          <button type="button" data-on-click="74" style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:4px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:8px;padding:2px 7px" title="50min muncă + 10min pauză">🧠 Deep</button>
+          <button type="button" data-on-click="75" style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:4px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:8px;padding:2px 7px" title="15min sprint rapid">⚡ Sprint</button>
         </div>
       <!-- Advanced generation params -->
       <div id="params-section">
-        <button type="button" id="params-toggle" onclick="toggleParamsSection()" aria-expanded="false">
+        <button type="button" id="params-toggle" data-on-click="76" aria-expanded="false">
           ⚙ Parametri avansați ▾
         </button>
         <div id="params-body" aria-hidden="true">
           <div class="param-row">
             <span class="param-lbl">Top-P</span>
             <input type="range" class="param-slider" id="p-topp" min="0.1" max="1" step="0.05" value="0.95"
-              oninput="updateParamVal('topp',this.value)" aria-label="Top-P (nucleu sampling)">
+              data-on-input="77" aria-label="Top-P (nucleu sampling)">
             <span class="param-val" id="v-topp">0.95</span>
           </div>
           <div class="param-row">
             <span class="param-lbl">Rep. Penalty</span>
             <input type="range" class="param-slider" id="p-repen" min="1.0" max="2.0" step="0.05" value="1.1"
-              oninput="updateParamVal('repen',this.value)" aria-label="Repetition penalty">
+              data-on-input="78" aria-label="Repetition penalty">
             <span class="param-val" id="v-repen">1.1</span>
           </div>
           <div class="param-row">
             <span class="param-lbl">Max tokeni</span>
             <input type="range" class="param-slider" id="p-maxtok" min="64" max="2048" step="64" value="512"
-              oninput="updateParamVal('maxtok',this.value)" aria-label="Tokeni maximi">
+              data-on-input="79" aria-label="Tokeni maximi">
             <span class="param-val" id="v-maxtok">512</span>
           </div>
         </div>
@@ -2414,12 +2414,12 @@ ONESTITATE — REGULA #1:
       <div class="sr"><span class="sk">MESSAGES</span><span class="sv" id="s-ms">0</span></div>
       <div class="sr"><span class="sk">TOKENS OUT</span><span class="sv" id="s-tk">0</span></div>
       <div class="sr"><span class="sk">CONTEXT</span><span class="sv" id="s-ctx">—</span></div>
-      <div id="mem-badge" style="display:none;margin-top:5px;font-family:var(--fc);font-size:10px;color:var(--ac);background:rgba(54,212,168,.1);border:1px solid rgba(54,212,168,.22);border-radius:4px;padding:3px 7px;cursor:pointer" onclick="if(confirm('Șterge memoria persistentă?'))clearMemory()">🧠 Memorie persistentă</div>
+      <div id="mem-badge" style="display:none;margin-top:5px;font-family:var(--fc);font-size:10px;color:var(--ac);background:rgba(54,212,168,.1);border:1px solid rgba(54,212,168,.22);border-radius:4px;padding:3px 7px;cursor:pointer" data-on-click="80">🧠 Memorie persistentă</div>
       <!-- Budget de atenție zilnic -->
       <div id="budget-section" style="margin-top:8px;display:none">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
           <span id="budget-lbl" style="font-family:var(--fc);font-size:9px;color:var(--tx3)">🎯 Budget zilnic</span>
-          <button onclick="toggleBudget()" style="background:none;border:none;color:var(--tx3);cursor:pointer;font-size:9px;font-family:var(--fc)" title="Activează/dezactivează budget">⚙</button>
+          <button data-on-click="81" style="background:none;border:none;color:var(--tx3);cursor:pointer;font-size:9px;font-family:var(--fc)" title="Activează/dezactivează budget">⚙</button>
         </div>
         <div style="width:100%;height:4px;background:var(--bg3);border-radius:2px;overflow:hidden">
           <div id="budget-bar-fill" style="height:100%;border-radius:2px;width:0%;transition:width .3s,background .3s;background:var(--ac)"></div>
@@ -2427,9 +2427,9 @@ ONESTITATE — REGULA #1:
         <div style="margin-top:4px;display:flex;gap:4px;align-items:center">
           <input type="number" id="budget-inp" min="1000" max="100000" step="1000" value="10000"
             style="width:80px;background:var(--bg3);border:1px solid var(--bd);border-radius:4px;color:var(--tx);font-family:var(--fc);font-size:9px;padding:2px 5px;outline:none"
-            onchange="setBudgetLimit(this)" title="Limita zilnică (tokeni)">
+            data-on-change="82" title="Limita zilnică (tokeni)">
           <span style="font-family:var(--fc);font-size:9px;color:var(--tx3)">tok/zi</span>
-          <button onclick="toggleBudget()" style="margin-left:auto;background:var(--bg3);border:1px solid var(--bd);border-radius:4px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:9px;padding:1px 6px">ON/OFF</button>
+          <button data-on-click="81" style="margin-left:auto;background:var(--bg3);border:1px solid var(--bd);border-radius:4px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:9px;padding:1px 6px">ON/OFF</button>
         </div>
       </div>
       <!-- Observatorul Inferenței (toggled via status bar button) -->
@@ -2441,19 +2441,19 @@ ONESTITATE — REGULA #1:
         <div id="mood-lbl" style="font-family:var(--fc);font-size:9px;color:var(--tx3);text-align:center;margin-top:2px">—</div>
       </div>
       <div class="per-row">
-        <input type="checkbox" id="persist-toggle" onchange="togglePersist(this.checked)">
+        <input type="checkbox" id="persist-toggle" data-on-change="83">
         <label for="persist-toggle">Salvează conversația local</label>
       </div>
       <div class="per-row" style="margin-top:4px">
-        <input type="checkbox" id="budget-toggle-cb" onchange="window.onBudgetCheckbox(this.checked)">
+        <input type="checkbox" id="budget-toggle-cb" data-on-change="84">
         <label for="budget-toggle-cb">Budget atenție zilnic 🎯</label>
       </div>
       <div id="obs-panel" style="display:none;margin-top:8px;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;padding:8px 10px;font-size:11px"></div>
       <div id="snap-panel" class="hidden">
         <div class="snap-hdr"><span>Ramuri / Snapshot-uri</span>
-          <button type="button" id="snap-tree-btn" class="snap-save" onclick="toggleSnapTree()" style="display:none" title="Arbore/Listă">🌲</button>
-          <button type="button" class="snap-save" onclick="openMergeModal()" title="Fuzionează 2 ramuri">🔀</button>
-          <button type="button" class="snap-save" onclick="saveSnapshot()">+ Salvează</button>
+          <button type="button" id="snap-tree-btn" class="snap-save" data-on-click="85" style="display:none" title="Arbore/Listă">🌲</button>
+          <button type="button" class="snap-save" data-on-click="86" title="Fuzionează 2 ramuri">🔀</button>
+          <button type="button" class="snap-save" data-on-click="87">+ Salvează</button>
         </div>
         <div id="snap-list"></div>
       </div>
@@ -2503,12 +2503,12 @@ ONESTITATE — REGULA #1:
       <div class="wt">AI rulează aici. În browserul tău.</div>
       <div class="ws">Alege un model și apasă <strong>Încarcă Modelul</strong>. Fără cheie API, server sau cont. Toate modelele suportă <strong>română</strong> și 100+ limbi. Modelul se descarcă o singură dată și rulează local pentru totdeauna.</div>
       <div class="chips">
-        <button type="button" class="chip" onclick="useChip(this)">Explică cum funcționează inteligența artificială</button>
-        <button type="button" class="chip" onclick="useChip(this)">Scrie o poveste scurtă despre o seară de toamnă</button>
-        <button type="button" class="chip" onclick="useChip(this)">Ce este paradoxul Fermi? Explică în română</button>
-        <button type="button" class="chip" onclick="useChip(this)">Translate "bună ziua" to 10 different languages</button>
-        <button type="button" class="chip" onclick="useChip(this)">Python function to reverse a string</button>
-        <button type="button" class="chip" onclick="useChip(this)">How does WebGPU work?</button>
+        <button type="button" class="chip" data-on-click="88">Explică cum funcționează inteligența artificială</button>
+        <button type="button" class="chip" data-on-click="88">Scrie o poveste scurtă despre o seară de toamnă</button>
+        <button type="button" class="chip" data-on-click="88">Ce este paradoxul Fermi? Explică în română</button>
+        <button type="button" class="chip" data-on-click="88">Translate "bună ziua" to 10 different languages</button>
+        <button type="button" class="chip" data-on-click="88">Python function to reverse a string</button>
+        <button type="button" class="chip" data-on-click="88">How does WebGPU work?</button>
       </div>
     </div>
 
@@ -2518,10 +2518,10 @@ ONESTITATE — REGULA #1:
     <div id="search-bar" style="display:none;padding:6px 14px;border-top:1px solid var(--bd);background:var(--bg2);flex-direction:column;gap:4px;flex-shrink:0">
       <div style="display:flex;align-items:center;gap:7px">
         <input type="text" id="search-input" placeholder="Caută… (/ pentru regex)"
-          oninput="renderSearchResults(this.value);_highlightSearch(this.value)"
+          data-on-input="89"
           style="flex:1;background:var(--bg3);border:1px solid var(--bd);border-radius:6px;color:var(--tx);font-family:var(--fc);font-size:12px;padding:5px 9px;outline:none"
-          onfocus="this.style.borderColor='var(--ac)'" onblur="this.style.borderColor='var(--bd)'">
-        <button type="button" onclick="toggleSearch()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:13px">✕</button>
+          data-on-focus="90" data-on-blur="91">
+        <button type="button" data-on-click="92" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:13px">✕</button>
       </div>
       <div id="search-results" style="max-height:160px;overflow-y:auto;border-radius:6px;border:1px solid var(--bd);background:var(--bg3)"></div>
     </div>
@@ -2532,20 +2532,20 @@ ONESTITATE — REGULA #1:
         <span id="pred-lbl"></span>
       </div>
       <div id="ftb" role="toolbar" aria-label="Formatting toolbar">
-        <button type="button" class="ftbtn" onclick="fmt('**','**')" title="Bold (Ctrl+B)"><b>B</b></button>
-        <button type="button" class="ftbtn" onclick="fmt('*','*')"   title="Italic (Ctrl+I)"><i>I</i></button>
-        <button type="button" class="ftbtn" onclick="fmt('~~','~~')" title="Strikethrough"><del style="text-decoration:line-through">S</del></button>
+        <button type="button" class="ftbtn" data-on-click="93" title="Bold (Ctrl+B)"><b>B</b></button>
+        <button type="button" class="ftbtn" data-on-click="94"   title="Italic (Ctrl+I)"><i>I</i></button>
+        <button type="button" class="ftbtn" data-on-click="95" title="Strikethrough"><del style="text-decoration:line-through">S</del></button>
         <div class="ftb-sep" aria-hidden="true"></div>
-        <button type="button" class="ftbtn" onclick="fmt('`','`')"   title="Inline code"><span style="font-family:var(--fc)">`code`</span></button>
-        <button type="button" class="ftbtn" onclick="fmtBlock('```\n','\n```')" title="Code block">❮/❯</button>
+        <button type="button" class="ftbtn" data-on-click="96"   title="Inline code"><span style="font-family:var(--fc)">`code`</span></button>
+        <button type="button" class="ftbtn" data-on-click="97" title="Code block">❮/❯</button>
         <div class="ftb-sep" aria-hidden="true"></div>
-        <button type="button" class="ftbtn" onclick="fmtLine('## ')" title="Heading">H2</button>
-        <button type="button" class="ftbtn" onclick="fmtLine('### ')" title="Subheading">H3</button>
+        <button type="button" class="ftbtn" data-on-click="98" title="Heading">H2</button>
+        <button type="button" class="ftbtn" data-on-click="99" title="Subheading">H3</button>
         <div class="ftb-sep" aria-hidden="true"></div>
-        <button type="button" class="ftbtn" onclick="fmtLine('- ')"  title="Bullet list">• list</button>
-        <button type="button" class="ftbtn" onclick="fmtLine('> ')"  title="Blockquote">" quote</button>
+        <button type="button" class="ftbtn" data-on-click="100"  title="Bullet list">• list</button>
+        <button type="button" class="ftbtn" data-on-click="101"  title="Blockquote">" quote</button>
         <div class="ftb-sep" aria-hidden="true"></div>
-        <button type="button" class="ftbtn" onclick="fmtLine('---')" title="Horizontal rule">—</button>
+        <button type="button" class="ftbtn" data-on-click="102" title="Horizontal rule">—</button>
       </div>
   
 <!-- Replay bar -->
@@ -2557,35 +2557,35 @@ ONESTITATE — REGULA #1:
     <option value="5">× Rapid</option>
   </select>
   <span id="replay-progress" style="margin-left:auto;color:var(--tx3)">0/0</span>
-  <button type="button" onclick="stopReplay()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0" aria-label="Oprește redarea">⏹</button>
+  <button type="button" data-on-click="103" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0" aria-label="Oprește redarea">⏹</button>
 </div>
     <!-- Pagination bar -->
     <div id="page-bar" role="navigation" aria-label="Paginare conversație">
-      <button type="button" class="page-btn" id="page-prev" onclick="changePage(-1)" aria-label="Pagina anterioară">◀</button>
+      <button type="button" class="page-btn" id="page-prev" data-on-click="104" aria-label="Pagina anterioară">◀</button>
       <span id="page-info">1/1</span>
-      <button type="button" class="page-btn" id="page-next" onclick="changePage(1)" aria-label="Pagina următoare">▶</button>
-      <button type="button" class="page-btn" onclick="showAllPages()" title="Afișează toate mesajele">Toate</button>
+      <button type="button" class="page-btn" id="page-next" data-on-click="105" aria-label="Pagina următoare">▶</button>
+      <button type="button" class="page-btn" data-on-click="106" title="Afișează toate mesajele">Toate</button>
     </div>
     <!-- Conversation timeline bar -->
     <div id="timeline-wrap" role="group" aria-label="Timeline conversație">
-      <button type="button" class="timeline-btn" onclick="timelineStep(-1)" title="Schimb anterior" aria-label="Anterior">◀</button>
+      <button type="button" class="timeline-btn" data-on-click="107" title="Schimb anterior" aria-label="Anterior">◀</button>
       <input type="range" id="timeline-slider" min="0" value="0" step="2"
-        oninput="_seekTimelineDebounced(this.value)" aria-label="Poziție în conversație">
+        data-on-input="108" aria-label="Poziție în conversație">
       <span id="timeline-label">0/0</span>
-      <button type="button" class="timeline-btn" onclick="timelineStep(1)" title="Schimb următor" aria-label="Următor">▶</button>
-      <button type="button" class="timeline-btn" onclick="toggleTimeline()" title="Închide timeline" aria-label="Închide">✕</button>
+      <button type="button" class="timeline-btn" data-on-click="109" title="Schimb următor" aria-label="Următor">▶</button>
+      <button type="button" class="timeline-btn" data-on-click="110" title="Închide timeline" aria-label="Închide">✕</button>
     </div>
     <div id="ai-note" style="font-size:10px;line-height:1.35;text-align:center;color:var(--tx2);padding:3px 10px 0">Modelele mici pot greși sau inventa informații; verifică răspunsurile. Nu înlocuiesc sfatul medical, juridic sau financiar.</div>
     <div id="ir">
             <div class="ta-wrap" style="flex:1;position:relative;min-width:0">
       <div id="ghost-text" aria-hidden="true" style="display:none"></div>
       <textarea id="ui" placeholder="Load a model first…" rows="1"
-          onkeydown="onKey(event)" oninput="resizeTA(this);_checkPromptLength && _checkPromptLength();window.updateCharCount&&window.updateCharCount(this);_updateGhostText(this);_trackWPM(this);_checkExpander&&_checkExpander(this);if(typeof _updateTypingTokens==='function')_updateTypingTokens(this)" disabled
+          data-on-keydown="111" data-on-input="112" disabled
           autocomplete="off" aria-label="Message input"></textarea>
     </div>
-        <button type="button" id="mic" onclick="toggleMic()" title="Input vocal" aria-label="Înregistrare vocală" disabled>🎤</button>
+        <button type="button" id="mic" data-on-click="113" title="Input vocal" aria-label="Înregistrare vocală" disabled>🎤</button>
         
-    <select id="fmt-btn" onchange="setFormat(this.value)"
+    <select id="fmt-btn" data-on-change="114"
       title="Format răspuns AI"
       style="-webkit-appearance:none;appearance:none;background:var(--bg2);border:1px solid var(--bd2);
       border-radius:5px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:9px;
@@ -2600,22 +2600,22 @@ ONESTITATE — REGULA #1:
       <option value="socratic">❓ Socratic</option>
     </select>
         <span id="len-row" title="Lungimea preferată a răspunsurilor">
-          <button type="button" class="len-btn" id="lb-s" onclick="setRespLen('s')" title="Răspuns scurt">S</button>
-          <button type="button" class="len-btn on" id="lb-n" onclick="setRespLen('n')" title="Răspuns normal">N</button>
-          <button type="button" class="len-btn" id="lb-l" onclick="setRespLen('l')" title="Răspuns detaliat">L</button>
+          <button type="button" class="len-btn" id="lb-s" data-on-click="115" title="Răspuns scurt">S</button>
+          <button type="button" class="len-btn on" id="lb-n" data-on-click="116" title="Răspuns normal">N</button>
+          <button type="button" class="len-btn" id="lb-l" data-on-click="117" title="Răspuns detaliat">L</button>
         </span>
         <span id="wpm-badge" aria-live="off" title="Viteză tastare"></span>
         <span id="char-count" aria-live="off" title="Caractere · Tokeni estimați"></span>
-        <button type="button" id="voice-btn" onclick="toggleVoiceInput()" title="Dictare vocală (Web Speech API)" aria-label="Dictare vocală" style="display:none">🎤</button>
-        <button type="button" id="voice-btn" onclick="toggleVoiceInput()"
+        <button type="button" id="voice-btn" data-on-click="118" title="Dictare vocală (Web Speech API)" aria-label="Dictare vocală" style="display:none">🎤</button>
+        <button type="button" id="voice-btn" data-on-click="118"
     title="Dictare voce (Web Speech API)"
     aria-label="Dictare vocală" style="margin-right:4px">🎤</button>
-<button type="button" id="snd" onclick="doSend()" disabled title="Send (Enter / Ctrl+Enter)" aria-label="Send message">➤</button>
-        <button type="button" id="stp" onclick="doStop()" title="Stop" aria-label="Stop generation">■</button>
+<button type="button" id="snd" data-on-click="119" disabled title="Send (Enter / Ctrl+Enter)" aria-label="Send message">➤</button>
+        <button type="button" id="stp" data-on-click="120" title="Stop" aria-label="Stop generation">■</button>
       </div>
       <div class="ih">
         <span class="kbh"><kbd>Enter</kbd> send &nbsp;<kbd>Shift+Enter</kbd> newline</span>
-        <button type="button" id="mhint" onclick="toggleSb()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:10.5px;padding:0;transition:color .1s" title="Deschide meniul lateral">← încarcă un model pentru a începe</button>
+        <button type="button" id="mhint" data-on-click="1" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:10.5px;padding:0;transition:color .1s" title="Deschide meniul lateral">← încarcă un model pentru a începe</button>
       </div>
     </div>
   </div>
@@ -2633,8 +2633,8 @@ ONESTITATE — REGULA #1:
       <option value="onnx-community/Qwen3-1.7B-ONNX">Qwen3 1.7B — SMART</option>
       <option value="onnx-community/Qwen3-4B-ONNX" selected>Qwen3 4B — CEL MAI BUN</option>
     </select>
-    <button type="button" id="cmp-run" onclick="runCmp()" title="Model B se va încărca pe CPU/WASM pentru a evita conflictul de memorie GPU cu Model A">⚡ Generează comparația</button>
-    <button type="button" id="cmp-close" onclick="closeCmp()">✕ Închide</button>
+    <button type="button" id="cmp-run" data-on-click="121" title="Model B se va încărca pe CPU/WASM pentru a evita conflictul de memorie GPU cu Model A">⚡ Generează comparația</button>
+    <button type="button" id="cmp-close" data-on-click="122">✕ Închide</button>
   </div>
   <div id="cmp-body">
     <div class="cmp-col">
@@ -2653,18 +2653,18 @@ ONESTITATE — REGULA #1:
   <div class="pl-panel">
     <div class="pl-hdr">
       <h3>📚 Bibliotecă Prompturi</h3>
-      <input type="text" id="pl-search" placeholder="Caută…" oninput="renderPromptList()">
-      <button type="button" class="pl-close" onclick="closePromptLib()">✕</button>
+      <input type="text" id="pl-search" placeholder="Caută…" data-on-input="123">
+      <button type="button" class="pl-close" data-on-click="124">✕</button>
     </div>
     <div id="pl-list"></div>
     <div class="pl-form">
       <input type="text" id="pl-name" placeholder="Titlu prompt…">
       <textarea id="pl-content" placeholder="Textul promptului…" rows="3"></textarea>
       <div class="pl-actions">
-        <button type="button" class="pl-btn primary" onclick="savePrompt()">+ Salvează</button>
-        <button type="button" class="pl-btn" onclick="exportPrompts()">↓ Export JSON</button>
+        <button type="button" class="pl-btn primary" data-on-click="125">+ Salvează</button>
+        <button type="button" class="pl-btn" data-on-click="126">↓ Export JSON</button>
         <label class="pl-btn" style="cursor:pointer">↑ Import
-          <input type="file" accept=".json" style="display:none" onchange="importPrompts(this)">
+          <input type="file" accept=".json" style="display:none" data-on-change="127">
         </label>
       </div>
     </div>
@@ -2676,7 +2676,7 @@ ONESTITATE — REGULA #1:
   <div class="audit-hdr">
     <h4>🛡 Audit Rețea</h4>
     <span id="audit-count" class="zero">0 cereri</span>
-    <button type="button" class="audit-close" onclick="document.getElementById('audit-panel').classList.toggle('hidden')">✕</button>
+    <button type="button" class="audit-close" data-on-click="128">✕</button>
   </div>
   <div id="audit-list"><div class="audit-empty">✅ Zero cereri de rețea în inferență</div></div>
 </div>
@@ -2690,11 +2690,11 @@ ONESTITATE — REGULA #1:
     <div id="dl-bar"><div id="dl-fill"></div></div>
     <span id="dl-pct"></span>
   </span>
-  <button type="button" class="tbtn" id="ctx-mgr-btn" onclick="toggleCtxMgr()"
+  <button type="button" class="tbtn" id="ctx-mgr-btn" data-on-click="129"
     title="Manager context — scoate mesaje din context" style="flex-shrink:0">🎛</button>
-  <button type="button" class="tbtn" id="mem-btn" onclick="toggleMemoryPanel()"
+  <button type="button" class="tbtn" id="mem-btn" data-on-click="130"
     title="Note persistente (Alt+M)" style="flex-shrink:0">📌</button>
-  <button type="button" class="tbtn" id="compact-btn" onclick="toggleCompactMode()"
+  <button type="button" class="tbtn" id="compact-btn" data-on-click="131"
     title="Mod compact (densitate mai mare)" style="flex-shrink:0">⊟</button>
   <span id="mood-dot" style="display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--tx3);margin-left:4px;flex-shrink:0;transition:background .6s ease;cursor:default" role="img" title="Sentiment sesiune" aria-label="Sentiment sesiune"></span>
   <span id="ctx-bar-wrap" title="Utilizare fereastră context" style="display:none">
@@ -2703,36 +2703,36 @@ ONESTITATE — REGULA #1:
     </div>
     <span id="ctx-pct">0%</span>
   </span>
-  <span id="smsg" aria-live="polite" aria-atomic="true" onclick="if(this.dataset.clickable)toggleSb()" style="cursor:pointer" data-clickable="1" title="Apasă pentru a deschide meniu">Selectează un model → Încarcă Modelul</span>
-  <span id="focus-stat" title="Click pentru statistici sesiune" style="cursor:pointer" onclick="showSessionStats()">
+  <span id="smsg" aria-live="polite" aria-atomic="true" data-on-click="132" style="cursor:pointer" data-clickable="1" title="Apasă pentru a deschide meniu">Selectează un model → Încarcă Modelul</span>
+  <span id="focus-stat" title="Click pentru statistici sesiune" style="cursor:pointer" data-on-click="133">
     <span id="focus-time">0:00</span>
     <span style="color:var(--tx3)">·</span>
     <span id="focus-words">0</span><span style="color:var(--tx3)"> cuv</span>
   </span>
   <div class="sr2">
     <!-- Skins / appearance -->
-    <button type="button" class="tbtn" id="foc-btn"      onclick="toggleFocTabara()" title="🔥 Foc de Tabară">🔥</button>
-    <button type="button" class="tbtn" id="rain-btn" onclick="toggleRain()" title="🌧 Ploaie — soundscape ambiant">🌧</button>
+    <button type="button" class="tbtn" id="foc-btn"      data-on-click="134" title="🔥 Foc de Tabară">🔥</button>
+    <button type="button" class="tbtn" id="rain-btn" data-on-click="135" title="🌧 Ploaie — soundscape ambiant">🌧</button>
     <span id="sound-vols" style="display:none;align-items:center;gap:3px;margin-left:2px">
       <input type="range" min="0" max="1" step="0.05"
         id="fire-vol-sl" title="Volum Foc"
-        oninput="setFireVol(this.value)"
+        data-on-input="136"
         style="-webkit-appearance:none;appearance:none;width:42px;height:2px;accent-color:var(--am);cursor:pointer;background:var(--bd2)"
         value="0.6" aria-label="Volum Foc de Tabară">
       <input type="range" min="0" max="1" step="0.05"
         id="rain-vol-sl" title="Volum Ploaie"
-        oninput="setRainVol(this.value)"
+        data-on-input="137"
         style="-webkit-appearance:none;appearance:none;width:42px;height:2px;accent-color:var(--bl);cursor:pointer;background:var(--bd2)"
         value="0.6" aria-label="Volum Ploaie">
     </span>
-    <button type="button" class="tbtn" id="dys-btn"      onclick="toggleDyslexia()"  title="Dyslexia-Friendly">Aa</button>
+    <button type="button" class="tbtn" id="dys-btn"      data-on-click="138"  title="Dyslexia-Friendly">Aa</button>
     <span class="fs-ctrl" title="Mărime font">
-      <button type="button" class="fs-btn" onclick="adjFont(-1)" aria-label="Font mai mic">A-</button>
+      <button type="button" class="fs-btn" data-on-click="139" aria-label="Font mai mic">A-</button>
       <span id="fs-lbl" style="font-family:var(--fc);font-size:9px;color:var(--tx3);min-width:22px;text-align:center;line-height:1" title="Dimensiune font curentă">14px</span>
-      <button type="button" class="fs-btn" onclick="adjFont(+1)" aria-label="Font mai mare">A+</button>
+      <button type="button" class="fs-btn" data-on-click="140" aria-label="Font mai mare">A+</button>
     </span>
-    <button type="button" class="tbtn" id="silenzio-btn" onclick="toggleSilenzio()"  title="🤫 Silenzio Bruno">🤫</button>
-    <button type="button" class="tbtn" onclick="startPomodoro(+localStorage.getItem('lm_pomo_min')||25)" title="⏱ Pomodoro — pornește timer de pauză activă (25 min implicit)">⏱</button>
+    <button type="button" class="tbtn" id="silenzio-btn" data-on-click="141"  title="🤫 Silenzio Bruno">🤫</button>
+    <button type="button" class="tbtn" data-on-click="142" title="⏱ Pomodoro — pornește timer de pauză activă (25 min implicit)">⏱</button>
 
     <!-- Pomodoro indicator (shown when active) -->
     <span id="pomo-wrap" title="Pomodoro — timp până la pauză">
@@ -2743,48 +2743,48 @@ ONESTITATE — REGULA #1:
           transform="rotate(-90 11 11)" id="pomo-arc"/>
       </svg>
       <span id="pomo-lbl">25:00</span>
-      <button type="button" onclick="stopPomodoro()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:10px;padding:0">✕</button>
+      <button type="button" data-on-click="143" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:10px;padding:0">✕</button>
     </span>
     <span class="tbtn-sep" aria-hidden="true"></span>
     <!-- Visualize / analyze -->
-    <button type="button" class="tbtn"                   onclick="openMindMap()"     title="🧩 Mind Map">🧩</button>
-    <button type="button" class="tbtn"                   onclick="showObserver()"    title="📊 Inferență">📊</button>
+    <button type="button" class="tbtn"                   data-on-click="144"     title="🧩 Mind Map">🧩</button>
+    <button type="button" class="tbtn"                   data-on-click="145"    title="📊 Inferență">📊</button>
     <span class="tbtn-sep" aria-hidden="true"></span>
     <!-- Actions -->
-    <button type="button" class="tbtn"                   onclick="window.toggleSearch()" title="🔍 Căutare">🔍</button>
-    <button type="button" class="tbtn" id="export-btn"   onclick="openExportMenu(event)" title="📤 Export">📤</button>
-    <button type="button" class="tbtn"                   onclick="shareSession()"    title="🔗 Partajează">🔗</button>
-    <button type="button" class="tbtn"                   onclick="openPromptLib()"   title="📚 Prompturi">📚</button>
-    <button type="button" class="tbtn"                   onclick="toggleAudit()"     title="🛡 Audit">🛡</button>
+    <button type="button" class="tbtn"                   data-on-click="146" title="🔍 Căutare">🔍</button>
+    <button type="button" class="tbtn" id="export-btn"   data-on-click="147" title="📤 Export">📤</button>
+    <button type="button" class="tbtn"                   data-on-click="148"    title="🔗 Partajează">🔗</button>
+    <button type="button" class="tbtn"                   data-on-click="149"   title="📚 Prompturi">📚</button>
+    <button type="button" class="tbtn"                   data-on-click="150"     title="🛡 Audit">🛡</button>
     <span class="tbtn-sep" aria-hidden="true"></span>
     <!-- Utility -->
-    <button type="button" class="tbtn red"               onclick="clearChat()"       title="Șterge conversația">✕</button>
-    <button type="button" class="tbtn md"                onclick="exportMD()"        title="Export Markdown">↓.md</button>
-    <button type="button" class="tbtn"                   onclick="exportChat()"      title="Export text">↓.txt</button>
-    <button type="button" class="tbtn"                   onclick="exportAsMarkdown()" title="Export Markdown cu formatare">↓.md</button>
-    <button type="button" class="tbtn"                   onclick="toggleFlashPanel()"title="Generator flashcarduri Anki din conversație" id="flash-btn">🃏</button>
-    <button type="button" class="tbtn"                   onclick="startReplay()"     title="Redă conversația cu efect de tastare" id="replay-btn">▶</button>
-    <button type="button" class="tbtn"                   onclick="toggleTimeline()"  title="Timeline — explorează orice moment din conversație" id="timeline-btn">⏱</button>
-    <button type="button" class="tbtn"                   onclick="exportAsPodcast()"  title="Export script podcast (Gazdă + Invitat format)" id="podcast-btn">🎙</button>
-    <button type="button" class="tbtn"                   onclick="aiSessionSummary()" title="Generează sumar AI al sesiunii" id="ai-summary-btn">🧩</button>
-    <button type="button" class="tbtn"                   onclick="generateSummary()"  title="Generează sumar AI al conversației" id="summary-btn">🧩</button>
-    <button type="button" class="tbtn"                   onclick="toggleStatsDash()" title="Statistici sesiune" id="stats-btn">📊</button>
-    <button type="button" class="tbtn"                   onclick="startReplay()"     title="Redă conversația cu efect de tastare" id="replay-btn">▶</button>
-    <button type="button" class="tbtn"                   onclick="exportAnalyticsCSV()" title="Export statistici ca CSV" id="stats-csv-btn">📋</button>
-    <button type="button" class="tbtn"                   onclick="toggleBenchPanel()"title="Benchmark viteză modele" id="bench-btn">⚡</button>
-    <button type="button" class="tbtn"                   onclick="toggleMindmap()"    title="Hartă vizuală a conversației" id="mindmap-btn">🗺</button>
-    <button type="button" class="tbtn"                   onclick="toggleAnalytics()"  title="Analize conversație: sentiment, topice" id="analytics-btn">📈</button>
-    <button type="button" class="tbtn"                   onclick="toggleWordCloud()"  title="Nor de cuvinte din conversație" id="wcloud-btn">☁</button>
-    <button type="button" class="tbtn"                   onclick="runHealthCheck()"   title="Verifică sănătatea conversației" id="health-btn">🏥</button>
-    <button type="button" class="tbtn"                   onclick="toggleChainPanel()" title="Lanț de prompturi secvențiale" id="chain-btn">⛓</button>
-    <button type="button" class="tbtn"                   onclick="togglePersonaPanel()" title="Personalități AI predefinite" id="persona-btn">🎭</button>
-    <button type="button" class="tbtn"                   onclick="window.print()"   title="Export PDF — Ctrl+P · printează sau salvează ca PDF">↓.pdf</button>
-    <button type="button" class="tbtn"                   onclick="exportAsHTML()"   title="Export conversație ca HTML frumos stilizat">↓.html</button>
-    <button type="button" class="tbtn"                   onclick="exportForPrint()"  title="Export HTML pentru imprimare/PDF (pagini curate, fără UI)" id="print-btn">🖨</button>
-    <button type="button" class="tbtn"                   onclick="toggleQRPanel()"    title="Partajează ultimul răspuns AI ca QR" id="qr-btn">📲</button>
-    <button type="button" class="tbtn"                   onclick="exportAsJSON()"   title="Export JSON structurat pentru dezvoltatori">↓.json</button>
-    <button type="button" class="tbtn"                   onclick="exportAsJSONL()"  title="Export JSONL pentru fine-tuning (perechi Q&A)">↓.jsonl</button>
-    <button type="button" class="tbtn"                   onclick="toggleQRModal()"  title="Partajează conversația ca QR code" id="qr-btn">📲</button>
+    <button type="button" class="tbtn red"               data-on-click="151"       title="Șterge conversația">✕</button>
+    <button type="button" class="tbtn md"                data-on-click="152"        title="Export Markdown">↓.md</button>
+    <button type="button" class="tbtn"                   data-on-click="153"      title="Export text">↓.txt</button>
+    <button type="button" class="tbtn"                   data-on-click="154" title="Export Markdown cu formatare">↓.md</button>
+    <button type="button" class="tbtn"                   data-on-click="155"title="Generator flashcarduri Anki din conversație" id="flash-btn">🃏</button>
+    <button type="button" class="tbtn"                   data-on-click="156"     title="Redă conversația cu efect de tastare" id="replay-btn">▶</button>
+    <button type="button" class="tbtn"                   data-on-click="110"  title="Timeline — explorează orice moment din conversație" id="timeline-btn">⏱</button>
+    <button type="button" class="tbtn"                   data-on-click="157"  title="Export script podcast (Gazdă + Invitat format)" id="podcast-btn">🎙</button>
+    <button type="button" class="tbtn"                   data-on-click="158" title="Generează sumar AI al sesiunii" id="ai-summary-btn">🧩</button>
+    <button type="button" class="tbtn"                   data-on-click="159"  title="Generează sumar AI al conversației" id="summary-btn">🧩</button>
+    <button type="button" class="tbtn"                   data-on-click="160" title="Statistici sesiune" id="stats-btn">📊</button>
+    <button type="button" class="tbtn"                   data-on-click="156"     title="Redă conversația cu efect de tastare" id="replay-btn">▶</button>
+    <button type="button" class="tbtn"                   data-on-click="161" title="Export statistici ca CSV" id="stats-csv-btn">📋</button>
+    <button type="button" class="tbtn"                   data-on-click="162"title="Benchmark viteză modele" id="bench-btn">⚡</button>
+    <button type="button" class="tbtn"                   data-on-click="163"    title="Hartă vizuală a conversației" id="mindmap-btn">🗺</button>
+    <button type="button" class="tbtn"                   data-on-click="164"  title="Analize conversație: sentiment, topice" id="analytics-btn">📈</button>
+    <button type="button" class="tbtn"                   data-on-click="165"  title="Nor de cuvinte din conversație" id="wcloud-btn">☁</button>
+    <button type="button" class="tbtn"                   data-on-click="166"   title="Verifică sănătatea conversației" id="health-btn">🏥</button>
+    <button type="button" class="tbtn"                   data-on-click="167" title="Lanț de prompturi secvențiale" id="chain-btn">⛓</button>
+    <button type="button" class="tbtn"                   data-on-click="168" title="Personalități AI predefinite" id="persona-btn">🎭</button>
+    <button type="button" class="tbtn"                   data-on-click="169"   title="Export PDF — Ctrl+P · printează sau salvează ca PDF">↓.pdf</button>
+    <button type="button" class="tbtn"                   data-on-click="170"   title="Export conversație ca HTML frumos stilizat">↓.html</button>
+    <button type="button" class="tbtn"                   data-on-click="171"  title="Export HTML pentru imprimare/PDF (pagini curate, fără UI)" id="print-btn">🖨</button>
+    <button type="button" class="tbtn"                   data-on-click="172"    title="Partajează ultimul răspuns AI ca QR" id="qr-btn">📲</button>
+    <button type="button" class="tbtn"                   data-on-click="173"   title="Export JSON structurat pentru dezvoltatori">↓.json</button>
+    <button type="button" class="tbtn"                   data-on-click="174"  title="Export JSONL pentru fine-tuning (perechi Q&A)">↓.jsonl</button>
+    <button type="button" class="tbtn"                   data-on-click="175"  title="Partajează conversația ca QR code" id="qr-btn">📲</button>
   </div>
 </footer>
 
@@ -2793,17 +2793,17 @@ ONESTITATE — REGULA #1:
   <div class="mm-hdr">
     <span class="mm-title">🧩 LocalMind — Vizualizare Conversație</span>
     <div class="mm-tabs">
-      <button class="mm-tab on" id="mm-tab-map"  onclick="switchMMTab('map')">🌐 Mind Map</button>
-      <button class="mm-tab"    id="mm-tab-diag" onclick="switchMMTab('diag')">📋 Diagramă</button>
+      <button class="mm-tab on" id="mm-tab-map"  data-on-click="176">🌐 Mind Map</button>
+      <button class="mm-tab"    id="mm-tab-diag" data-on-click="177">📋 Diagramă</button>
     </div>
     <div style="display:flex;gap:5px;align-items:center;margin-left:8px">
-      <button class="mm-ctrl-btn" onclick="mmZoom(1.2)" title="Zoom in">＋</button>
-      <button class="mm-ctrl-btn" onclick="mmZoom(0.8)" title="Zoom out">－</button>
-      <button class="mm-ctrl-btn" onclick="mmReset()"   title="Reset view">⊙</button>
-      <button class="mm-ctrl-btn" onclick="mmRegenerate()" title="Regenerează layoutul">↻</button>
-      <button class="mm-ctrl-btn" onclick="exportMMSVG()" title="Exportă ca SVG">↓ SVG</button>
+      <button class="mm-ctrl-btn" data-on-click="178" title="Zoom in">＋</button>
+      <button class="mm-ctrl-btn" data-on-click="179" title="Zoom out">－</button>
+      <button class="mm-ctrl-btn" data-on-click="180"   title="Reset view">⊙</button>
+      <button class="mm-ctrl-btn" data-on-click="181" title="Regenerează layoutul">↻</button>
+      <button class="mm-ctrl-btn" data-on-click="182" title="Exportă ca SVG">↓ SVG</button>
     </div>
-    <button class="mm-close" onclick="closeMindMap()" aria-label="Închide">✕</button>
+    <button class="mm-close" data-on-click="183" aria-label="Închide">✕</button>
   </div>
   <!-- Mind Map view -->
   <div id="mm-map-view" style="flex:1;display:flex;flex-direction:column;overflow:hidden">
@@ -2834,21 +2834,21 @@ ONESTITATE — REGULA #1:
 
 <!-- ══ Annotation floating menu ══ -->
 <div id="annot-menu" role="menu" aria-label="Adaugă adnotare">
-  <button class="atb" onclick="applyAnnot('✓','verificat')">✓ verificat</button>
-  <button class="atb" onclick="applyAnnot('?','incert')">? incert</button>
-  <button class="atb" onclick="applyAnnot('✗','eroare')">✗ eroare</button>
-  <button class="atb" onclick="applyAnnot('★','excelent')">★ excelent</button>
-  <button class="atb" onclick="applyAnnot('→','explorează')">→ explorează</button>
-  <button class="atb" onclick="closeAnnotMenu()" style="color:var(--tx3)">✕</button>
+  <button class="atb" data-on-click="184">✓ verificat</button>
+  <button class="atb" data-on-click="185">? incert</button>
+  <button class="atb" data-on-click="186">✗ eroare</button>
+  <button class="atb" data-on-click="187">★ excelent</button>
+  <button class="atb" data-on-click="188">→ explorează</button>
+  <button class="atb" data-on-click="189" style="color:var(--tx3)">✕</button>
 </div>
 
 <!-- ══ Export menu ══ -->
 <div id="exp-menu" class="exp-menu" role="menu">
-  <button class="exp-btn" onclick="exportObsidian()">🟣 Obsidian (.md)</button>
-  <button class="exp-btn" onclick="exportLogseq()">🟦 Logseq (.md)</button>
-  <button class="exp-btn" onclick="exportNotion()">⬛ Notion (JSON)</button>
-  <button class="exp-btn" onclick="exportAnon()">🔒 Anonim (.txt)</button>
-  <button class="exp-btn" onclick="closeExportMenu()" style="color:var(--tx3)">✕ Închide</button>
+  <button class="exp-btn" data-on-click="190">🟣 Obsidian (.md)</button>
+  <button class="exp-btn" data-on-click="191">🟦 Logseq (.md)</button>
+  <button class="exp-btn" data-on-click="192">⬛ Notion (JSON)</button>
+  <button class="exp-btn" data-on-click="193">🔒 Anonim (.txt)</button>
+  <button class="exp-btn" data-on-click="194" style="color:var(--tx3)">✕ Închide</button>
 </div>
 
 <!-- ══ Merge snapshots modal ══ -->
@@ -2859,8 +2859,8 @@ ONESTITATE — REGULA #1:
     <select id="merge-a" class="merge-sel"></select>
     <label style="font-family:var(--fc);font-size:10px;color:var(--tx3)">Ramura B</label>
     <select id="merge-b" class="merge-sel"></select>
-    <button class="merge-run" onclick="doMergeSnapshots()">⚡ Fuzionează — sinteză AI</button>
-    <button onclick="closeMergeModal()" style="background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;font-family:var(--fc)">✕ Anulează</button>
+    <button class="merge-run" data-on-click="195">⚡ Fuzionează — sinteză AI</button>
+    <button data-on-click="196" style="background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;font-family:var(--fc)">✕ Anulează</button>
   </div>
 </div>
 
@@ -2877,21 +2877,21 @@ ONESTITATE — REGULA #1:
 
 <!-- Conversation History Panel -->
 <div id="conv-hist-panel" role="dialog" aria-modal="true" aria-label="Istoricul conversațiilor"
-  onclick="if(event.target===this)toggleConvHistory()">
+  data-on-click="197">
   <div class="ch-box">
     <div class="ch-title">
       <span>🗂 Conversații salvate</span>
       <div style="display:flex;gap:6px;align-items:center">
-        <button type="button" class="ch-save-btn" onclick="saveCurrentConv()">💾 Salvează curentă</button>
-        <button type="button" class="ch-save-btn" onclick="openMergeModal()" style="background:var(--bg3);color:var(--tx3);border:1px solid var(--bd2)">🔀 Combină</button>
-        <button type="button" class="ch-save-btn" onclick="importConversation()" style="background:var(--bg3);color:var(--tx3);border:1px solid var(--bd2)">📥 Import</button>
-        <button type="button" onclick="toggleConvHistory()"
+        <button type="button" class="ch-save-btn" data-on-click="198">💾 Salvează curentă</button>
+        <button type="button" class="ch-save-btn" data-on-click="86" style="background:var(--bg3);color:var(--tx3);border:1px solid var(--bd2)">🔀 Combină</button>
+        <button type="button" class="ch-save-btn" data-on-click="199" style="background:var(--bg3);color:var(--tx3);border:1px solid var(--bd2)">📥 Import</button>
+        <button type="button" data-on-click="10"
           style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0">✕</button>
       </div>
     </div>
     <input type="text" id="conv-filter"
       placeholder="🔍 Filtrează conversații..."
-      oninput="if(typeof window.filterConvList==='function')window.filterConvList(this.value)"
+      data-on-input="200"
       aria-label="Filtrează conversații"
       autocomplete="off" autocorrect="off" spellcheck="false">
     <div id="ch-list"></div>
@@ -2912,38 +2912,38 @@ ONESTITATE — REGULA #1:
 
 <!-- QR Share Modal -->
 <div id="qr-modal" role="dialog" aria-modal="true" aria-label="Partajare QR"
-  onclick="if(event.target===this)toggleQRModal()">
+  data-on-click="201">
   <div class="qr-box">
     <div class="qr-title">📲 Partajează conversația</div>
     <div class="qr-sub">Scanează cu alt dispozitiv (primele 10 mesaje, comprimat)</div>
     <canvas id="qr-canvas" width="220" height="220"></canvas>
     <div id="qr-size-info" style="font-family:var(--fc);font-size:9px;color:var(--tx3);margin-bottom:8px"></div>
-    <button type="button" class="qr-close" onclick="toggleQRModal()">Închide</button>
+    <button type="button" class="qr-close" data-on-click="175">Închide</button>
   </div>
 </div>
-<button type="button" id="read-exit" onclick="toggleReadMode()" aria-label="Ieși din modul citire">✕ Ieși din citire</button>
+<button type="button" id="read-exit" data-on-click="18" aria-label="Ieși din modul citire">✕ Ieși din citire</button>
 
 <!-- PWA install banner -->
 <div id="pwa-banner" role="complementary" aria-label="Instalare aplicație">
   <span>📲 Instalează LocalMind ca aplicație</span>
-  <button type="button" id="pwa-install-btn" onclick="installPWA()">Instalează</button>
-  <button type="button" id="pwa-dismiss" onclick="dismissPWA()" aria-label="Închide">✕</button>
+  <button type="button" id="pwa-install-btn" data-on-click="202">Instalează</button>
+  <button type="button" id="pwa-dismiss" data-on-click="203" aria-label="Închide">✕</button>
 </div>
 
 <!-- Flashcard Panel -->
 <div id="flash-panel" role="dialog" aria-modal="true" aria-label="Generator flashcarduri"
-  onclick="if(event.target===this)toggleFlashPanel()">
+  data-on-click="204">
   <div class="flash-box">
     <div class="flash-title">
       <span>🃏 Flashcarduri generate</span>
-      <button type="button" onclick="toggleFlashPanel()"
+      <button type="button" data-on-click="155"
         style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0">✕</button>
     </div>
     <div id="flash-list"></div>
     <div class="flash-actions">
-      <button type="button" class="flash-btn flash-btn-p" onclick="exportFlashAnki()">↓ Export Anki (.csv)</button>
-      <button type="button" class="flash-btn flash-btn-s" onclick="exportFlashJSON()">↓ JSON</button>
-      <button type="button" class="flash-btn flash-btn-s" onclick="toggleFlashPanel()">Închide</button>
+      <button type="button" class="flash-btn flash-btn-p" data-on-click="205">↓ Export Anki (.csv)</button>
+      <button type="button" class="flash-btn flash-btn-s" data-on-click="206">↓ JSON</button>
+      <button type="button" class="flash-btn flash-btn-s" data-on-click="155">Închide</button>
     </div>
   </div>
 </div>
@@ -2952,7 +2952,7 @@ ONESTITATE — REGULA #1:
 <div id="analytics-panel" role="complementary" aria-label="Analize conversație">
   <div class="an-title">
     <span>📈 Analize</span>
-    <button type="button" onclick="toggleAnalytics()"
+    <button type="button" data-on-click="164"
       style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
   </div>
   <div id="analytics-content"></div>
@@ -2960,11 +2960,11 @@ ONESTITATE — REGULA #1:
 
 <!-- Context Manager Panel -->
 <div id="ctx-mgr-panel" role="dialog" aria-modal="true" aria-label="Manager context"
-  onclick="if(event.target===this)toggleCtxMgr()">
+  data-on-click="207">
   <div class="cmgr-box">
     <div class="cmgr-title">
       <span>🎛 Manager context</span>
-      <button type="button" onclick="toggleCtxMgr()"
+      <button type="button" data-on-click="129"
         style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
     </div>
     <div class="cmgr-subtitle">Selectează mesajele care rămân în contextul modelului · debifate = excluse</div>
@@ -2972,9 +2972,9 @@ ONESTITATE — REGULA #1:
     <div class="cmgr-footer">
       <span class="cmgr-total" id="cmgr-total"></span>
       <div style="display:flex;gap:7px">
-        <button type="button" onclick="applyCtxMgr()" 
+        <button type="button" data-on-click="208" 
           style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 14px">Aplică</button>
-        <button type="button" onclick="toggleCtxMgr()"
+        <button type="button" data-on-click="129"
           style="-webkit-appearance:none;appearance:none;background:none;border:1px solid var(--bd2);border-radius:6px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 14px">Anulează</button>
       </div>
     </div>
@@ -2983,11 +2983,11 @@ ONESTITATE — REGULA #1:
 
 <!-- Word Cloud Modal -->
 <div id="wcloud-modal" role="dialog" aria-modal="true" aria-label="Nor de cuvinte"
-  onclick="if(event.target===this)toggleWordCloud()">
+  data-on-click="209">
   <div class="wc-box">
     <div class="wc-title">
       <span>☁ Nor de cuvinte</span>
-      <button type="button" onclick="toggleWordCloud()"
+      <button type="button" data-on-click="165"
         style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
     </div>
     <canvas id="wcloud-canvas" width="560" height="260" aria-label="Nor de cuvinte din conversație"></canvas>
@@ -3000,12 +3000,12 @@ ONESTITATE — REGULA #1:
   <div class="tts-row">
     <span class="tts-label">Viteză</span>
     <input type="range" min="0.5" max="2" step="0.1" value="1.05" id="tts-rate"
-      class="tts-ctrl" oninput="updateTTSSettings()" aria-label="Viteză voce">
+      class="tts-ctrl" data-on-input="210" aria-label="Viteză voce">
     <span id="tts-rate-val" style="font-family:var(--fc);font-size:9px;color:var(--tx3);width:25px">1.0×</span>
   </div>
   <div class="tts-row">
     <span class="tts-label">Voce</span>
-    <select id="tts-voice" class="tts-ctrl" onchange="updateTTSSettings()" aria-label="Voce TTS" style="max-width:140px"></select>
+    <select id="tts-voice" class="tts-ctrl" data-on-change="210" aria-label="Voce TTS" style="max-width:140px"></select>
   </div>
 </div>
 
@@ -3013,24 +3013,24 @@ ONESTITATE — REGULA #1:
 <div id="bench-panel" role="complementary" aria-label="Benchmark modele">
   <div class="bench-title">
     <span>⚡ Benchmark t/s</span>
-    <button type="button" onclick="toggleBenchPanel()"
+    <button type="button" data-on-click="162"
       style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0" aria-label="Închide">✕</button>
   </div>
   <div id="bench-list"></div>
-  <button type="button" id="bench-run-btn" onclick="runBenchmark()">▶ Rulează benchmark</button>
+  <button type="button" id="bench-run-btn" data-on-click="211">▶ Rulează benchmark</button>
 </div>
 
 <!-- Conversation Compare Panel -->
 <div id="conv-cmp-panel" role="dialog" aria-modal="true" aria-label="Compară conversații">
   <div class="cmp-header">
     <span class="cmp-title">↔ Compară conversații</span>
-    <select id="cmp-sel-a" class="cmp-sel" onchange="renderCmpPanel()" aria-label="Conversație stânga">
+    <select id="cmp-sel-a" class="cmp-sel" data-on-change="212" aria-label="Conversație stânga">
       <option value="">— stânga —</option>
     </select>
-    <select id="cmp-sel-b" class="cmp-sel" onchange="renderCmpPanel()" aria-label="Conversație dreapta">
+    <select id="cmp-sel-b" class="cmp-sel" data-on-change="212" aria-label="Conversație dreapta">
       <option value="">— dreapta —</option>
     </select>
-    <button type="button" onclick="toggleConvCmp()"
+    <button type="button" data-on-click="9"
       style="-webkit-appearance:none;appearance:none;background:none;border:none;
       color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
   </div>
@@ -3050,29 +3050,29 @@ ONESTITATE — REGULA #1:
 <div id="expanders-panel" role="complementary" aria-label="Abrevieri text">
   <div class="exp-title">
     <span>⌨ Abrevieri /shortcut</span>
-    <button type="button" onclick="toggleExpandersPanel()"
+    <button type="button" data-on-click="213"
       style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
   </div>
   <div id="expanders-list"></div>
   <div class="exp-add-row">
     <input type="text" id="exp-abbr-inp" class="exp-input" placeholder="/nou" style="width:60px" aria-label="Abreviere nouă">
     <input type="text" id="exp-text-inp" class="exp-input" placeholder="Textul expandat…" style="flex:1" aria-label="Textul expandat">
-    <button type="button" onclick="addExpanderFromPanel()"
+    <button type="button" data-on-click="214"
       style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:5px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:3px 9px">+</button>
   </div>
 </div>
-<button type="button" id="ambient-exit" onclick="toggleAmbientMode()" aria-label="Ieși din modul ambient">✕ Ieși</button>
+<button type="button" id="ambient-exit" data-on-click="17" aria-label="Ieși din modul ambient">✕ Ieși</button>
 
 <!-- Global Search Panel -->
 <div id="glob-search-panel" role="dialog" aria-modal="true" aria-label="Căutare globală"
-  onclick="if(event.target===this)toggleGlobSearch()">
+  data-on-click="215">
   <div class="gsrch-box">
     <div class="gsrch-input-row">
       <input type="search" id="gsrch-inp" class="gsrch-inp"
         placeholder="🔍 Caută în toate conversațiile salvate…"
-        oninput="_runGlobSearch(this.value)"
+        data-on-input="216"
         aria-label="Căutare globală în conversații">
-      <button type="button" onclick="toggleGlobSearch()"
+      <button type="button" data-on-click="217"
         style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0 4px" aria-label="Închide">✕</button>
     </div>
     <div id="gsrch-results"><div class="gsrch-empty">Tastează pentru a căuta în toate conversațiile salvate.</div></div>
@@ -3081,15 +3081,15 @@ ONESTITATE — REGULA #1:
 
 <div id="chain-panel" role="complementary" aria-label="Lanț de prompturi">
   <div class="chain-title"><span>⛓ Lanț prompturi</span>
-    <button type="button" onclick="toggleChainPanel()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
+    <button type="button" data-on-click="167" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
   </div>
   <div id="chain-list"></div>
   <div class="chain-add-row">
     <input type="text" id="chain-inp" class="chain-inp" placeholder="Adaugă prompt…" aria-label="Prompt nou">
-    <button type="button" onclick="addChainPrompt()" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:5px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:4px 10px">+</button>
+    <button type="button" data-on-click="218" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:5px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:4px 10px">+</button>
   </div>
   <div style="display:flex;gap:6px;margin-top:8px">
-    <button type="button" onclick="runChain()" id="chain-run-btn" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 12px;flex:1">▶ Rulează lanț</button>
+    <button type="button" data-on-click="219" id="chain-run-btn" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:6px;color:#000;cursor:pointer;font-family:var(--fc);font-size:10px;padding:5px 12px;flex:1">▶ Rulează lanț</button>
   </div>
 </div>
 <div id="lang-menu" role="listbox" aria-label="Limbă răspuns"></div>
@@ -3101,7 +3101,7 @@ ONESTITATE — REGULA #1:
 <div id="mindmap-panel" role="dialog" aria-modal="true" aria-label="Hartă conversație">
   <div id="mindmap-header">
     <span id="mindmap-title">🗺 Hartă conversație</span>
-    <button type="button" onclick="toggleMindmap()"
+    <button type="button" data-on-click="163"
       style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:16px;padding:0" aria-label="Închide">✕</button>
   </div>
   <div id="mindmap-svg"></div>
@@ -3111,7 +3111,7 @@ ONESTITATE — REGULA #1:
 <div id="persona-panel" role="listbox" aria-label="Personalități AI">
   <div class="persona-title">
     <span>🎭 Personalități AI</span>
-    <button type="button" onclick="togglePersonaPanel()"
+    <button type="button" data-on-click="168"
       style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
   </div>
   <div id="persona-list"></div>
@@ -3119,12 +3119,12 @@ ONESTITATE — REGULA #1:
 
 <!-- QR panel -->
 <div id="qr-panel" role="dialog" aria-modal="true" aria-label="QR Code"
-  onclick="if(event.target===this)toggleQRPanel()">
+  data-on-click="220">
   <div id="qr-box">
     <h3>📲 Partajează QR</h3>
     <canvas id="qr-canvas" width="180" height="180" aria-label="QR Code"></canvas>
     <div id="qr-url"></div>
-    <button type="button" onclick="toggleQRPanel()"
+    <button type="button" data-on-click="172"
       style="-webkit-appearance:none;appearance:none;margin-top:12px;background:none;border:1px solid var(--bd2);border-radius:5px;color:var(--tx3);cursor:pointer;font-family:var(--fc);font-size:10px;padding:4px 14px">Închide</button>
   </div>
 </div>
@@ -3133,19 +3133,310 @@ ONESTITATE — REGULA #1:
 <div id="memory-panel" aria-label="Note de sesiune">
   <div class="mem-title">
     <span>📌 Note persistente</span>
-    <button type="button" onclick="toggleMemoryPanel()"
+    <button type="button" data-on-click="130"
       style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>
   </div>
   <textarea id="memory-ta" placeholder="Notează informații importante — persistă între sesiuni..." aria-label="Note de sesiune"></textarea>
   <div class="mem-actions">
-    <button type="button" class="mem-btn" onclick="saveMemoryNotes()">💾 Salvează</button>
-    <button type="button" class="mem-btn" onclick="injectMemoryToPrompt()">↑ Injectează în prompt</button>
+    <button type="button" class="mem-btn" data-on-click="221">💾 Salvează</button>
+    <button type="button" class="mem-btn" data-on-click="222">↑ Injectează în prompt</button>
   </div>
 </div>
 <div id="word-goal-bar" aria-hidden="true"></div>
 <div id="session-pill" class="session-pill" aria-live="polite"></div>
 
+<script>
+/* Delegated event handlers: replace the former inline on* attributes so the CSP can drop 'unsafe-inline' for scripts.
+   Static handlers: data-on-<event>="N" -> __lmH[N] (this = element, event = the event).
+   Dynamic handlers: data-on-<event>="c:NAME" + data-args='[JSON]' -> window[NAME](...args), NAME limited to __lmC.
+   No eval / Function: all code below is part of this (hash-allowed) script. */
+var __lmC={runCode:1,cpCode:1,loadSnapshot:1,usePrompt:1,deletePrompt:1,scrollToMsg:1,deleteConv:1,addFromSearch:1,_msgReaction:1,_quickReact:1};
+var __lmH=[
+function(event){toggleFocus()},
+function(event){toggleSb()},
+function(event){startTitleEdit()},
+function(event){endTitleEdit()},
+function(event){if(event.key==='Enter')endTitleEdit();if(event.key==='Escape'){this.style.display='none';document.getElementById('conv-title').style.display=''}},
+function(event){showOnboarding()},
+function(event){toggleSimpleMode()},
+function(event){toggleLightMode()},
+function(event){toggleNightMode()},
+function(event){toggleConvCmp()},
+function(event){toggleConvHistory()},
+function(event){toggleLangMenu()},
+function(event){toggleAutoRead()},
+function(event){toggleTTSSettings()},
+function(event){toggleTimestamps()},
+function(event){toggleThinkMode()},
+function(event){toggleConvLock()},
+function(event){toggleAmbientMode()},
+function(event){toggleReadMode()},
+function(event){selMdl(this)},
+function(event){if(event.key==='Enter'||event.key===' '){selMdl(this);event.preventDefault()}},
+function(event){event.stopPropagation();updMdl('onnx-community/Qwen3-0.6B-ONNX')},
+function(event){event.stopPropagation();updMdl('onnx-community/LFM2-1.2B-ONNX')},
+function(event){event.stopPropagation();updMdl('onnx-community/Qwen3-1.7B-ONNX')},
+function(event){event.stopPropagation();updMdl('onnx-community/Qwen3-4B-ONNX')},
+function(event){doLoad()},
+function(event){if(event.key==='Enter')addCustomModel()},
+function(event){openModelSearch()},
+function(event){addCustomModel()},
+function(event){closeModelSearch()},
+function(event){searchModels(this.value)},
+function(event){if(event.key==='Escape')closeModelSearch()},
+function(event){setMdsFilter(this,'')},
+function(event){setMdsFilter(this,'q4')},
+function(event){setMdsFilter(this,'q8')},
+function(event){setMdsFilter(this,'instruct')},
+function(event){setMdsFilter(this,'multilingual')},
+function(event){setMdsCompatFilter()},
+function(event){document.getElementById('rag-input').click()},
+function(event){event.preventDefault();this.classList.add('drag')},
+function(event){this.classList.remove('drag')},
+function(event){event.preventDefault();this.classList.remove('drag');handleRagDrop(event.dataTransfer.files)},
+function(event){handleRagDrop(this.files)},
+function(event){setTemp(this.value)},
+function(event){setTemp('0.05')},
+function(event){setTemp('0.2')},
+function(event){setTemp('0.4')},
+function(event){setTemp('0.7')},
+function(event){setTemp('0.6')},
+function(event){setTemp('0.9')},
+function(event){setTemp('1.0')},
+function(event){setTemp('0.55')},
+function(event){setTemp('0.85')},
+function(event){setTemp('0.45')},
+function(event){setTemp('0.15')},
+function(event){setTemp('1.15')},
+function(event){document.getElementById('tkv').textContent=this.value},
+function(event){setPrompt('conv')},
+function(event){setPrompt('sci')},
+function(event){setPrompt('code')},
+function(event){setPrompt('cre')},
+function(event){setPrompt('ron')},
+function(event){setPrompt('mat')},
+function(event){setPrompt('trad')},
+function(event){setPrompt('rez')},
+function(event){setPrompt('fil')},
+function(event){setPrompt('rpg')},
+function(event){setPrompt('coach')},
+function(event){setPrompt('soc')},
+function(event){setPrompt('devil')},
+function(event){setPrompt('arb')},
+function(event){setPrompt('simp')},
+function(event){setPrompt('tel')},
+function(event){startSchedule('pomodoro')},
+function(event){startSchedule('deep')},
+function(event){startSchedule('sprint')},
+function(event){toggleParamsSection()},
+function(event){updateParamVal('topp',this.value)},
+function(event){updateParamVal('repen',this.value)},
+function(event){updateParamVal('maxtok',this.value)},
+function(event){if(confirm('Șterge memoria persistentă?'))clearMemory()},
+function(event){toggleBudget()},
+function(event){setBudgetLimit(this)},
+function(event){togglePersist(this.checked)},
+function(event){window.onBudgetCheckbox(this.checked)},
+function(event){toggleSnapTree()},
+function(event){openMergeModal()},
+function(event){saveSnapshot()},
+function(event){useChip(this)},
+function(event){renderSearchResults(this.value);_highlightSearch(this.value)},
+function(event){this.style.borderColor='var(--ac)'},
+function(event){this.style.borderColor='var(--bd)'},
+function(event){toggleSearch()},
+function(event){fmt('**','**')},
+function(event){fmt('*','*')},
+function(event){fmt('~~','~~')},
+function(event){fmt('`','`')},
+function(event){fmtBlock('```\n','\n```')},
+function(event){fmtLine('## ')},
+function(event){fmtLine('### ')},
+function(event){fmtLine('- ')},
+function(event){fmtLine('> ')},
+function(event){fmtLine('---')},
+function(event){stopReplay()},
+function(event){changePage(-1)},
+function(event){changePage(1)},
+function(event){showAllPages()},
+function(event){timelineStep(-1)},
+function(event){_seekTimelineDebounced(this.value)},
+function(event){timelineStep(1)},
+function(event){toggleTimeline()},
+function(event){onKey(event)},
+function(event){resizeTA(this);_checkPromptLength && _checkPromptLength();window.updateCharCount&&window.updateCharCount(this);_updateGhostText(this);_trackWPM(this);_checkExpander&&_checkExpander(this);if(typeof _updateTypingTokens==='function')_updateTypingTokens(this)},
+function(event){toggleMic()},
+function(event){setFormat(this.value)},
+function(event){setRespLen('s')},
+function(event){setRespLen('n')},
+function(event){setRespLen('l')},
+function(event){toggleVoiceInput()},
+function(event){doSend()},
+function(event){doStop()},
+function(event){runCmp()},
+function(event){closeCmp()},
+function(event){renderPromptList()},
+function(event){closePromptLib()},
+function(event){savePrompt()},
+function(event){exportPrompts()},
+function(event){importPrompts(this)},
+function(event){document.getElementById('audit-panel').classList.toggle('hidden')},
+function(event){toggleCtxMgr()},
+function(event){toggleMemoryPanel()},
+function(event){toggleCompactMode()},
+function(event){if(this.dataset.clickable)toggleSb()},
+function(event){showSessionStats()},
+function(event){toggleFocTabara()},
+function(event){toggleRain()},
+function(event){setFireVol(this.value)},
+function(event){setRainVol(this.value)},
+function(event){toggleDyslexia()},
+function(event){adjFont(-1)},
+function(event){adjFont(+1)},
+function(event){toggleSilenzio()},
+function(event){startPomodoro(+localStorage.getItem('lm_pomo_min')||25)},
+function(event){stopPomodoro()},
+function(event){openMindMap()},
+function(event){showObserver()},
+function(event){window.toggleSearch()},
+function(event){openExportMenu(event)},
+function(event){shareSession()},
+function(event){openPromptLib()},
+function(event){toggleAudit()},
+function(event){clearChat()},
+function(event){exportMD()},
+function(event){exportChat()},
+function(event){exportAsMarkdown()},
+function(event){toggleFlashPanel()},
+function(event){startReplay()},
+function(event){exportAsPodcast()},
+function(event){aiSessionSummary()},
+function(event){generateSummary()},
+function(event){toggleStatsDash()},
+function(event){exportAnalyticsCSV()},
+function(event){toggleBenchPanel()},
+function(event){toggleMindmap()},
+function(event){toggleAnalytics()},
+function(event){toggleWordCloud()},
+function(event){runHealthCheck()},
+function(event){toggleChainPanel()},
+function(event){togglePersonaPanel()},
+function(event){window.print()},
+function(event){exportAsHTML()},
+function(event){exportForPrint()},
+function(event){toggleQRPanel()},
+function(event){exportAsJSON()},
+function(event){exportAsJSONL()},
+function(event){toggleQRModal()},
+function(event){switchMMTab('map')},
+function(event){switchMMTab('diag')},
+function(event){mmZoom(1.2)},
+function(event){mmZoom(0.8)},
+function(event){mmReset()},
+function(event){mmRegenerate()},
+function(event){exportMMSVG()},
+function(event){closeMindMap()},
+function(event){applyAnnot('✓','verificat')},
+function(event){applyAnnot('?','incert')},
+function(event){applyAnnot('✗','eroare')},
+function(event){applyAnnot('★','excelent')},
+function(event){applyAnnot('→','explorează')},
+function(event){closeAnnotMenu()},
+function(event){exportObsidian()},
+function(event){exportLogseq()},
+function(event){exportNotion()},
+function(event){exportAnon()},
+function(event){closeExportMenu()},
+function(event){doMergeSnapshots()},
+function(event){closeMergeModal()},
+function(event){if(event.target===this)toggleConvHistory()},
+function(event){saveCurrentConv()},
+function(event){importConversation()},
+function(event){if(typeof window.filterConvList==='function')window.filterConvList(this.value)},
+function(event){if(event.target===this)toggleQRModal()},
+function(event){installPWA()},
+function(event){dismissPWA()},
+function(event){if(event.target===this)toggleFlashPanel()},
+function(event){exportFlashAnki()},
+function(event){exportFlashJSON()},
+function(event){if(event.target===this)toggleCtxMgr()},
+function(event){applyCtxMgr()},
+function(event){if(event.target===this)toggleWordCloud()},
+function(event){updateTTSSettings()},
+function(event){runBenchmark()},
+function(event){renderCmpPanel()},
+function(event){toggleExpandersPanel()},
+function(event){addExpanderFromPanel()},
+function(event){if(event.target===this)toggleGlobSearch()},
+function(event){_runGlobSearch(this.value)},
+function(event){toggleGlobSearch()},
+function(event){addChainPrompt()},
+function(event){runChain()},
+function(event){if(event.target===this)toggleQRPanel()},
+function(event){saveMemoryNotes()},
+function(event){injectMemoryToPrompt()},
+function(event){document.getElementById('obs-panel').style.display='none'},
+function(event){this.parentElement.remove()},
+function(event){document.getElementById('chrome-switch-modal').remove()},
+function(event){document.getElementById('load-err-bar').remove();doLoad()},
+function(event){removeFailedModel()},
+function(event){document.getElementById('load-err-bar').remove()},
+function(event){this.style.background='var(--sf)'},
+function(event){this.style.background=''},
+function(event){breakLoop('o perspectivă complet diferită')},
+function(event){breakLoop('exemple concrete și practice')},
+function(event){breakLoop('o simplificare radicală a problemei')},
+function(event){this.closest('#loop-alert-bar').remove()},
+function(event){closeOnboarding()},
+function(event){restoreAutosave()},
+function(event){showChromeBrowserSwitch()},
+function(event){localStorage.setItem('lm_android_notice','1');this.parentElement.remove()},
+function(event){cancelReply()},
+function(event){if(event.target===this)toggleKbdPanel()},
+function(event){toggleKbdPanel()}
+];
+(function(){
+  function run(el,type,ev){
+    var k=el.getAttribute('data-on-'+type);
+    if(k===null)return;
+    var r;
+    if(k.charAt(0)==='c'&&k.charAt(1)===':'){
+      var n=k.slice(2),fn=Object.prototype.hasOwnProperty.call(__lmC,n)?window[n]:null;
+      if(typeof fn!=='function')return;
+      var a=[];
+      try{a=JSON.parse(el.getAttribute('data-args')||'[]');}catch(e){a=[];}
+      if(!Array.isArray(a))a=[];
+      a=a.map(function(v){return v==='@this'?el:(v==='@event'?ev:v);});
+      r=fn.apply(el,a);
+    }else{
+      var f=__lmH[+k];
+      if(typeof f==='function')r=f.call(el,ev);
+    }
+    if(r===false)ev.preventDefault();
+  }
+  ['click','input','change','keydown','dragover','dragleave','drop','mouseover'].forEach(function(t){
+    document.addEventListener(t,function(ev){
+      for(var el=ev.target;el&&el.nodeType===1;el=el.parentElement){
+        if(el.hasAttribute('data-on-'+t)){
+          run(el,t,ev);
+          if(ev.cancelBubble){ev.stopImmediatePropagation();break;}
+        }
+      }
+    });
+  });
+  ['blur','focus','mouseenter','mouseleave'].forEach(function(t){
+    document.addEventListener(t,function(ev){
+      var el=ev.target;
+      if(el&&el.nodeType===1&&el.hasAttribute('data-on-'+t))run(el,t,ev);
+    },true);
+  });
+})();
+</script>
 <script type="module">
+// Atribute data-args: JSON escapat pentru HTML (înlocuiește argumentele din fostele handlere inline)
+const _da = a => JSON.stringify(a).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+// Funcții apelate din handlerele delegate (data-on-*), definite doar în modul: înainte, atributele inline le căutau pe window și aruncau ReferenceError.
+Object.assign(window, { _highlightSearch, _seekTimelineDebounced, _checkPromptLength, _updateGhostText, _trackWPM, _checkExpander, _updateTypingTokens, _runGlobSearch });
 // ── Console safety shim ───────────────────────────────────────
 // In some iframe/sandboxed contexts (srcdoc, blob:, file://) the browser
 // provides a console object but with restricted/missing methods.
@@ -3305,9 +3596,9 @@ function renderMd(raw) {
       // ── Standard code block ──
       const isJS = /^(js|javascript|ts|typescript)$/.test(L);
       const isPY = /^(py|python)$/.test(L);
-      const runBtn = (isJS || isPY) ? `<button type="button" class="cb-run" onclick="runCode(this,'${cid}')" title="Rulează ${isPY?'Python (Pyodide)':'JavaScript'}">▶ Run</button>` : '';
+      const runBtn = (isJS || isPY) ? `<button type="button" class="cb-run" data-on-click="c:runCode" data-args="${_da(['@this', cid])}" title="Rulează ${isPY?'Python (Pyodide)':'JavaScript'}">▶ Run</button>` : '';
       out += `<div class="cb"><span class="cb-lang">${esc(b.lang)}</span>`
-           + `<button type="button" class="cb-copy" onclick="cpCode(this,'${cid}')">copy</button>`
+           + `<button type="button" class="cb-copy" data-on-click="c:cpCode" data-args="${_da(['@this', cid])}">copy</button>`
            + runBtn
            + `<pre id="${cid}">${hlCode(b.code, b.lang)}</pre></div>`;
       continue;
@@ -4789,7 +5080,7 @@ function renderSnapList() {
     `<div class="snap-item">
       <span class="snap-label">${s.label}</span>
       <span class="snap-time">${s.history.length/2|0} schimburi</span>
-      <button type="button" class="snap-load" onclick="loadSnapshot(${s.id})">↩ încarcă</button>
+      <button type="button" class="snap-load" data-on-click="c:loadSnapshot" data-args="${_da([s.id])}">↩ încarcă</button>
     </div>`).join('') || '<div style="padding:8px;font-size:10px;color:var(--tx3)">Niciun snapshot salvat</div>';
 }
 
@@ -4967,7 +5258,7 @@ function renderMdsPopular() {
           <span style="color:var(--tx3)">${m.gpuOnly ? '⚙️ GPU required · ' : ''}${m.desc}</span>
         </div>
       </div>
-      <button class="mds-pop-add${added?' added':''}" ${added?'disabled':''} onclick="addFromSearch('${m.id.replace(/'/g,"\\'")}',this,{badge:'${m.badge}',badgeLbl:'${m.badgeLbl}',name:'${m.name}',dl:'${m.dl}',ram:${m.ram}})">
+      <button class="mds-pop-add${added?' added':''}" ${added?'disabled':''} data-on-click="c:addFromSearch" data-args="${_da([m.id, '@this', {badge:m.badge, badgeLbl:m.badgeLbl, name:m.name, dl:m.dl, ram:m.ram}])}">
         ${added ? '✓ adăugat' : '＋ Adaugă'}
       </button>`;
     // Click on row body also adds
@@ -5124,7 +5415,7 @@ function renderMdsResults(models) {
         </div>
       </div>
       <button type="button" class="mdr-add${alreadyAdded?' added':''}"
-        ${alreadyAdded?'disabled':''} onclick="addFromSearch('${jsId}',this)">
+        ${alreadyAdded?'disabled':''} data-on-click="c:addFromSearch" data-args="${_da([jsId, '@this'])}">
         ${alreadyAdded?'✓ adăugat':'＋ Adaugă'}
       </button>`;
     row.querySelector('.mdr-body').onclick = () => {
@@ -5323,8 +5614,8 @@ window.renderPromptList = function() {
         <div class="pl-item-name">${p.name}</div>
         <div class="pl-item-preview">${p.content.slice(0,80)}</div>
       </div>
-      <button type="button" class="pl-use" onclick="usePrompt(${p.id})">↗ Folosește</button>
-      <button type="button" class="pl-del" onclick="deletePrompt(${p.id})">🗑</button>
+      <button type="button" class="pl-use" data-on-click="c:usePrompt" data-args="${_da([p.id])}">↗ Folosește</button>
+      <button type="button" class="pl-del" data-on-click="c:deletePrompt" data-args="${_da([p.id])}">🗑</button>
     </div>`).join('')
     : '<div style="padding:16px;text-align:center;color:var(--tx3);font-size:12px">Niciun prompt salvat.</div>';
 };
@@ -5933,7 +6224,7 @@ function updateObserver(n, elapsed, tps) {
   panel.innerHTML = `
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
       <span style="font-family:var(--fc);font-size:9px;letter-spacing:1px;color:var(--tx3)">OBSERVATOR INFERENȚĂ</span>
-      <button onclick="document.getElementById('obs-panel').style.display='none'" style="background:none;border:none;color:var(--tx3);cursor:pointer;font-size:11px">✕</button>
+      <button data-on-click="223" style="background:none;border:none;color:var(--tx3);cursor:pointer;font-size:11px">✕</button>
     </div>
     <div style="font-family:var(--fc);font-size:12px;color:var(--ac);margin-bottom:6px">${tps} tok/s · ${n} tokeni · ${elapsed.toFixed(1)}s</div>
     <div style="line-height:0">${bars}</div>`;
@@ -5979,7 +6270,7 @@ function showShareToast(url) {
     padding:10px 16px;font-family:var(--fc);font-size:11px;color:var(--tx);
     z-index:500;max-width:90vw;box-shadow:0 4px 20px rgba(0,0,0,.4)`;
   t.innerHTML = `🔗 Partajare P2P · URL copiat (${url.length} car.)
-    <button onclick="this.parentElement.remove()" style="margin-left:10px;background:none;border:none;color:var(--tx3);cursor:pointer">✕</button>`;
+    <button data-on-click="224" style="margin-left:10px;background:none;border:none;color:var(--tx3);cursor:pointer">✕</button>`;
   document.body.appendChild(t);
   setTimeout(() => t.remove(), 6000);
 }
@@ -6257,7 +6548,7 @@ window.showChromeBrowserSwitch = function showChromeBrowserSwitch() {
       <div style="font-size:11px;color:var(--tx3);text-align:center;margin-bottom:14px">
         Deschide această pagină (${location.href.slice(0,40)}…) în Samsung Internet sau Firefox.
       </div>
-      <button onclick="document.getElementById('chrome-switch-modal').remove()"
+      <button data-on-click="225"
         style="-webkit-appearance:none;appearance:none;width:100%;padding:10px;background:var(--bg3);
           border:1px solid var(--bd2);border-radius:7px;color:var(--tx2);cursor:pointer;
           font-family:var(--fc);font-size:12px">
@@ -6339,9 +6630,9 @@ function showLoadErrorCard(title, detail, showRemove, showRemoveCta, showRetry) 
   bar.id = 'load-err-bar';
   bar.style.cssText = 'background:rgba(255,68,102,.07);border:1px solid rgba(255,68,102,.25);border-radius:8px;padding:13px 16px;margin:8px 0;font-size:13px;color:var(--tx2);animation:fu .2s ease';
   const btns = [
-    showRetry  ? `<button class="mab" onclick="document.getElementById('load-err-bar').remove();doLoad()">↻ Încearcă din nou</button>` : '',
-    showRemove ? `<button class="mab" onclick="removeFailedModel()">🗑 Elimină din listă</button>` : '',
-    `<button class="mab" onclick="document.getElementById('load-err-bar').remove()">✕ Închide</button>`,
+    showRetry  ? `<button class="mab" data-on-click="226">↻ Încearcă din nou</button>` : '',
+    showRemove ? `<button class="mab" data-on-click="227">🗑 Elimină din listă</button>` : '',
+    `<button class="mab" data-on-click="228">✕ Închide</button>`,
   ].filter(Boolean).join('');
   bar.innerHTML = `<div style="font-weight:600;color:var(--er);margin-bottom:7px">${title}</div>
     <div style="line-height:1.65">${detail}</div>
@@ -6396,7 +6687,7 @@ function onReady(dev) {
   _hideDlProgress();
   localStorage.setItem('lm_last_model', chosenMdl);
   setSt('✓ ' + short + ' gata', 'ok');
-  _autoTitled = false; document.title = 'LocalMind v118 — AI în browser';
+  _autoTitled = false; document.title = 'LocalMind v119 — AI în browser';
   stampCached(chosenMdl);
   updateMemBadge();
   verifyModelIntegrity(chosenMdl); // verify on WASM path
@@ -6419,7 +6710,7 @@ function onReady(dev) {
       _hideDlProgress();
   localStorage.setItem('lm_last_model', chosenMdl);
   setSt('✓ ' + short + ' gata · GPU pregătit', 'ok');
-      _autoTitled = false; document.title = 'LocalMind v118 — AI în browser';
+      _autoTitled = false; document.title = 'LocalMind v119 — AI în browser';
       verifyModelIntegrity(chosenMdl);
     } catch(_) {
       setSt('✓ ' + short + ' gata', 'ok');
@@ -7095,7 +7386,7 @@ function showBenchToast(html, mdlId) {
   if (existing) existing.remove();
   const t = document.createElement('div');
   t.id = 'bench-toast';
-  t.innerHTML = html + ' <button onclick="this.parentElement.remove()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;margin-left:8px;font-size:12px">✕</button>';
+  t.innerHTML = html + ' <button data-on-click="224" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;margin-left:8px;font-size:12px">✕</button>';
   t.style.cssText = `position:fixed;bottom:46px;left:50%;transform:translateX(-50%);
     background:var(--bg2);border:1px solid var(--ac);border-radius:8px;
     padding:9px 16px;font-family:var(--fc);font-size:11px;color:var(--tx);
@@ -7360,7 +7651,7 @@ window.renderSnapList = function() {
       `<div class="snap-item">
         <span class="snap-label">${s.label}</span>
         <span class="snap-time">${s.history.length/2|0} schimburi</span>
-        <button type="button" class="snap-load" onclick="loadSnapshot(${s.id})">↩ încarcă</button>
+        <button type="button" class="snap-load" data-on-click="c:loadSnapshot" data-args="${_da([s.id])}">↩ încarcă</button>
       </div>`).join('');
     return;
   }
@@ -7385,9 +7676,9 @@ window.renderSnapList = function() {
     const rawLabel = s.label.length > 22 ? s.label.slice(0, 22) + '…' : s.label;
     const label = rawLabel.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     // Branch dot
-    svg += `<circle cx="${cx}" cy="${cy}" r="5" fill="${color}" style="cursor:pointer" onclick="loadSnapshot(${s.id})"><title>Încarcă: ${label}</title></circle>`;
+    svg += `<circle cx="${cx}" cy="${cy}" r="5" fill="${color}" style="cursor:pointer" data-on-click="c:loadSnapshot" data-args="${_da([s.id])}"><title>Încarcă: ${label}</title></circle>`;
     // Label
-    svg += `<text x="${cx + 12}" y="${cy + 4}" font-size="10" fill="var(--tx2)" style="cursor:pointer" onclick="loadSnapshot(${s.id})">${label}</text>`;
+    svg += `<text x="${cx + 12}" y="${cy + 4}" font-size="10" fill="var(--tx2)" style="cursor:pointer" data-on-click="c:loadSnapshot" data-args="${_da([s.id])}">${label}</text>`;
     // Message count badge
     const cnt = (s.history.length / 2) | 0;
     svg += `<text x="${W - 8}" y="${cy + 4}" font-size="9" fill="var(--tx3)" text-anchor="end">${cnt}✉</text>`;
@@ -7449,7 +7740,7 @@ window.renderSearchResults = function(q) {
   const reWords = new RegExp(`(${words.map(escapeRe).join('|')})`, 'gi');
   res.innerHTML = hits.map(h => {
     const hl = h.snippet.replace(reWords, '<mark style="background:rgba(54,212,168,.25);color:var(--ac);border-radius:2px">$1</mark>');
-    return `<div onclick="scrollToMsg(${h.i})" style="padding:6px 10px;border-bottom:1px solid var(--bd);cursor:pointer;font-size:11px;color:var(--tx2)" onmouseenter="this.style.background='var(--sf)'" onmouseleave="this.style.background=''">
+    return `<div data-on-click="c:scrollToMsg" data-args="${_da([h.i])}" style="padding:6px 10px;border-bottom:1px solid var(--bd);cursor:pointer;font-size:11px;color:var(--tx2)" data-on-mouseenter="229" data-on-mouseleave="230">
       <div style="font-family:var(--fc);font-size:9px;color:${h.role==='user'?'var(--bl)':'var(--ac)'};margin-bottom:2px">${h.role.toUpperCase()} · mesaj ${h.i+1}</div>
       <div>${hl}…</div>
     </div>`;
@@ -7488,10 +7779,10 @@ function checkCognitiveLoop() {
   bar.id = 'loop-alert-bar'; bar.className = 'loop-bar';
   bar.innerHTML = `<strong>🔄 Loop cognitiv detectat</strong> — Conversația pare să se repete. Schimb perspectiva?
     <div style="margin-top:7px;display:flex;gap:5px;flex-wrap:wrap">
-      <button class="mab" onclick="breakLoop('o perspectivă complet diferită')">🔀 Perspectivă nouă</button>
-      <button class="mab" onclick="breakLoop('exemple concrete și practice')">📌 Exemple concrete</button>
-      <button class="mab" onclick="breakLoop('o simplificare radicală a problemei')">🔬 Simplifică radical</button>
-      <button class="mab" onclick="this.closest('#loop-alert-bar').remove()">✕</button>
+      <button class="mab" data-on-click="231">🔀 Perspectivă nouă</button>
+      <button class="mab" data-on-click="232">📌 Exemple concrete</button>
+      <button class="mab" data-on-click="233">🔬 Simplifică radical</button>
+      <button class="mab" data-on-click="234">✕</button>
     </div>`;
   document.getElementById('ca')?.appendChild(bar);
   scrollBot();
@@ -8105,8 +8396,8 @@ window.showOnboarding = function showOnboarding() {
         </div>
       </div>
     </div>
-    <button class="ob-start" onclick="closeOnboarding()">🚀 Am înțeles — să începem!</button>
-    <button class="ob-skip" onclick="closeOnboarding()">Sari peste introducere</button>
+    <button class="ob-start" data-on-click="235">🚀 Am înțeles — să începem!</button>
+    <button class="ob-skip" data-on-click="235">Sari peste introducere</button>
   </div>`;
   document.body.appendChild(el);
   // Close on Escape
@@ -8138,7 +8429,7 @@ setTimeout(()=>{
       const snap = JSON.parse(saved);
       if (snap.history?.length > 1 && (Date.now() - snap.ts) < 24 * 3600 * 1000) {
         const mins = Math.round((Date.now() - snap.ts) / 60000);
-        setSt(`💾 Conversație salvată (${mins} min în urmă). <button onclick="restoreAutosave()" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:4px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:2px 7px;margin-left:6px">Restaurează</button>`, '');
+        setSt(`💾 Conversație salvată (${mins} min în urmă). <button data-on-click="236" style="-webkit-appearance:none;appearance:none;background:var(--ac);border:none;border-radius:4px;color:#000;cursor:pointer;font-family:var(--fc);font-size:9px;padding:2px 7px;margin-left:6px">Restaurează</button>`, '');
       }
     } catch(_) {}
   }
@@ -8220,8 +8511,8 @@ setTimeout(()=>{
         ].join(';');
         b.innerHTML = `<span style="font-size:15px;flex-shrink:0">⚠️</span>
           <span style="flex:1"><strong>Chrome Android incompatibil.</strong> Deschide în <strong>Samsung Internet</strong> sau <strong>Firefox</strong> pentru a încărca modelele.</span>
-          <button onclick="showChromeBrowserSwitch()" style="-webkit-appearance:none;appearance:none;background:rgba(255,68,0,.2);border:1px solid #ff4400;border-radius:4px;color:#ffaa80;cursor:pointer;font-size:10px;padding:2px 7px">Detalii</button>
-          <button onclick="localStorage.setItem('lm_android_notice','1');this.parentElement.remove()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:#ff4400;cursor:pointer;font-size:15px;padding:0;flex-shrink:0">✕</button>`;
+          <button data-on-click="237" style="-webkit-appearance:none;appearance:none;background:rgba(255,68,0,.2);border:1px solid #ff4400;border-radius:4px;color:#ffaa80;cursor:pointer;font-size:10px;padding:2px 7px">Detalii</button>
+          <button data-on-click="238" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:#ff4400;cursor:pointer;font-size:15px;padding:0;flex-shrink:0">✕</button>`;
         document.body.appendChild(b);
       }
     } else {
@@ -8243,7 +8534,7 @@ setTimeout(()=>{
         const browserName = isSamsung ? 'Samsung Internet' : 'Firefox Android';
         b.innerHTML = `<span style="font-size:15px;flex-shrink:0">📱</span>
           <span style="flex:1"><strong>${browserName} detectat.</strong> Folosește <strong>Qwen3 0.6B</strong> (~350MB). Modele mai mari pot depăși memoria disponibilă.</span>
-          <button onclick="localStorage.setItem('lm_android_notice','1');this.parentElement.remove()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:#00aa44;cursor:pointer;font-size:15px;padding:0;flex-shrink:0">✕</button>`;
+          <button data-on-click="238" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:#00aa44;cursor:pointer;font-size:15px;padding:0;flex-shrink:0">✕</button>`;
         document.body.appendChild(b);
       }
     }
@@ -8292,7 +8583,7 @@ window.addEventListener('beforeunload', function() {
 });
 
 // ╔══════════════════════════════════════════════════════════════╗
-// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v118           ║
+// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v119           ║
 // ║  Force-directed SVG · Zero dependencies · Trade-Free        ║
 // ║  A.I. Chiuță — alexio.tf — trade-free.org                  ║
 // ╚══════════════════════════════════════════════════════════════╝
@@ -9344,7 +9635,7 @@ footer{margin-top:40px;font-size:11px;color:#aaa;text-align:center;
 </style>
 </head><body>
 <h1>${escT}</h1>
-<div class="meta">Exportat din LocalMind v118 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
+<div class="meta">Exportat din LocalMind v119 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
 ${msgs}
 <footer>Generat cu LocalMind — AI local, offline, trade-free · alexio.tf</footer>
 </body></html>`;
@@ -9448,7 +9739,7 @@ function _renderConvList() {
     const _forkBadge = conv.forked ? ' 🌿' : '';
     item.innerHTML = `<span style="width:8px;height:8px;border-radius:50%;background:${accentDot};flex-shrink:0;display:inline-block;margin-right:3px"></span><span class="ch-item-title" title="${_lmEsc(conv.title)}">${_lmEsc(conv.title)}${_forkBadge}</span>
       <span class="ch-item-meta">${conv.msgs}m · ${new Date(conv.ts).toLocaleDateString('ro-RO')}${conv.tags?.length ? ' · ' + conv.tags.map(_lmEsc).join(' ') : ''}</span>
-      <button type="button" class="ch-del" title="Șterge" onclick="deleteConv(${idx})">🗑</button>`;
+      <button type="button" class="ch-del" title="Șterge" data-on-click="c:deleteConv" data-args="${_da([idx])}">🗑</button>`;
     item.onclick = e => { if (e.target.classList.contains('ch-del')) return; loadConv(idx); };
     el.appendChild(item);
   });
@@ -9619,7 +9910,7 @@ window.exportAsJSON = function() {
       title,
       model: chosenMdl || 'unknown',
       exported_at: new Date().toISOString(),
-      version: 'LocalMind v118',
+      version: 'LocalMind v119',
       messages_count: history.length,
       starred_count: starred.length,
       pinned_count: pinned.length,
@@ -9923,7 +10214,7 @@ window.exportAsMarkdown = function() {
   const lines = [
     '# ' + title,
     '',
-    '> Exportat din **LocalMind v118** · ' + new Date().toLocaleDateString('ro-RO') +
+    '> Exportat din **LocalMind v119** · ' + new Date().toLocaleDateString('ro-RO') +
     ' · Model: `' + (chosenMdl||'necunoscut').split('/').pop() + '`',
     ''
   ];
@@ -10280,7 +10571,7 @@ document.addEventListener('paste', function(e) {
     if (document.activeElement && document.activeElement !== ta) return; // only fire for #ui
     // Insert a text reference to the pasted image
     const note = '[Imagine lipită — ' + Math.round(blob.size/1024) + 'KB · ' + blob.type + ']\n' +
-      'Notă: LocalMind v118 nu procesează imagini direct. ' +
+      'Notă: LocalMind v119 nu procesează imagini direct. ' +
       'Descrie imaginea în text sau consideră un model multimodal.';
     const pos = ta.selectionStart;
     ta.value = ta.value.slice(0, pos) + note + ta.value.slice(ta.selectionEnd);
@@ -10789,7 +11080,7 @@ window.exportAsPodcast = function() {
   const lines = [
     '=== ' + title.toUpperCase() + ' ===',
     'Format: Podcast · Gazdă: Tu · Invitat: ' + model,
-    'Generat cu LocalMind v118 · ' + new Date().toLocaleDateString('ro-RO'),
+    'Generat cu LocalMind v119 · ' + new Date().toLocaleDateString('ro-RO'),
     '',
     '[INTRO MUZICĂ]',
     '',
@@ -12667,7 +12958,7 @@ window.replyTo = function(btn) {
     if (ir) ir.parentNode.insertBefore(qbar, ir);
   }
   qbar.innerHTML = '<span style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">↩ ' + role + ': ' + txt.slice(0,80) + (txt.length>80?'…':'') + '</span>' +
-    '<button type="button" onclick="cancelReply()" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>';
+    '<button type="button" data-on-click="239" style="-webkit-appearance:none;appearance:none;background:none;border:none;color:var(--tx3);cursor:pointer;font-size:12px;padding:0">✕</button>';
   qbar.style.display = 'flex';
   document.getElementById('ui')?.focus();
 };
@@ -13721,9 +14012,9 @@ function _renderMsgReactions(msgId) {
   const emojis = Object.keys(r);
   let html = '';
   emojis.forEach(function(e){
-    html += '<button class="msg-react-btn' + (r[e] ? ' active' : '') + '" onclick="window._msgReaction(\''+msgId+'\',\''+e+'\')" title="'+e+'">'+e+' <span>'+r[e]+'</span></button>';
+    html += '<button class="msg-react-btn' + (r[e] ? ' active' : '') + '" data-on-click="c:_msgReaction" data-args="'+_da([msgId, e])+'" title="'+e+'">'+e+' <span>'+r[e]+'</span></button>';
   });
-  html += '<button class="msg-react-add" title="Reacție" onclick="window._quickReact(\''+msgId+'\')">+&#128512;</button>';
+  html += '<button class="msg-react-add" title="Reacție" data-on-click="c:_quickReact" data-args="'+_da([msgId])+'">+&#128512;</button>';
   wrap.innerHTML = html;
 }
 window._quickReact = function(msgId) {
@@ -13889,11 +14180,11 @@ window._quickReact = function(msgId) {
 
 <!-- Keyboard Shortcuts Panel -->
 <div id="kbd-panel" role="dialog" aria-modal="true" aria-label="Scurtături tastatură"
-  onclick="if(event.target===this)toggleKbdPanel()">
+  data-on-click="240">
   <div class="kbd-box">
     <div class="kbd-title">
       <span>⌨ Scurtături tastatură</span>
-      <button type="button" onclick="toggleKbdPanel()"
+      <button type="button" data-on-click="241"
         style="-webkit-appearance:none;appearance:none;background:none;border:none;
         color:var(--tx3);cursor:pointer;font-size:16px;padding:0">✕</button>
     </div>
