@@ -6,11 +6,11 @@ Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont ș
 
 ![Captura de ecran](screenshot.png)
 
-**Ultima actualizare:** 11 octombrie 2026 · versiune v119
+**Ultima actualizare:** 11 octombrie 2026 · versiune v120
 
 ## Ce este
 
-LocalMind (v119 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „FĂRĂ TELEMETRIE” și „FĂRĂ CONT” (în versiunile anterioare: „ZERO TELEMETRY” / „NO ACCOUNT”; reformulate pentru a fi precise — vezi „Avertisment”).
+LocalMind (v120 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „FĂRĂ TELEMETRIE” și „FĂRĂ CONT” (în versiunile anterioare: „ZERO TELEMETRY” / „NO ACCOUNT”; reformulate pentru a fi precise — vezi „Avertisment”).
 
 ## Funcții
 
@@ -68,6 +68,10 @@ CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE. Antetul `index.ht
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### v120 — 11 octombrie 2026 (runda 7)
+- Reparat: butonul preseturilor de stil (Chat, Știință, Cod…) schimba promptul de sistem, dar nu mai evidenția presetul activ (selectorul căuta atributul `onclick`, eliminat la trecerea la dispatcher delegat); acum folosește `data-prompt`. Reprodus și verificat în browser.
+- Versiune v120 (titlu, exporturi, antet); hash-ul CSP al scriptului recalculat. `'unsafe-eval'` rămâne (rulare cod JS și ONNX/WASM).
 
 ### v119 — 11 octombrie 2026 (runda 6)
 - Securitate: toate cele ~300 de handlere inline (`onclick=`, `oninput=` etc.; 242 distincte) au fost înlocuite cu un singur dispecer delegat (`data-on-*` + un script clasic separat, fără `eval`/`Function`; pentru markup generat dinamic, argumentele trec prin `data-args` JSON și doar o listă fixă de funcții poate fi apelată). CSP-ul are acum `script-src` pe hash SHA-256 (două scripturi), fără `'unsafe-inline'`; `'unsafe-eval'` rămâne necesar pentru funcția „Rulează” a blocurilor de cod JavaScript și `'wasm-unsafe-eval'` pentru ONNX Runtime.

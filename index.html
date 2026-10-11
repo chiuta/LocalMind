@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--
   ╔══════════════════════════════════════════════════════════════╗
-  ║              L O C A L M I N D  v119                         ║
+  ║              L O C A L M I N D  v120                         ║
   ║        AI în browser — un singur fișier HTML                ║
   ╠══════════════════════════════════════════════════════════════╣
   ║  FILOSOFIE TRADE-FREE · LICENȚĂ CC0 1.0                     ║
@@ -48,9 +48,9 @@
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net 'sha256-KMbZwfyRlZceF9j1oEToCHIp8JP7gFGyxuv6m34YEw8=' 'sha256-aTMkah38dsuVNPMtv0LI6pnAaKgHYuTp10P1ESNw4pM='; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net 'sha256-KMbZwfyRlZceF9j1oEToCHIp8JP7gFGyxuv6m34YEw8=' 'sha256-Mp37v28FVJXfRzfkjStzq0CiLjsEM2PCJav/bJ1fMXc='; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>LocalMind v119 — AI în browser</title>
+<title>LocalMind v120 — AI în browser</title>
 <meta name="theme-color" content="#007848">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2336,22 +2336,22 @@ body.ambient-mode:hover #ambient-exit{opacity:1}
     <div class="ss">
       <div class="sl">System Prompt</div>
       <div class="presets" style="margin-bottom:7px" role="group" aria-label="System prompt presets">
-        <button type="button" class="prs" data-on-click="57"  title="Conversație caldă, umană">🗣 Chat</button>
-        <button type="button" class="prs" data-on-click="58"   title="Expert științific — precizie maximă">🔬 Știință</button>
-        <button type="button" class="prs" data-on-click="59"  title="Asistent programare">💻 Cod</button>
-        <button type="button" class="prs am" data-on-click="60" title="Scriitor creativ expresiv">✍️ Creativ</button>
-        <button type="button" class="prs bl" data-on-click="61" title="Exclusiv în română">🇷🇴 Română</button>
-        <button type="button" class="prs" data-on-click="62"   title="Matematică pas cu pas">🧮 Mate</button>
-        <button type="button" class="prs" data-on-click="63"  title="Traducător expert multilingv">🌍 Traducere</button>
-        <button type="button" class="prs" data-on-click="64"   title="Rezumat concis și precis">📋 Rezumat</button>
-        <button type="button" class="prs am" data-on-click="65" title="Dialog filozofic socratic">🧠 Filosof</button>
-        <button type="button" class="prs am" data-on-click="66" title="Joc de rol imersiv">🎮 RPG</button>
-        <button type="button" class="prs" data-on-click="67" title="Coaching — ghidare empatică, întrebări deschise">🧘 Coach</button>
-        <button type="button" class="prs bl" data-on-click="68" title="Mod Socratic — nu dă răspunsuri, pune întrebări">🦅 Socratic</button>
-        <button type="button" class="prs am" data-on-click="69" title="Avocat al Diavolului — contraargumentează sistematic">⚔ Contrariu</button>
-        <button type="button" class="prs bl" data-on-click="70" title="Arbitru de dezbateri — evaluează și dă verdict pe argumente">⚖ Arbitru</button>
-        <button type="button" class="prs bl" data-on-click="71" title="Limbaj simplu — explicații pentru oricine">📖 Simplu</button>
-        <button type="button" class="prs" data-on-click="72"   title="Telegrafic — maximă densitate, minimă lungime">📐 Telegrafic</button>
+        <button type="button" class="prs" data-prompt="conv" data-on-click="57"  title="Conversație caldă, umană">🗣 Chat</button>
+        <button type="button" class="prs" data-prompt="sci" data-on-click="58"   title="Expert științific — precizie maximă">🔬 Știință</button>
+        <button type="button" class="prs" data-prompt="code" data-on-click="59"  title="Asistent programare">💻 Cod</button>
+        <button type="button" class="prs am" data-prompt="cre" data-on-click="60" title="Scriitor creativ expresiv">✍️ Creativ</button>
+        <button type="button" class="prs bl" data-prompt="ron" data-on-click="61" title="Exclusiv în română">🇷🇴 Română</button>
+        <button type="button" class="prs" data-prompt="mat" data-on-click="62"   title="Matematică pas cu pas">🧮 Mate</button>
+        <button type="button" class="prs" data-prompt="trad" data-on-click="63"  title="Traducător expert multilingv">🌍 Traducere</button>
+        <button type="button" class="prs" data-prompt="rez" data-on-click="64"   title="Rezumat concis și precis">📋 Rezumat</button>
+        <button type="button" class="prs am" data-prompt="fil" data-on-click="65" title="Dialog filozofic socratic">🧠 Filosof</button>
+        <button type="button" class="prs am" data-prompt="rpg" data-on-click="66" title="Joc de rol imersiv">🎮 RPG</button>
+        <button type="button" class="prs" data-prompt="coach" data-on-click="67" title="Coaching — ghidare empatică, întrebări deschise">🧘 Coach</button>
+        <button type="button" class="prs bl" data-prompt="soc" data-on-click="68" title="Mod Socratic — nu dă răspunsuri, pune întrebări">🦅 Socratic</button>
+        <button type="button" class="prs am" data-prompt="devil" data-on-click="69" title="Avocat al Diavolului — contraargumentează sistematic">⚔ Contrariu</button>
+        <button type="button" class="prs bl" data-prompt="arb" data-on-click="70" title="Arbitru de dezbateri — evaluează și dă verdict pe argumente">⚖ Arbitru</button>
+        <button type="button" class="prs bl" data-prompt="simp" data-on-click="71" title="Limbaj simplu — explicații pentru oricine">📖 Simplu</button>
+        <button type="button" class="prs" data-prompt="tel" data-on-click="72"   title="Telegrafic — maximă densitate, minimă lungime">📐 Telegrafic</button>
       </div>
       <textarea id="sysp" rows="8" aria-label="System prompt">/no_think
 Ești LocalMind — un prieten informat, cald și sincer, nu un robot corporatist.
@@ -4223,8 +4223,8 @@ window.setPrompt = function(key) {
   const ta = document.getElementById('sysp');
   if (ta && PROMPTS[key]) ta.value = PROMPTS[key];
   // Visual feedback: briefly highlight active preset
-  document.querySelectorAll('.prs[onclick*="setPrompt"]').forEach(b => b.classList.remove('on'));
-  const clicked = document.querySelector(`.prs[onclick="setPrompt('${key}')"]`);
+  document.querySelectorAll('.prs[data-prompt]').forEach(b => b.classList.remove('on'));
+  const clicked = document.querySelector(`.prs[data-prompt="${key}"]`);
   if (clicked) clicked.classList.add('on');
 };
 
@@ -6687,7 +6687,7 @@ function onReady(dev) {
   _hideDlProgress();
   localStorage.setItem('lm_last_model', chosenMdl);
   setSt('✓ ' + short + ' gata', 'ok');
-  _autoTitled = false; document.title = 'LocalMind v119 — AI în browser';
+  _autoTitled = false; document.title = 'LocalMind v120 — AI în browser';
   stampCached(chosenMdl);
   updateMemBadge();
   verifyModelIntegrity(chosenMdl); // verify on WASM path
@@ -6710,7 +6710,7 @@ function onReady(dev) {
       _hideDlProgress();
   localStorage.setItem('lm_last_model', chosenMdl);
   setSt('✓ ' + short + ' gata · GPU pregătit', 'ok');
-      _autoTitled = false; document.title = 'LocalMind v119 — AI în browser';
+      _autoTitled = false; document.title = 'LocalMind v120 — AI în browser';
       verifyModelIntegrity(chosenMdl);
     } catch(_) {
       setSt('✓ ' + short + ' gata', 'ok');
@@ -8583,7 +8583,7 @@ window.addEventListener('beforeunload', function() {
 });
 
 // ╔══════════════════════════════════════════════════════════════╗
-// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v119           ║
+// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v120           ║
 // ║  Force-directed SVG · Zero dependencies · Trade-Free        ║
 // ║  A.I. Chiuță — alexio.tf — trade-free.org                  ║
 // ╚══════════════════════════════════════════════════════════════╝
@@ -9635,7 +9635,7 @@ footer{margin-top:40px;font-size:11px;color:#aaa;text-align:center;
 </style>
 </head><body>
 <h1>${escT}</h1>
-<div class="meta">Exportat din LocalMind v119 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
+<div class="meta">Exportat din LocalMind v120 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
 ${msgs}
 <footer>Generat cu LocalMind — AI local, offline, trade-free · alexio.tf</footer>
 </body></html>`;
@@ -9910,7 +9910,7 @@ window.exportAsJSON = function() {
       title,
       model: chosenMdl || 'unknown',
       exported_at: new Date().toISOString(),
-      version: 'LocalMind v119',
+      version: 'LocalMind v120',
       messages_count: history.length,
       starred_count: starred.length,
       pinned_count: pinned.length,
@@ -10214,7 +10214,7 @@ window.exportAsMarkdown = function() {
   const lines = [
     '# ' + title,
     '',
-    '> Exportat din **LocalMind v119** · ' + new Date().toLocaleDateString('ro-RO') +
+    '> Exportat din **LocalMind v120** · ' + new Date().toLocaleDateString('ro-RO') +
     ' · Model: `' + (chosenMdl||'necunoscut').split('/').pop() + '`',
     ''
   ];
@@ -10571,7 +10571,7 @@ document.addEventListener('paste', function(e) {
     if (document.activeElement && document.activeElement !== ta) return; // only fire for #ui
     // Insert a text reference to the pasted image
     const note = '[Imagine lipită — ' + Math.round(blob.size/1024) + 'KB · ' + blob.type + ']\n' +
-      'Notă: LocalMind v119 nu procesează imagini direct. ' +
+      'Notă: LocalMind v120 nu procesează imagini direct. ' +
       'Descrie imaginea în text sau consideră un model multimodal.';
     const pos = ta.selectionStart;
     ta.value = ta.value.slice(0, pos) + note + ta.value.slice(ta.selectionEnd);
@@ -11080,7 +11080,7 @@ window.exportAsPodcast = function() {
   const lines = [
     '=== ' + title.toUpperCase() + ' ===',
     'Format: Podcast · Gazdă: Tu · Invitat: ' + model,
-    'Generat cu LocalMind v119 · ' + new Date().toLocaleDateString('ro-RO'),
+    'Generat cu LocalMind v120 · ' + new Date().toLocaleDateString('ro-RO'),
     '',
     '[INTRO MUZICĂ]',
     '',
