@@ -6,7 +6,7 @@ Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont ș
 
 ![Captura de ecran](screenshot.png)
 
-**Ultima actualizare:** 11 octombrie 2026 · versiune v120
+**Versiune:** 120.0.1 · **Ultima actualizare:** 12 octombrie 2026
 
 ## Ce este
 
@@ -68,6 +68,9 @@ CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE. Antetul `index.ht
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### 120.0.1 — 2026-10-12
+- Versiunea și data ultimei actualizări sunt afișate în aplicație (subsolul barei laterale); versiunea 120.0.1 în titlu, exporturi și antet (numerotare majoră v120 păstrată).
 
 ### v120 — 11 octombrie 2026 (runda 7)
 - Reparat: butonul preseturilor de stil (Chat, Știință, Cod…) schimba promptul de sistem, dar nu mai evidenția presetul activ (selectorul căuta atributul `onclick`, eliminat la trecerea la dispatcher delegat); acum folosește `data-prompt`. Reprodus și verificat în browser.

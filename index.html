@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <!--
   ╔══════════════════════════════════════════════════════════════╗
-  ║              L O C A L M I N D  v120                         ║
+  ║              L O C A L M I N D  v120.0.1                     ║
   ║        AI în browser — un singur fișier HTML                ║
   ╠══════════════════════════════════════════════════════════════╣
   ║  FILOSOFIE TRADE-FREE · LICENȚĂ CC0 1.0                     ║
@@ -48,9 +48,11 @@
   *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important;scroll-behavior:auto!important}
 }
 </style>
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net 'sha256-KMbZwfyRlZceF9j1oEToCHIp8JP7gFGyxuv6m34YEw8=' 'sha256-Mp37v28FVJXfRzfkjStzq0CiLjsEM2PCJav/bJ1fMXc='; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; font-src 'self' data: https://cdn.jsdelivr.net; media-src 'self' blob: data:; object-src 'none'; base-uri 'self'; form-action 'self'; worker-src 'self' blob:; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net 'sha256-KMbZwfyRlZceF9j1oEToCHIp8JP7gFGyxuv6m34YEw8=' 'sha256-pgXrMoJZLyj4sXhaZxFOZRCsx9okkcFHfjF0GJRLtEI='; connect-src 'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>LocalMind v120 — AI în browser</title>
+<meta name="application-version" content="120.0.1">
+<meta name="last-updated" content="2026-10-12">
+<title>LocalMind v120.0.1 — AI în browser</title>
 <meta name="theme-color" content="#007848">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2480,6 +2482,7 @@ ONESTITATE — REGULA #1:
         </a>
       </div>
       <div class="sbft-meta">
+        <div id="app-version" style="margin-bottom:4px">v 120.0.1 · 2026-10-12</div>
         Powered by <a href="https://huggingface.co/docs/transformers.js" target="_blank" rel="noopener noreferrer">transformers.js v4.2.0</a> + WebGPU.<br>
         Model cached locally after first load.<br>
         <a href="https://trade-free.org" target="_blank" rel="noopener noreferrer" class="tf-badge" style="margin-top:6px;display:inline-flex">⬡ Trade-Free — fără taxe, reclame sau date</a>
@@ -6687,7 +6690,7 @@ function onReady(dev) {
   _hideDlProgress();
   localStorage.setItem('lm_last_model', chosenMdl);
   setSt('✓ ' + short + ' gata', 'ok');
-  _autoTitled = false; document.title = 'LocalMind v120 — AI în browser';
+  _autoTitled = false; document.title = 'LocalMind v120.0.1 — AI în browser';
   stampCached(chosenMdl);
   updateMemBadge();
   verifyModelIntegrity(chosenMdl); // verify on WASM path
@@ -6710,7 +6713,7 @@ function onReady(dev) {
       _hideDlProgress();
   localStorage.setItem('lm_last_model', chosenMdl);
   setSt('✓ ' + short + ' gata · GPU pregătit', 'ok');
-      _autoTitled = false; document.title = 'LocalMind v120 — AI în browser';
+      _autoTitled = false; document.title = 'LocalMind v120.0.1 — AI în browser';
       verifyModelIntegrity(chosenMdl);
     } catch(_) {
       setSt('✓ ' + short + ' gata', 'ok');
@@ -8583,7 +8586,7 @@ window.addEventListener('beforeunload', function() {
 });
 
 // ╔══════════════════════════════════════════════════════════════╗
-// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v120           ║
+// ║  MIND MAP + CONVERSATION DIAGRAM — LocalMind v120.0.1       ║
 // ║  Force-directed SVG · Zero dependencies · Trade-Free        ║
 // ║  A.I. Chiuță — alexio.tf — trade-free.org                  ║
 // ╚══════════════════════════════════════════════════════════════╝
@@ -9635,7 +9638,7 @@ footer{margin-top:40px;font-size:11px;color:#aaa;text-align:center;
 </style>
 </head><body>
 <h1>${escT}</h1>
-<div class="meta">Exportat din LocalMind v120 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
+<div class="meta">Exportat din LocalMind v120.0.1 · ${new Date().toLocaleDateString('ro-RO')} · ${history.length} mesaje · Trade-free</div>
 ${msgs}
 <footer>Generat cu LocalMind — AI local, offline, trade-free · alexio.tf</footer>
 </body></html>`;
@@ -9910,7 +9913,7 @@ window.exportAsJSON = function() {
       title,
       model: chosenMdl || 'unknown',
       exported_at: new Date().toISOString(),
-      version: 'LocalMind v120',
+      version: 'LocalMind v120.0.1',
       messages_count: history.length,
       starred_count: starred.length,
       pinned_count: pinned.length,
@@ -10214,7 +10217,7 @@ window.exportAsMarkdown = function() {
   const lines = [
     '# ' + title,
     '',
-    '> Exportat din **LocalMind v120** · ' + new Date().toLocaleDateString('ro-RO') +
+    '> Exportat din **LocalMind v120.0.1** · ' + new Date().toLocaleDateString('ro-RO') +
     ' · Model: `' + (chosenMdl||'necunoscut').split('/').pop() + '`',
     ''
   ];
@@ -10571,7 +10574,7 @@ document.addEventListener('paste', function(e) {
     if (document.activeElement && document.activeElement !== ta) return; // only fire for #ui
     // Insert a text reference to the pasted image
     const note = '[Imagine lipită — ' + Math.round(blob.size/1024) + 'KB · ' + blob.type + ']\n' +
-      'Notă: LocalMind v120 nu procesează imagini direct. ' +
+      'Notă: LocalMind v120.0.1 nu procesează imagini direct. ' +
       'Descrie imaginea în text sau consideră un model multimodal.';
     const pos = ta.selectionStart;
     ta.value = ta.value.slice(0, pos) + note + ta.value.slice(ta.selectionEnd);
@@ -11080,7 +11083,7 @@ window.exportAsPodcast = function() {
   const lines = [
     '=== ' + title.toUpperCase() + ' ===',
     'Format: Podcast · Gazdă: Tu · Invitat: ' + model,
-    'Generat cu LocalMind v120 · ' + new Date().toLocaleDateString('ro-RO'),
+    'Generat cu LocalMind v120.0.1 · ' + new Date().toLocaleDateString('ro-RO'),
     '',
     '[INTRO MUZICĂ]',
     '',
