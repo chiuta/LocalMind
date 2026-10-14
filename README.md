@@ -6,7 +6,7 @@ Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont ș
 
 ![Captura de ecran](screenshot.png)
 
-**Versiune:** 120.0.1 · **Ultima actualizare:** 12 octombrie 2026
+**Versiune:** 120.1.0 · **Ultima actualizare:** 14 octombrie 2026
 
 ## Ce este
 
@@ -24,6 +24,21 @@ LocalMind (v120 în titlul paginii) este o interfață de chat cu modele de limb
 - Dictare vocală și citire cu voce (API-urile browserului, acolo unde există), tastatură cu scurtături.
 - „Audit Rețea”: panou care numără cererile de rețea făcute în timpul inferenței.
 - Teme (luminos/întunecat, nocturn), mod Simplu, accesibilitate (mărime text, dislexie).
+
+## Funcții noi (120.1.0)
+
+- **🛡 Anonim verificat (.txt):** înainte de a exporta o conversație, aplicația o scanează local (`FFF.pii`) și îți arată ce a găsit; poți masca elementele bifate sau exporta neschimbat. Dacă nu găsește nimic, spune explicit că detecția e euristică și poate rata ceva.
+- **🔎 Caută tot:** căutare locală (BM25, diacritice, forme apropiate; `FFF.search`) în toate conversațiile salvate pe acest dispozitiv, cu fragmente evidențiate, deschiderea unei conversații și ștergerea ei. Nimic nu este trimis.
+- **🔐 Copie criptată:** deschide eticheta de transparență pentru export/import `.fff.json` cu parolă (AES-GCM, PBKDF2) și ștergerea datelor aplicației.
+- **Indicator „🔒 Nimic nu pleacă din dispozitiv”:** se bazează pe jurnalul de rețea al aplicației (auditul existent) și devine „⚠ N cereri către alte gazde” dacă apare vreo cerere în afara `huggingface.co` / `cdn.jsdelivr.net`. Limită: vede doar cererile făcute prin `fetch` ale paginii, nu orice trafic al browserului; verifică și în fila Rețea.
+- **🧪 Evaluare calitate (onestă):** rulează **modelul real încărcat** pe 8 sarcini mici cu răspuns verificabil automat (aritmetică, JSON valid, exact trei cuvinte, extragere, limbă, copiere exactă, deducție, abținere), cu decodare deterministă. Afișează scorul cu **interval Wilson 95%**, timpul până la primul token și viteza (mediane măsurate pe dispozitivul tău), detalii pe sarcină, export JSON. Când intervalele a două modele se suprapun, aplicația spune că nu se poate decide care e mai bun. Nu simulează nimic: fără model încărcat, butonul e dezactivat.
+
+### Limite
+- 8 sarcini sunt un semnal grosier, nu un clasament general al modelelor; sarcinile sunt în română, iar cele mici pot pica pe format, nu pe „înțelegere”.
+- Viteza depinde de dispozitiv, WebGPU/WASM, temperatură și alte file deschise.
+- Detecția de date personale este euristică.
+
+**Kit FFF.** Din `fff-kit` (lipit în `index.html`, fără rețea) se folosesc modulele `core, label, bundle, pii, search`: etichetă de transparență (apasă versiunea din subsol), export/import/ștergere `.fff.json` cu criptare opțională AES-GCM + PBKDF2, detecția locală de date personale și căutarea locală BM25. Politica CSP **nu a fost schimbată** față de versiunea anterioară în afară de hash-urile `sha256` ale scripturilor inline (stilurile noi sunt în `<style>`, acoperit de `style-src 'unsafe-inline'` deja prezent; nu s-a adăugat nicio gazdă nouă). Traducerile textelor noi în fr/it/es/pt/hu/de sunt automate și **neverificate nativ**. Detecția de date personale este euristică: poate rata sau semnala greșit; nu înlocuiește verificarea ta.
 
 ## Manual de utilizare
 
@@ -68,6 +83,9 @@ CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE. Antetul `index.ht
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### 120.1.0 — 2026-10-14
+- Export anonim verificat (`FFF.pii`), căutare în toate conversațiile (`FFF.search`), copie criptată (`FFF.bundle`), indicator „nimic nu pleacă”, evaluare de calitate a modelului local cu intervale de încredere; testele în `tests/fff-r8.test.mjs`. Numerotarea majoră v120 păstrată.
 
 ### 120.0.1 — 2026-10-12
 - Versiunea și data ultimei actualizări sunt afișate în aplicație (subsolul barei laterale); versiunea 120.0.1 în titlu, exporturi și antet (numerotare majoră v120 păstrată).

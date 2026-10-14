@@ -1,0 +1,168 @@
+{
+  "schema": 1,
+  "slug": "localmind",
+  "name": "LocalMind v120.1.0 — AI în browser",
+  "version": "120.1.0",
+  "updated": "2026-10-14",
+  "description": "Rulează modele AI local în browser, fără cont și fără telemetrie; modelele se descarcă o singură dată de la Hugging Face. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.",
+  "egress": [
+    {
+      "host": "*.hf.co",
+      "via": [
+        "csp:connect-src"
+      ]
+    },
+    {
+      "host": "*.huggingface.co",
+      "via": [
+        "csp:connect-src"
+      ]
+    },
+    {
+      "host": "cdn-lfs-us-1.huggingface.co",
+      "via": [
+        "csp:connect-src"
+      ]
+    },
+    {
+      "host": "cdn-lfs.huggingface.co",
+      "via": [
+        "csp:connect-src"
+      ]
+    },
+    {
+      "host": "cdn.jsdelivr.net",
+      "via": [
+        "csp:connect-src",
+        "csp:font-src",
+        "csp:script-src",
+        "csp:style-src",
+        "src="
+      ]
+    },
+    {
+      "host": "hf.co",
+      "via": [
+        "csp:connect-src"
+      ]
+    },
+    {
+      "host": "huggingface.co",
+      "via": [
+        "csp:connect-src",
+        "fetch"
+      ]
+    }
+  ],
+  "permissions": [
+    "Notification",
+    "speechSynthesis",
+    "SpeechRecognition",
+    "clipboard",
+    "serviceWorker",
+    "localStorage",
+    "Web Crypto",
+    "WebGPU",
+    "Worker",
+    "BroadcastChannel"
+  ],
+  "storageKeys": [
+    "__lm_probe",
+    "lm_accent",
+    "lm_android_notice",
+    "lm_autosave",
+    "lm_bench_done",
+    "lm_benchmarks",
+    "lm_chrome_switch_seen",
+    "lm_compact",
+    "lm_custom_models",
+    "lm_dyslexia",
+    "lm_expanders",
+    "lm_fire_vol",
+    "lm_foc",
+    "lm_font",
+    "lm_fontsize",
+    "lm_gpu_mb",
+    "lm_last_model",
+    "lm_light",
+    "lm_onboarded",
+    "lm_personas",
+    "lm_ph",
+    "lm_pinned",
+    "lm_pomo_min",
+    "lm_pwa_dismissed",
+    "lm_rain",
+    "lm_rain_vol",
+    "lm_ratings",
+    "lm_reactions",
+    "lm_reading",
+    "lm_session_notes",
+    "lm_show_think",
+    "lm_silenzio",
+    "lm_simple",
+    "lm_starred",
+    "lm_templates",
+    "lm_theme",
+    "lm_tts_rate",
+    "lm_tts_voice",
+    "lm_user_name",
+    "lm_warmup_disabled",
+    "lm_word_goal"
+  ],
+  "sizeBytes": 914642,
+  "sha256": "0245959b544ee5800520f1179a3d95fc1abf6fee1886a1743bacf6e4784b5b46",
+  "csp": {
+    "present": true,
+    "directives": {
+      "default-src": "'self'",
+      "img-src": "'self' data: blob:",
+      "style-src": "'self' 'unsafe-inline' https://cdn.jsdelivr.net",
+      "font-src": "'self' data: https://cdn.jsdelivr.net",
+      "media-src": "'self' blob: data:",
+      "object-src": "'none'",
+      "base-uri": "'self'",
+      "form-action": "'self'",
+      "worker-src": "'self' blob:",
+      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net sha256×4",
+      "connect-src": "'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:"
+    },
+    "scriptInline": "hash",
+    "connect": "'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:"
+  },
+  "features": {
+    "export": true,
+    "import": true,
+    "i18n": [
+      "ro",
+      "en",
+      "fr",
+      "it",
+      "es",
+      "pt",
+      "hu",
+      "de"
+    ],
+    "pwa": {
+      "manifest": false,
+      "serviceWorker": true
+    },
+    "modules": [
+      "core",
+      "label",
+      "bundle",
+      "pii",
+      "search"
+    ]
+  },
+  "kit": {
+    "version": "1.0.0",
+    "modules": [
+      "core",
+      "label",
+      "bundle",
+      "pii",
+      "search"
+    ]
+  },
+  "selfSerializing": false
+}
