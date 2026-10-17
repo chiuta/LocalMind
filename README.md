@@ -66,7 +66,7 @@ Răspunsurile modelelor mici pot fi greșite, incomplete sau inventate („haluc
 
 ## Componente terțe
 
-Folderul `vendor/` conține copii ale unor biblioteci cu licențe proprii, diferite de CC0: pdf.js (Mozilla, Apache-2.0 — notificarea este în antetul fișierului), transformers.js 4.2.0 (Hugging Face, Apache-2.0 conform proiectului upstream; fișierul minificat nu conține notificarea) și `qrcode.min.js` (qrcodejs, MIT conform proiectului upstream; folosit la generarea de coduri QR). Declarația CC0 se aplică codului autorului, nu componentelor terțe. Modelele descărcate de la Hugging Face au licențele lor (de ex. Qwen3 sub Apache-2.0, LFM2 sub licența Liquid AI).
+Folderul `vendor/` conține copii ale unor biblioteci cu licențe proprii, diferite de MIT: pdf.js (Mozilla, Apache-2.0 — notificarea este în antetul fișierului), transformers.js 4.2.0 (Hugging Face, Apache-2.0 conform proiectului upstream; fișierul minificat nu conține notificarea) și `qrcode.min.js` (qrcodejs, MIT conform proiectului upstream; folosit la generarea de coduri QR). Licența MIT se aplică codului autorului, nu componentelor terțe. Modelele descărcate de la Hugging Face au licențele lor (de ex. Qwen3 sub Apache-2.0, LFM2 sub licența Liquid AI).
 
 ## Rulare locală / offline
 
@@ -74,11 +74,11 @@ Descarcă întregul director (nu doar `index.html`, deoarece scripturile transfo
 
 ## Licență
 
-CC0 1.0 Universal (domeniu public) — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRADE-FREE LICENSE v1.0” (cu condiția ca derivatele să rămână trade-free); a fost unificat spre CC0, iar spiritul trade-free rămâne o invitație, nu o condiție legală. Componentele din `vendor/` rămân sub licențele lor (vezi „Componente terțe”).
+MIT — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRADE-FREE LICENSE v1.0” (cu condiția ca derivatele să rămână trade-free); a fost unificat (în prezent MIT), iar spiritul trade-free rămâne o invitație, nu o condiție legală. Componentele din `vendor/` rămân sub licențele lor (vezi „Componente terțe”).
 
 ## Audit
 
-2026-10-11 (rundă 2): licență unificată spre CC0 în antet; insigne reformulate; tema luminoasă reparată (variabilele `--sf`, `--sf2`, `--tx3` definite pentru `body.light-mode`: butoanele-sugestie, `kbd` și celelalte suprafețe nu mai rămân întunecate); panoul „Parametri avansați” (CSS rămas într-un bloc nefolosit) se ascunde acum corect, cu `aria-hidden` adevărat.
+2026-10-11 (rundă 2): licență unificată în antet (în prezent MIT); insigne reformulate; tema luminoasă reparată (variabilele `--sf`, `--sf2`, `--tx3` definite pentru `body.light-mode`: butoanele-sugestie, `kbd` și celelalte suprafețe nu mai rămân întunecate); panoul „Parametri avansați” (CSS rămas într-un bloc nefolosit) se ascunde acum corect, cu `aria-hidden` adevărat.
 
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
