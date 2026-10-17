@@ -109,8 +109,8 @@
     "lm_warmup_disabled",
     "lm_word_goal"
   ],
-  "sizeBytes": 914052,
-  "sha256": "7e02e5864ef824811e94cfb12e70e3cc17562415add1c55b274b0cf104691f18",
+  "sizeBytes": 915337,
+  "sha256": "176736880c603fd1bdc3abca6d9188736af4549452e018af78655189e8391006",
   "csp": {
     "present": true,
     "directives": {
