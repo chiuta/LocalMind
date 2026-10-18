@@ -70,11 +70,13 @@
     "__lm_probe",
     "lm_accent",
     "lm_android_notice",
+    "lm_annotations",
     "lm_autosave",
     "lm_bench_done",
     "lm_benchmarks",
     "lm_chrome_switch_seen",
     "lm_compact",
+    "lm_conv_list",
     "lm_custom_models",
     "lm_dyslexia",
     "lm_expanders",
@@ -85,6 +87,7 @@
     "lm_gpu_mb",
     "lm_last_model",
     "lm_light",
+    "lm_mds_history",
     "lm_onboarded",
     "lm_personas",
     "lm_ph",
@@ -109,8 +112,8 @@
     "lm_warmup_disabled",
     "lm_word_goal"
   ],
-  "sizeBytes": 915337,
-  "sha256": "176736880c603fd1bdc3abca6d9188736af4549452e018af78655189e8391006",
+  "sizeBytes": 915494,
+  "sha256": "ad938ceed9d59eb95563a4ff242bbabb3a59b800123ae205c1cef86e4a1f2faf",
   "csp": {
     "present": true,
     "directives": {
