@@ -31,9 +31,9 @@ const FAKEERR=/Failed to fetch|net::|NetworkError|ERR_FAILED|Failed to load reso
 { const {ctx,p,errs,reqs}=await open();
   ok(errs.filter(e=>!FAKEERR.test(e)).length===0,'pornire fără erori/CSP: '+errs.join(' | '));
   ok(reqs.length===0,'0 cereri de rețea la pornire: '+reqs.join(','));
-  ok((await p.textContent('#app-version')).includes('v 120.1.0 · 2026-10-14'),'text #app-version');
-  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.1.0'),'meta versiune');
-  ok(await p.evaluate(()=>document.title.includes('120.1.0')),'titlu cu versiunea');
+  ok((await p.textContent('#app-version')).includes('v 120.1.1 · 2026-10-18'),'text #app-version');
+  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.1.1'),'meta versiune');
+  ok(await p.evaluate(()=>document.title.includes('120.1.1')),'titlu cu versiunea');
   ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'fără depășire orizontală');
   const net=await p.textContent('#c5-net'); ok(/Nimic nu pleacă/.test(net),'indicator: '+net);
   await axe(p,'start');
@@ -140,6 +140,26 @@ const FAKEERR=/Failed to fetch|net::|NetworkError|ERR_FAILED|Failed to load reso
   await ctx.close(); }
 // 7. temă deschisă
 { const {ctx,p}=await open({scheme:'light'}); await p.evaluate(()=>lmSearchAll()); await p.waitForSelector('dialog.c5-dlg[open]'); await axe(p,'căutare, schemă luminoasă'); await ctx.close(); }
+
+// 8. RAG: diacritice (ș/ş), NFD (macOS), cuvinte de 3 litere
+{ const {ctx,p,errs}=await open();
+  const r=await p.evaluate(()=>{
+    const out={}; const mk=(t)=>({name:'t.txt',chunks:[t]});
+    const q=(chunks,query)=>{ __lmRag.set([{name:'t.txt',chunks}]); return __lmRag.context(query); };
+    out.sedilla=/șoim/.test(q(['Un șoim zboară deasupra pădurii.'],'Unde zboară şoimul?'))||/șoim/.test(q(['Un șoim zboară deasupra pădurii.'],'şoim'));
+    out.sedilla2=q(['Un șoim zboară.'],'şoim').includes('șoim');
+    out.nfd_query=q(['Un șoim zboară.'],'ș'.normalize('NFD')+'oim').includes('șoim')|| q(['Un șoim zboară.'],'s\u0326oim').includes('șoim');
+    out.nfd_text=q(['Un \u0073\u0326oim zboară.'.replace('\u0073\u0326','s\u0326')],'șoim').includes('zboară');
+    out.nfd_text2=q(['Pădurea e deasă.'.normalize('NFD')],'pădurea').normalize('NFC').includes('Pădurea');
+    out.imi=q(['Sistemul IMI conectează autoritățile.'],'IMI').includes('IMI');
+    out.rag=q(['Tehnica RAG caută în documente.'],'ce este RAG').includes('RAG');
+    out.ue=q(['Piața UE.'],'UE')==='';
+    out.none=q(['altceva complet'],'șoim')==='';
+    __lmRag.set([]); return out; });
+  ok(r.sedilla2,'ş (cedilă) găsește ș (virgulă)'); ok(r.nfd_query,'interogare NFD găsește textul NFC'); ok(r.nfd_text2,'text NFD găsit cu interogare NFC');
+  ok(r.imi,'IMI (3 litere) contează'); ok(r.rag,'RAG (3 litere) contează'); ok(r.ue,'UE (2 litere) sub prag'); ok(r.none,'fără potrivire: șir gol');
+  ok(errs.filter(e=>!FAKEERR.test(e)).length===0,'fără erori: '+errs.join(' | '));
+  await ctx.close(); }
 
 await browser.close();
 console.log(`\nLocalMind fff-r8: ${pass} reușite, ${fail} eșuate`); process.exit(fail?1:0);

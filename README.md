@@ -6,7 +6,7 @@ Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont ș
 
 ![Captura de ecran](screenshot.png)
 
-**Versiune:** 120.1.0 · **Ultima actualizare:** 14 octombrie 2026
+**Versiune:** 120.1.1 · **Ultima actualizare:** 18 octombrie 2026
 
 ## Ce este
 
@@ -83,6 +83,9 @@ MIT — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRAD
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### 120.1.1 — 2026-10-18
+- Căutarea în documentele atașate (RAG) normalizează textul NFD→NFC și ignoră diacriticele (ș/ş/s, ă/a; text NFD de pe macOS), iar cuvintele de 3 litere (IMI, RAG) intră acum în calcul (prag ≥3 în loc de >3; „UE”, de 2 litere, rămâne sub prag).
 
 ### 120.1.0 — 2026-10-14
 - Export anonim verificat (`FFF.pii`), căutare în toate conversațiile (`FFF.search`), copie criptată (`FFF.bundle`), indicator „nimic nu pleacă”, evaluare de calitate a modelului local cu intervale de încredere; testele în `tests/fff-r8.test.mjs`. Numerotarea majoră v120 păstrată.
