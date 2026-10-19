@@ -76,6 +76,8 @@ Der Ordner `vendor/` enthält Kopien von Bibliotheken mit eigenen, von MIT abwei
 
 Lade das gesamte Verzeichnis herunter (nicht nur `index.html`, da die Skripte von transformers.js und pdf.js in `vendor/` liegen) und stelle es mit einem lokalen Webserver bereit (z. B. `python3 -m http.server 8080`, dann `http://localhost:8080/`). **Direktes Öffnen von `index.html` aus dem Dateisystem (`file://`):** Die Oberfläche startet jetzt normal, aber das Laden der Modelle wird vom Browser blockiert (ES-Module aus `vendor/`, CORS-Richtlinie); die App zeigt eine klare Meldung mit den Schritten für den lokalen Server, statt einer toten Oberfläche (geprüft am 2026-10-11). Firefox und Safari können ähnliche Einschränkungen haben. Beim ersten Gebrauch jedes Modells ist Internet nötig; danach liegt das Modell im Cache. KaTeX, Mermaid und Pyodide benötigen beim ersten Gebrauch Internet.
 
+Siehe auch: [VENDOR-README.md](VENDOR-README.md) — Hinweise zum Vendoring (was lokal enthalten ist, wie man vollständig offline arbeitet; auf Rumänisch).
+
 ## Lizenz
 
 MIT — siehe die Datei LICENSE. Der Header von `index.html` nannte früher auch „TRADE-FREE LICENSE v1.0“ (unter der Bedingung, dass Ableitungen trade-free bleiben); das wurde vereinheitlicht (derzeit MIT), und der Trade-free-Geist bleibt eine Einladung, keine rechtliche Bedingung. Die Komponenten in `vendor/` bleiben unter ihren eigenen Lizenzen (siehe „Komponenten von Drittanbietern“).

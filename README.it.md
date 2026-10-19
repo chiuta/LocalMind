@@ -76,6 +76,8 @@ La cartella `vendor/` contiene copie di librerie con licenze proprie, diverse da
 
 Scarica l'intera directory (non solo `index.html`, perché gli script transformers.js e pdf.js si trovano in `vendor/`) e servila con un server web locale (ad es. `python3 -m http.server 8080`, poi `http://localhost:8080/`). **Apertura diretta di `index.html` dal file system (`file://`):** l'interfaccia ora si avvia normalmente, ma il caricamento dei modelli è bloccato dal browser (moduli ES da `vendor/`, politica CORS); l'app mostra un messaggio chiaro con i passaggi per il server locale, invece di un'interfaccia inerte (verificato il 2026-10-11). Firefox e Safari possono avere restrizioni simili. Per il primo utilizzo di ogni modello serve internet; dopo, il modello è nella cache. KaTeX, Mermaid e Pyodide richiedono internet al primo utilizzo.
 
+Vedi anche: [VENDOR-README.md](VENDOR-README.md) — Note sul vendoring (cosa è incluso in locale, come arrivare al 100 % offline; in rumeno).
+
 ## Licenza
 
 MIT — vedi il file LICENSE. L'intestazione di `index.html` diceva in precedenza anche «TRADE-FREE LICENSE v1.0» (a condizione che le opere derivate restino trade-free); è stata unificata (attualmente MIT), e lo spirito trade-free resta un invito, non una condizione legale. I componenti in `vendor/` restano sotto le proprie licenze (vedi «Componenti di terzi»).

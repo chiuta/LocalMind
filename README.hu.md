@@ -76,6 +76,8 @@ A `vendor/` mappa saját, az MIT-től eltérő licenccel rendelkező könyvtára
 
 Töltsd le a teljes könyvtárat (nem csak az `index.html` fájlt, mert a transformers.js és a pdf.js szkriptjei a `vendor/` mappában vannak), és szolgáld ki helyi webkiszolgálóval (pl. `python3 -m http.server 8080`, majd `http://localhost:8080/`). **Az `index.html` közvetlen megnyitása a fájlrendszerből (`file://`):** a felület most már normálisan elindul, de a modellek betöltését a böngésző blokkolja (ES-modulok a `vendor/` mappából, CORS-szabályzat); az alkalmazás holt felület helyett világos üzenetet jelenít meg a helyi kiszolgáló lépéseivel (ellenőrizve: 2026-10-11). A Firefoxban és a Safariban hasonló korlátozások lehetnek. Minden modell első használatához internet szükséges; utána a modell a gyorsítótárban van. A KaTeX, a Mermaid és a Pyodide az első használatkor igényel internetet.
 
+Lásd még: [VENDOR-README.md](VENDOR-README.md) — Megjegyzések a vendorizálásról (mi van helyben mellékelve, hogyan lehet teljesen offline működni; románul).
+
 ## Licenc
 
 MIT — lásd a LICENSE fájlt. Az `index.html` fejléce korábban a „TRADE-FREE LICENSE v1.0”-t is említette (azzal a feltétellel, hogy a származékok trade-free maradnak); ezt egységesítettük (jelenleg MIT), és a trade-free szellem meghívás marad, nem jogi feltétel. A `vendor/` komponensei saját licencük alatt maradnak (lásd „Harmadik féltől származó komponensek”).
