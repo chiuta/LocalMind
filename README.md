@@ -1,115 +1,117 @@
 # LocalMind
 
-Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont și fără cheie API.
+**English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Live:** https://chiuta.github.io/LocalMind/
+**Version:** 120.1.1 · **Last updated:** 2026-10-18
 
-![Captura de ecran](screenshot.png)
+An AI assistant that runs in the browser (transformers.js + WebGPU), with no account and no API key.
 
-**Versiune:** 120.1.1 · **Ultima actualizare:** 18 octombrie 2026
+**Live app:** https://chiuta.github.io/LocalMind/
 
-## Ce este
+![Screenshot](screenshot.png)
 
-LocalMind (v120 în titlul paginii) este o interfață de chat cu modele de limbaj care rulează local în browser, prin transformers.js v4.2.0 (WebGPU, cu alternativă CPU/WASM acolo unde este cazul). Alegi un model, apeși „Încarcă Modelul”, iar modelul se descarcă o singură dată de la Hugging Face și rămâne în cache-ul browserului. Interfața este în română, iar aplicația afișează insigne „FĂRĂ TELEMETRIE” și „FĂRĂ CONT” (în versiunile anterioare: „ZERO TELEMETRY” / „NO ACCOUNT”; reformulate pentru a fi precise — vezi „Avertisment”).
+## What it is
 
-## Funcții
+LocalMind (v120 in the page title) is a chat interface with language models that run locally in the browser, through transformers.js v4.2.0 (WebGPU, with a CPU/WASM fallback where applicable). You choose a model, press "Încarcă Modelul" (Load the Model), and the model is downloaded once from Hugging Face and stays in the browser cache. The interface is in Romanian, and the app displays "FĂRĂ TELEMETRIE" (NO TELEMETRY) and "FĂRĂ CONT" (NO ACCOUNT) badges (in earlier versions: "ZERO TELEMETRY" / "NO ACCOUNT"; reworded to be precise — see "Disclaimer").
 
-- Modele predefinite: Qwen3 0.6B, LFM2 1.2B, Qwen3 1.7B, Qwen3 4B (dimensiuni afișate în interfață: ~550 MB, ~700 MB, ~1.3 GB, ~2.5 GB), plus „Descoperă modele ONNX” (căutare în catalogul Hugging Face) și o colecție curată.
-- Chat cu streaming, istoric de conversații, ramuri/snapshot-uri, fuzionarea a două ramuri, comparare a două modele, bookmark-uri, căutare în conversație.
-- Presetări de stil și de system prompt (Chat, Știință, Cod, Creativ, Română, Mate, Traducere, Rezumat, Socratic etc.), parametri (temperature, Top-P, penalizare de repetiție, max tokens), variabile `{{date}}`, `{{time}}`, `{{model}}`, `{{name}}`.
-- Documente (RAG): încărcare TXT / MD / CSV / PDF (pdf.js local).
-- Memorie persistentă, buget zilnic de tokeni, bibliotecă de prompturi (export/import JSON), temporizatoare (Pomodoro, Deep, Sprint), mod focus.
-- Vizualizare conversație (mind map, diagramă), export TXT / MD / JSON / JSONL / PDF / HTML, export către Obsidian, Logseq, Notion, varianta anonimă.
-- Randare Markdown, KaTeX și Mermaid (încărcate la nevoie), rulare de cod Python prin Pyodide (încărcat la nevoie).
-- Dictare vocală și citire cu voce (API-urile browserului, acolo unde există), tastatură cu scurtături.
-- „Audit Rețea”: panou care numără cererile de rețea făcute în timpul inferenței.
-- Teme (luminos/întunecat, nocturn), mod Simplu, accesibilitate (mărime text, dislexie).
+## Features
 
-## Funcții noi (120.1.0)
+- Preset models: Qwen3 0.6B, LFM2 1.2B, Qwen3 1.7B, Qwen3 4B (sizes shown in the interface: ~550 MB, ~700 MB, ~1.3 GB, ~2.5 GB), plus "Descoperă modele ONNX" (Discover ONNX models; search in the Hugging Face catalog) and a curated collection.
+- Streaming chat, conversation history, branches/snapshots, merging two branches, comparing two models, bookmarks, search within a conversation.
+- Style and system prompt presets (Chat, Science, Code, Creative, Romanian, Math, Translation, Summary, Socratic etc.), parameters (temperature, Top-P, repetition penalty, max tokens), variables `{{date}}`, `{{time}}`, `{{model}}`, `{{name}}`.
+- Documents (RAG): uploading TXT / MD / CSV / PDF (local pdf.js).
+- Persistent memory, daily token budget, prompt library (JSON export/import), timers (Pomodoro, Deep, Sprint), focus mode.
+- Conversation visualization (mind map, diagram), export to TXT / MD / JSON / JSONL / PDF / HTML, export to Obsidian, Logseq, Notion, the anonymous variant.
+- Markdown, KaTeX and Mermaid rendering (loaded on demand), running Python code through Pyodide (loaded on demand).
+- Voice dictation and text-to-speech (browser APIs, where available), keyboard with shortcuts.
+- "Audit Rețea" (Network Audit): a panel that counts the network requests made during inference.
+- Themes (light/dark, night), Simple mode, accessibility (text size, dyslexia).
 
-- **🛡 Anonim verificat (.txt):** înainte de a exporta o conversație, aplicația o scanează local (`FFF.pii`) și îți arată ce a găsit; poți masca elementele bifate sau exporta neschimbat. Dacă nu găsește nimic, spune explicit că detecția e euristică și poate rata ceva.
-- **🔎 Caută tot:** căutare locală (BM25, diacritice, forme apropiate; `FFF.search`) în toate conversațiile salvate pe acest dispozitiv, cu fragmente evidențiate, deschiderea unei conversații și ștergerea ei. Nimic nu este trimis.
-- **🔐 Copie criptată:** deschide eticheta de transparență pentru export/import `.fff.json` cu parolă (AES-GCM, PBKDF2) și ștergerea datelor aplicației.
-- **Indicator „🔒 Nimic nu pleacă din dispozitiv”:** se bazează pe jurnalul de rețea al aplicației (auditul existent) și devine „⚠ N cereri către alte gazde” dacă apare vreo cerere în afara `huggingface.co` / `cdn.jsdelivr.net`. Limită: vede doar cererile făcute prin `fetch` ale paginii, nu orice trafic al browserului; verifică și în fila Rețea.
-- **🧪 Evaluare calitate (onestă):** rulează **modelul real încărcat** pe 8 sarcini mici cu răspuns verificabil automat (aritmetică, JSON valid, exact trei cuvinte, extragere, limbă, copiere exactă, deducție, abținere), cu decodare deterministă. Afișează scorul cu **interval Wilson 95%**, timpul până la primul token și viteza (mediane măsurate pe dispozitivul tău), detalii pe sarcină, export JSON. Când intervalele a două modele se suprapun, aplicația spune că nu se poate decide care e mai bun. Nu simulează nimic: fără model încărcat, butonul e dezactivat.
+## New features (120.1.0)
 
-### Limite
-- 8 sarcini sunt un semnal grosier, nu un clasament general al modelelor; sarcinile sunt în română, iar cele mici pot pica pe format, nu pe „înțelegere”.
-- Viteza depinde de dispozitiv, WebGPU/WASM, temperatură și alte file deschise.
-- Detecția de date personale este euristică.
+- **🛡 Verified anonymous (.txt):** before exporting a conversation, the app scans it locally (`FFF.pii`) and shows you what it found; you can mask the ticked items or export unchanged. If it finds nothing, it says explicitly that the detection is heuristic and may miss something.
+- **🔎 Search everything:** local search (BM25, diacritics, close forms; `FFF.search`) across all the conversations saved on this device, with highlighted snippets, opening a conversation and deleting it. Nothing is sent.
+- **🔐 Encrypted copy:** opens the transparency label for `.fff.json` export/import with a password (AES-GCM, PBKDF2) and deleting the app's data.
+- **"🔒 Nothing leaves the device" indicator:** based on the app's network log (the existing audit) and becomes "⚠ N requests to other hosts" if any request appears outside `huggingface.co` / `cdn.jsdelivr.net`. Limit: it sees only the requests made through the page's `fetch`, not all of the browser's traffic; also check in the Network tab.
+- **🧪 Quality evaluation (honest):** runs the **actual loaded model** on 8 small tasks with an automatically verifiable answer (arithmetic, valid JSON, exactly three words, extraction, language, exact copying, deduction, abstention), with deterministic decoding. It shows the score with a **95% Wilson interval**, the time to first token and the speed (medians measured on your device), per-task details, JSON export. When the intervals of two models overlap, the app says it cannot be decided which is better. It simulates nothing: without a loaded model, the button is disabled.
 
-**Kit FFF.** Din `fff-kit` (lipit în `index.html`, fără rețea) se folosesc modulele `core, label, bundle, pii, search`: etichetă de transparență (apasă versiunea din subsol), export/import/ștergere `.fff.json` cu criptare opțională AES-GCM + PBKDF2, detecția locală de date personale și căutarea locală BM25. Politica CSP **nu a fost schimbată** față de versiunea anterioară în afară de hash-urile `sha256` ale scripturilor inline (stilurile noi sunt în `<style>`, acoperit de `style-src 'unsafe-inline'` deja prezent; nu s-a adăugat nicio gazdă nouă). Traducerile textelor noi în fr/it/es/pt/hu/de sunt automate și **neverificate nativ**. Detecția de date personale este euristică: poate rata sau semnala greșit; nu înlocuiește verificarea ta.
+### Limits
+- 8 tasks are a coarse signal, not a general ranking of models; the tasks are in Romanian, and the small ones may fail on format, not on "understanding".
+- Speed depends on the device, WebGPU/WASM, temperature and other open tabs.
+- Personal data detection is heuristic.
 
-## Manual de utilizare
+**FFF kit.** From `fff-kit` (pasted into `index.html`, no network) the modules `core, label, bundle, pii, search` are used: a transparency label (press the version in the footer), `.fff.json` export/import/deletion with optional AES-GCM + PBKDF2 encryption, local personal data detection and local BM25 search. The CSP policy **was not changed** from the previous version apart from the `sha256` hashes of the inline scripts (the new styles are in `<style>`, covered by the `style-src 'unsafe-inline'` already present; no new host was added). The translations of the new texts into fr/it/es/pt/hu/de are automatic and **not checked by native speakers**. Personal data detection is heuristic: it may miss or wrongly flag; it does not replace your own check.
 
-1. Deschide pagina într-un browser cu WebGPU (aplicația detectează dispozitivul în antet).
-2. Alege un model din lista „Model” (de exemplu Qwen3 0.6B pentru pornire rapidă) și apasă „⬇ Încarcă Modelul”. Prima încărcare descarcă modelul de pe huggingface.co.
-3. Scrie în câmpul de mesaj și trimite cu `Enter` (`Shift+Enter` pentru linie nouă). `Escape` oprește generarea.
-4. Ajustează presetarea de stil, system prompt-ul și parametrii în panoul lateral.
-5. Pentru documente, trage un fișier în zona „Documente (RAG)” sau fă click pe ea; activează „RAG activ”.
-6. Salvează și exportă conversația din butoanele de export (sau `Ctrl+Shift+S`, `Ctrl+Shift+X`, `Ctrl+Shift+J`).
-7. Scurtături utile: `?` fereastra de scurtături, `Alt+M` meniu, `Alt+S` modul Simplu, `Alt+N` modul nocturn, `Alt+L` temă luminoasă, `Alt+V` dictare, `Alt+C` conversație nouă, `Alt+H` istoric, `Alt+D` statistici, `Ctrl+F` caută, `Ctrl+B` salt la bookmark, `Alt+1–5` schimb rapid de model.
-8. Deschide „Audit Rețea” pentru a vedea cererile de rețea din timpul generării.
+## User guide
 
-## Confidențialitate și rețea
+1. Open the page in a browser with WebGPU (the app detects the device in the header).
+2. Choose a model from the "Model" list (for example Qwen3 0.6B for a quick start) and press "⬇ Încarcă Modelul". The first load downloads the model from huggingface.co.
+3. Type in the message field and send with `Enter` (`Shift+Enter` for a new line). `Escape` stops the generation.
+4. Adjust the style preset, the system prompt and the parameters in the side panel.
+5. For documents, drag a file into the "Documente (RAG)" area or click it; enable "RAG activ".
+6. Save and export the conversation with the export buttons (or `Ctrl+Shift+S`, `Ctrl+Shift+X`, `Ctrl+Shift+J`).
+7. Useful shortcuts: `?` shortcuts window, `Alt+M` menu, `Alt+S` Simple mode, `Alt+N` night mode, `Alt+L` light theme, `Alt+V` dictation, `Alt+C` new conversation, `Alt+H` history, `Alt+D` statistics, `Ctrl+F` search, `Ctrl+B` jump to bookmark, `Alt+1–5` quick model switch.
+8. Open "Audit Rețea" to see the network requests during generation.
 
-- **Stocare locală:** `localStorage` (chei cu prefixul `lm_`: preferințe, conversații salvate, bibliotecă de prompturi, memorie, buget, benchmark-uri etc.) și Cache Storage (modele descărcate de transformers.js și un service worker mic pentru resurse CDN). Textul conversațiilor nu este trimis nicăieri de aplicație.
-- **Rețea (hosturi terțe):**
-  - `huggingface.co` (și `*.huggingface.co`, `hf.co`): descărcarea modelelor ONNX și căutarea în catalog, doar când încarci un model sau cauți modele.
-  - `cdn.jsdelivr.net`: KaTeX, Mermaid 11.15.0 și Pyodide 0.27.0, încărcate doar când sunt necesare (formule, diagrame, rulare de cod Python). Politica CSP din pagină permite doar aceste hosturi.
-  - transformers.js și pdf.js sunt incluse local în folderul `vendor/` din repository.
-- Aplicația afirmă „zero cereri de rețea în inferență”: după ce modelul este încărcat, generarea rulează local.
+## Privacy and network
 
-## Avertisment
+- **Local storage:** `localStorage` (keys with the prefix `lm_`: preferences, saved conversations, prompt library, memory, budget, benchmarks etc.) and Cache Storage (models downloaded by transformers.js and a small service worker for CDN resources). The text of the conversations is not sent anywhere by the app.
+- **Network (third-party hosts):**
+  - `huggingface.co` (and `*.huggingface.co`, `hf.co`): downloading ONNX models and searching the catalog, only when you load a model or search for models.
+  - `cdn.jsdelivr.net`: KaTeX, Mermaid 11.15.0 and Pyodide 0.27.0, loaded only when needed (formulas, diagrams, running Python code). The CSP in the page allows only these hosts.
+  - transformers.js and pdf.js are included locally in the `vendor/` folder of the repository.
+- The app states "zero network requests during inference": after the model is loaded, generation runs locally.
 
-Răspunsurile modelelor mici pot fi greșite, incomplete sau inventate („halucinații"); verificați-le. Aplicația nu oferă sfaturi medicale, juridice sau financiare. Insignele „FĂRĂ TELEMETRIE” / „FĂRĂ CONT” (tooltip-ul insignei spune același lucru) se referă la faptul că aplicația nu trimite conversațiile sau date de utilizare către un server al autorului; pagina contactează totuși huggingface.co (descărcare modele, căutare) și cdn.jsdelivr.net (KaTeX, Mermaid, Pyodide), după cum este descris mai sus.
+## Disclaimer
 
-## Componente terțe
+The answers of small models can be wrong, incomplete or made up ("hallucinations"); verify them. The app does not provide medical, legal or financial advice. The "FĂRĂ TELEMETRIE" / "FĂRĂ CONT" badges (the badge tooltip says the same) mean that the app does not send conversations or usage data to a server of the author; the page does, however, contact huggingface.co (model download, search) and cdn.jsdelivr.net (KaTeX, Mermaid, Pyodide), as described above.
 
-Folderul `vendor/` conține copii ale unor biblioteci cu licențe proprii, diferite de MIT: pdf.js (Mozilla, Apache-2.0 — notificarea este în antetul fișierului), transformers.js 4.2.0 (Hugging Face, Apache-2.0 conform proiectului upstream; fișierul minificat nu conține notificarea) și `qrcode.min.js` (qrcodejs, MIT conform proiectului upstream; folosit la generarea de coduri QR). Licența MIT se aplică codului autorului, nu componentelor terțe. Modelele descărcate de la Hugging Face au licențele lor (de ex. Qwen3 sub Apache-2.0, LFM2 sub licența Liquid AI).
+## Third-party components
 
-## Rulare locală / offline
+The `vendor/` folder contains copies of libraries with their own licenses, different from MIT: pdf.js (Mozilla, Apache-2.0 — the notice is in the file header), transformers.js 4.2.0 (Hugging Face, Apache-2.0 according to the upstream project; the minified file does not contain the notice) and `qrcode.min.js` (qrcodejs, MIT according to the upstream project; used to generate QR codes). The MIT license applies to the author's code, not to the third-party components. The models downloaded from Hugging Face have their own licenses (e.g. Qwen3 under Apache-2.0, LFM2 under the Liquid AI license).
 
-Descarcă întregul director (nu doar `index.html`, deoarece scripturile transformers.js și pdf.js sunt în `vendor/`) și servește-l cu un server web local (de ex. `python3 -m http.server 8080`, apoi `http://localhost:8080/`). **Deschiderea directă a `index.html` din sistemul de fișiere (`file://`):** interfața pornește acum normal, dar încărcarea modelelor este blocată de browser (module ES din `vendor/`, politica CORS); aplicația afișează un mesaj clar cu pașii pentru serverul local, în loc de o interfață inertă (verificat 2026-10-11). Firefox și Safari pot avea restricții similare. Pentru prima utilizare a fiecărui model este nevoie de internet; după aceea modelul este în cache. KaTeX, Mermaid și Pyodide au nevoie de internet la prima folosire.
+## Running locally / offline
 
-## Licență
+Download the whole directory (not just `index.html`, because the transformers.js and pdf.js scripts are in `vendor/`) and serve it with a local web server (e.g. `python3 -m http.server 8080`, then `http://localhost:8080/`). **Opening `index.html` directly from the file system (`file://`):** the interface now starts normally, but loading models is blocked by the browser (ES modules from `vendor/`, CORS policy); the app displays a clear message with the steps for the local server, instead of an inert interface (verified 2026-10-11). Firefox and Safari may have similar restrictions. Internet is needed the first time each model is used; after that the model is in the cache. KaTeX, Mermaid and Pyodide need internet on first use.
 
-MIT — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRADE-FREE LICENSE v1.0” (cu condiția ca derivatele să rămână trade-free); a fost unificat (în prezent MIT), iar spiritul trade-free rămâne o invitație, nu o condiție legală. Componentele din `vendor/` rămân sub licențele lor (vezi „Componente terțe”).
+## License
+
+MIT — see the LICENSE file. The `index.html` header used to also say "TRADE-FREE LICENSE v1.0" (on condition that derivatives remain trade-free); it was unified (currently MIT), and the trade-free spirit remains an invitation, not a legal condition. The components in `vendor/` remain under their own licenses (see "Third-party components").
 
 ## Audit
 
-2026-10-11 (rundă 2): licență unificată în antet (în prezent MIT); insigne reformulate; tema luminoasă reparată (variabilele `--sf`, `--sf2`, `--tx3` definite pentru `body.light-mode`: butoanele-sugestie, `kbd` și celelalte suprafețe nu mai rămân întunecate); panoul „Parametri avansați” (CSS rămas într-un bloc nefolosit) se ascunde acum corect, cu `aria-hidden` adevărat.
+2026-10-11 (round 2): license unified in the header (currently MIT); badges reworded; light theme fixed (the variables `--sf`, `--sf2`, `--tx3` defined for `body.light-mode`: the suggestion buttons, `kbd` and the other surfaces no longer stay dark); the "Advanced parameters" panel (CSS left in an unused block) now hides correctly, with a true `aria-hidden`.
 
-2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
+2026-10-10: verified in the browser (0 JS errors on load; no network requests leave on load) and the CSP in the page. Added accessible names, a note on the reliability of the models and the license notes above.
 
-## Istoric / Changelog
+## History / Changelog
 
 ### 120.1.1 — 2026-10-18
-- Căutarea în documentele atașate (RAG) normalizează textul NFD→NFC și ignoră diacriticele (ș/ş/s, ă/a; text NFD de pe macOS), iar cuvintele de 3 litere (IMI, RAG) intră acum în calcul (prag ≥3 în loc de >3; „UE”, de 2 litere, rămâne sub prag).
+- Search in the attached documents (RAG) normalizes the text NFD→NFC and ignores diacritics (ș/ş/s, ă/a; NFD text from macOS), and 3-letter words (IMI, RAG) now count (threshold ≥3 instead of >3; "UE", with 2 letters, stays below the threshold).
 
 ### 120.1.0 — 2026-10-14
-- Export anonim verificat (`FFF.pii`), căutare în toate conversațiile (`FFF.search`), copie criptată (`FFF.bundle`), indicator „nimic nu pleacă”, evaluare de calitate a modelului local cu intervale de încredere; testele în `tests/fff-r8.test.mjs`. Numerotarea majoră v120 păstrată.
+- Verified anonymous export (`FFF.pii`), search across all conversations (`FFF.search`), encrypted copy (`FFF.bundle`), "nothing leaves" indicator, local model quality evaluation with confidence intervals; tests in `tests/fff-r8.test.mjs`. The major numbering v120 kept.
 
 ### 120.0.1 — 2026-10-12
-- Versiunea și data ultimei actualizări sunt afișate în aplicație (subsolul barei laterale); versiunea 120.0.1 în titlu, exporturi și antet (numerotare majoră v120 păstrată).
+- The version and the date of the last update are shown in the app (sidebar footer); version 120.0.1 in the title, exports and header (major numbering v120 kept).
 
-### v120 — 11 octombrie 2026 (runda 7)
-- Reparat: butonul preseturilor de stil (Chat, Știință, Cod…) schimba promptul de sistem, dar nu mai evidenția presetul activ (selectorul căuta atributul `onclick`, eliminat la trecerea la dispatcher delegat); acum folosește `data-prompt`. Reprodus și verificat în browser.
-- Versiune v120 (titlu, exporturi, antet); hash-ul CSP al scriptului recalculat. `'unsafe-eval'` rămâne (rulare cod JS și ONNX/WASM).
+### v120 — 11 October 2026 (round 7)
+- Fixed: the style presets button (Chat, Science, Code…) changed the system prompt but no longer highlighted the active preset (the selector looked for the `onclick` attribute, removed in the switch to the delegated dispatcher); it now uses `data-prompt`. Reproduced and verified in the browser.
+- Version v120 (title, exports, header); the CSP hash of the script recomputed. `'unsafe-eval'` remains (JS code execution and ONNX/WASM).
 
-### v119 — 11 octombrie 2026 (runda 6)
-- Securitate: toate cele ~300 de handlere inline (`onclick=`, `oninput=` etc.; 242 distincte) au fost înlocuite cu un singur dispecer delegat (`data-on-*` + un script clasic separat, fără `eval`/`Function`; pentru markup generat dinamic, argumentele trec prin `data-args` JSON și doar o listă fixă de funcții poate fi apelată). CSP-ul are acum `script-src` pe hash SHA-256 (două scripturi), fără `'unsafe-inline'`; `'unsafe-eval'` rămâne necesar pentru funcția „Rulează” a blocurilor de cod JavaScript și `'wasm-unsafe-eval'` pentru ONNX Runtime.
-- Verificat paritatea comportamentului: pe toate cele 253 de elemente cu handlere (242 handlere distincte) s-au declanșat evenimentele originale și s-au comparat apelurile, modificările de stil, DOM-ul și `defaultPrevented`, înainte și după: 0 diferențe.
-- Reparat: opt funcții folosite de handlere (`_highlightSearch`, `_seekTimelineDebounced`, `_checkPromptLength`, `_updateGhostText`, `_trackWPM`, `_checkExpander`, `_updateTypingTokens`, `_runGlobSearch`) erau definite doar în modul, deci handlerele inline aruncau `ReferenceError` (căutarea cu evidențiere, glisorul de poziție din conversație, căutarea globală și verificările la tastare nu rulau); acum sunt expuse pe `window`.
+### v119 — 11 October 2026 (round 6)
+- Security: all of the ~300 inline handlers (`onclick=`, `oninput=` etc.; 242 distinct) were replaced with a single delegated dispatcher (`data-on-*` + a separate classic script, without `eval`/`Function`; for dynamically generated markup, the arguments pass through JSON `data-args` and only a fixed list of functions can be called). The CSP now has `script-src` by SHA-256 hash (two scripts), without `'unsafe-inline'`; `'unsafe-eval'` remains necessary for the "Run" function of the JavaScript code blocks and `'wasm-unsafe-eval'` for ONNX Runtime.
+- Verified behavior parity: on all 253 elements with handlers (242 distinct handlers) the original events were fired and the calls, style changes, DOM and `defaultPrevented` were compared, before and after: 0 differences.
+- Fixed: eight functions used by handlers (`_highlightSearch`, `_seekTimelineDebounced`, `_checkPromptLength`, `_updateGhostText`, `_trackWPM`, `_checkExpander`, `_updateTypingTokens`, `_runGlobSearch`) were defined only in the module, so the inline handlers threw `ReferenceError` (search with highlighting, the position slider in the conversation, global search and the typing checks did not run); they are now exposed on `window`.
 
-### v118 — 11 octombrie 2026
-- Reparat: pe `file://` interfața nu mai este inertă (ReferenceError doLoad/setTemp/useChip): transformers.js se încarcă la cerere (import dinamic), iar „Încarcă Modelul” afișează un mesaj explicativ.
-- Reparat: blocul de CSS și HTML pentru ~24 de panouri (istoric conversații, QR, statistici, analize, flashcarduri, benchmark, căutare globală, hartă etc.), care fusese inserat din greșeală în șablonul `exportAsHTML()`, este acum în `<head>`/`<body>`; funcțiile lor nu mai sunt inerte, iar câmpul de titlu al conversației nu mai apare ca dreptunghi alb.
-- Reparat: pe mobil, zona de chat nu mai este acoperită de bara de stare (bară compactă pe 3 rânduri, ecranul de bun venit derulează în loc să împingă câmpul de mesaj); bannerul „Instalează” și bara de redare nu mai sunt afișate permanent.
-- Reparat: o regulă CSS coruptă, `<h1>` pentru titlul aplicației, `<header>`/`<footer>` și etichetă pentru câmpul de ID model; 0 violări axe-core la 1280 și 360 px.
-- Neschimbat: handlerele `onclick` inline (≈300) și `eval`/`new Function` din rularea blocurilor de cod rămân (CSP permite `'unsafe-inline'`); eliminarea lor cere o refactorizare mai amplă.
+### v118 — 11 October 2026
+- Fixed: on `file://` the interface is no longer inert (ReferenceError doLoad/setTemp/useChip): transformers.js loads on demand (dynamic import), and "Încarcă Modelul" displays an explanatory message.
+- Fixed: the CSS and HTML block for ~24 panels (conversation history, QR, statistics, analyses, flashcards, benchmark, global search, map etc.), which had been inserted by mistake into the `exportAsHTML()` template, is now in `<head>`/`<body>`; their functions are no longer inert, and the conversation title field no longer appears as a white rectangle.
+- Fixed: on mobile, the chat area is no longer covered by the status bar (compact 3-row bar, the welcome screen scrolls instead of pushing the message field); the "Install" banner and the playback bar are no longer displayed permanently.
+- Fixed: a corrupted CSS rule, `<h1>` for the app title, `<header>`/`<footer>` and a label for the model ID field; 0 axe-core violations at 1280 and 360 px.
+- Unchanged: the inline `onclick` handlers (≈300) and `eval`/`new Function` from running code blocks remain (CSP allows `'unsafe-inline'`); removing them requires a broader refactoring.
 
-## Autor
+## Author
 
 Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
