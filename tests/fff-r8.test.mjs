@@ -11,7 +11,7 @@ const CONVS=[
  {title:'Grădinărit',ts:Date.now()-86400000,msgs:2,data:[{role:'user',content:'Cum plantez roșii în grădină? Scrie-mi pe test.user@example.com'},{role:'assistant',content:'Roșiile se plantează după ultimul îngheț, la 50 cm distanță.'}]},
  {title:'Astronomie',ts:Date.now(),msgs:2,data:[{role:'user',content:'Ce este o eclipsă solară? IBAN-ul meu RO49AAAA1B31007593840000'},{role:'assistant',content:'O eclipsă solară apare când Luna se află între Soare și Pământ.'}]}];
 async function open(opts={}){
-  const ctx=await browser.newContext({viewport:opts.vp||{width:1280,height:800},colorScheme:opts.scheme||'dark',acceptDownloads:true});
+  const ctx=await browser.newContext({locale:'ro-RO',viewport:opts.vp||{width:1280,height:800},colorScheme:opts.scheme||'dark',acceptDownloads:true});
   const reqs=[]; await ctx.route(/^https?:/, r=>{ reqs.push(r.request().url()); r.abort(); });
   const p=await ctx.newPage(); const errs=[];
   p.on('pageerror',e=>errs.push('pageerror '+e.message)); p.on('console',m=>{ if(m.type()==='error'||/Content Security/i.test(m.text())) errs.push('console '+m.text()); });
@@ -31,9 +31,9 @@ const FAKEERR=/Failed to fetch|net::|NetworkError|ERR_FAILED|Failed to load reso
 { const {ctx,p,errs,reqs}=await open();
   ok(errs.filter(e=>!FAKEERR.test(e)).length===0,'pornire fără erori/CSP: '+errs.join(' | '));
   ok(reqs.length===0,'0 cereri de rețea la pornire: '+reqs.join(','));
-  ok((await p.textContent('#app-version')).includes('v 120.1.1 · 2026-10-18'),'text #app-version');
-  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.1.1'),'meta versiune');
-  ok(await p.evaluate(()=>document.title.includes('120.1.1')),'titlu cu versiunea');
+  ok((await p.textContent('#app-version')).includes('v 120.2.0 · 2026-10-19'),'text #app-version');
+  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.2.0'),'meta versiune');
+  ok(await p.evaluate(()=>document.title.includes('120.2.0')),'titlu cu versiunea');
   ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'fără depășire orizontală');
   const net=await p.textContent('#c5-net'); ok(/Nimic nu pleacă/.test(net),'indicator: '+net);
   await axe(p,'start');

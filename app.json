@@ -1,9 +1,9 @@
 {
   "schema": 1,
   "slug": "localmind",
-  "name": "LocalMind v120.1.1 — AI în browser",
-  "version": "120.1.1",
-  "updated": "2026-10-18",
+  "name": "LocalMind v120.2.0 — AI în browser",
+  "version": "120.2.0",
+  "updated": "2026-10-19",
   "description": "Rulează modele AI local în browser, fără cont și fără telemetrie; modelele se descarcă o singură dată de la Hugging Face. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.",
   "egress": [
     {
@@ -108,12 +108,13 @@
     "lm_theme",
     "lm_tts_rate",
     "lm_tts_voice",
+    "lm_ui_lang",
     "lm_user_name",
     "lm_warmup_disabled",
     "lm_word_goal"
   ],
-  "sizeBytes": 916504,
-  "sha256": "532233f5fa3741048690bbf198a2b96e004b9f791ea669ed90a6013154c2099f",
+  "sizeBytes": 1237949,
+  "sha256": "e367bd348f77bad969a5ee07072fcb6da38f72a8c460e10e39c84d1551963b3a",
   "csp": {
     "present": true,
     "directives": {
@@ -126,7 +127,7 @@
       "base-uri": "'self'",
       "form-action": "'self'",
       "worker-src": "'self' blob:",
-      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net sha256×4",
+      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net sha256×5",
       "connect-src": "'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:"
     },
     "scriptInline": "hash",
