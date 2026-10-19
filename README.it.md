@@ -117,6 +117,6 @@ MIT — vedi il file LICENSE. L'intestazione di `index.html` diceva in precedenz
 
 Alexio — Alexandru-Ionuț Chiuță, contatto: alexio@trom.tf
 
-## English summary
+## Riepilogo
 
-LocalMind is a browser-based chat UI for small language models (Qwen3, LFM2) running via transformers.js and WebGPU, with RAG over local documents, conversation branching, exports and a network audit panel. Models are downloaded once from huggingface.co; KaTeX, Mermaid and Pyodide load on demand from cdn.jsdelivr.net; transformers.js and pdf.js are vendored locally. Settings and chats live in localStorage (`lm_` keys). UI is Romanian.
+LocalMind è un'interfaccia di chat nel browser per piccoli modelli linguistici (Qwen3, LFM2) eseguiti tramite transformers.js e WebGPU, con RAG su documenti locali, ramificazione delle conversazioni, esportazioni e un pannello di audit della rete. I modelli vengono scaricati una sola volta da huggingface.co; KaTeX, Mermaid e Pyodide si caricano su richiesta da cdn.jsdelivr.net; transformers.js e pdf.js sono inclusi localmente. Impostazioni e chat risiedono in localStorage (chiavi `lm_`). L'interfaccia è in rumeno.
