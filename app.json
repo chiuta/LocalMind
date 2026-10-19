@@ -112,8 +112,8 @@
     "lm_warmup_disabled",
     "lm_word_goal"
   ],
-  "sizeBytes": 915868,
-  "sha256": "7d4da54cfba5148b7b1462c944a9c96d3989e743e7a9924d1f1cba7da8af11c7",
+  "sizeBytes": 916504,
+  "sha256": "532233f5fa3741048690bbf198a2b96e004b9f791ea669ed90a6013154c2099f",
   "csp": {
     "present": true,
     "directives": {
@@ -158,7 +158,7 @@
     ]
   },
   "kit": {
-    "version": "1.1.0",
+    "version": "1.1.1",
     "modules": [
       "core",
       "label",
