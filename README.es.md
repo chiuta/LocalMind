@@ -10,7 +10,7 @@ Un asistente de IA que se ejecuta en el navegador (transformers.js + WebGPU), si
 
 **Aplicación en línea:** https://chiuta.github.io/LocalMind/
 
-![Captura de pantalla](screenshot.png)
+![Captura de pantalla](screenshot.es.png)
 
 ## Qué es
 

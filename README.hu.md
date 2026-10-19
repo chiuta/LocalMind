@@ -10,7 +10,7 @@ Böngészőben futó MI-asszisztens (transformers.js + WebGPU), fiók és API-ku
 
 **Online alkalmazás:** https://chiuta.github.io/LocalMind/
 
-![Képernyőkép](screenshot.png)
+![Képernyőkép](screenshot.hu.png)
 
 ## Mi ez
 

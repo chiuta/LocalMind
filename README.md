@@ -10,7 +10,7 @@ An AI assistant that runs in the browser (transformers.js + WebGPU), with no acc
 
 **Live app:** https://chiuta.github.io/LocalMind/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.en.png)
 
 ## What it is
 

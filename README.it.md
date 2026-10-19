@@ -10,7 +10,7 @@ Un assistente IA che funziona nel browser (transformers.js + WebGPU), senza acco
 
 **App online:** https://chiuta.github.io/LocalMind/
 
-![Schermata](screenshot.png)
+![Schermata](screenshot.it.png)
 
 ## Che cos'è
 

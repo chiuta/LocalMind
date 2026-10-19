@@ -10,7 +10,7 @@ Ein KI-Assistent, der im Browser läuft (transformers.js + WebGPU), ohne Konto u
 
 **Online-App:** https://chiuta.github.io/LocalMind/
 
-![Screenshot](screenshot.png)
+![Screenshot](screenshot.de.png)
 
 ## Was es ist
 

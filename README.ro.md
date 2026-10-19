@@ -10,7 +10,7 @@ Asistent AI care rulează în browser (transformers.js + WebGPU), fără cont ș
 
 **Live:** https://chiuta.github.io/LocalMind/
 
-![Captura de ecran](screenshot.png)
+![Captura de ecran](screenshot.ro.png)
 
 ## Ce este
 
