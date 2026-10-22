@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 120.2.6 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 120.2.7 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRAD
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### 120.2.7 — 2026-10-22
+- Securitate: căutarea globală și căutarea în conversație nu mai inserează interogarea tastată sau textul mesajelor ca HTML (DOM-XSS latent); rezultatele se construiesc din noduri de text.
 
 ### 120.2.6 — 2026-10-22
 

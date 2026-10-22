@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 120.2.6 · **Última atualização:** 2026-10-22
+**Versão:** 120.2.7 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — ver o ficheiro LICENSE. O cabeçalho do `index.html` dizia anteriormente
 2026-10-10: verificado no navegador (0 erros de JS ao carregar; ao carregar não sai nenhum pedido de rede) e a CSP da página. Adicionados nomes acessíveis, uma nota sobre a fiabilidade dos modelos e as notas sobre licenças acima.
 
 ## Histórico / Changelog
+
+### 120.2.7 — 2026-10-22
+- Segurança: a pesquisa global e a pesquisa na conversa deixaram de inserir a consulta escrita ou o texto das mensagens como HTML (DOM-XSS latente); os resultados são construídos com nós de texto.
 
 ### 120.2.6 — 2026-10-22
 

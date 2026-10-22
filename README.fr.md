@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 120.2.6 · **Dernière mise à jour :** 2026-10-22
+**Version :** 120.2.7 · **Dernière mise à jour :** 2026-10-22
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — voir le fichier LICENSE. L'en-tête de `index.html` mentionnait auparava
 2026-10-10 : vérifié dans le navigateur (0 erreur JS au chargement ; aucune requête réseau ne part au chargement) et la CSP de la page. Ajout de noms accessibles, d'une note sur la fiabilité des modèles et des notes ci-dessus sur les licences.
 
 ## Historique / Changelog
+
+### 120.2.7 — 2026-10-22
+- Sécurité : la recherche globale et la recherche dans la conversation n’insèrent plus la requête saisie ni le texte des messages comme HTML (DOM-XSS latent) ; les résultats sont construits à partir de nœuds de texte.
 
 ### 120.2.6 — 2026-10-22
 
