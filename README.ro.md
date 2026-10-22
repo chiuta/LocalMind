@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 120.2.4 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 120.2.5 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRAD
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### 120.2.5 — 2026-10-22
+- Dialogurile native (confirm/prompt/alert) înlocuite cu dialoguri în pagină, traduse; mobil: bară de sus derulabilă (toate butoanele accesibile), ținte tactile ≥ 24 px, text ≥ 12 px, onboarding-ul nu mai e acoperit de butonul de donații; `sw.js` real + manifest + icoane (shell offline după prima vizită) în loc de service worker-ul invalid din blob:; pe Chrome Android, opțiune experimentală „Încearcă oricum cu Qwen2.5 0.5B (~300MB)” în loc de blocare totală.
 
 ### 120.2.4 — 2026-10-22
 - Insigna „nimic nu pleacă din dispozitiv” (text și tooltip) și butonul „Copie criptată” se retraduc acum imediat la schimbarea limbii, fără reload. Promptul de sistem și chip-urile rămân intenționat în română.

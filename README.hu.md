@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 120.2.4 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 120.2.5 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — lásd a LICENSE fájlt. Az `index.html` fejléce korábban a „TRADE-FR
 2026-10-10: ellenőrizve a böngészőben (0 JS-hiba betöltéskor; betöltéskor nem indul hálózati kérés) és az oldal CSP-je. Hozzáadott hozzáférhető nevek, egy megjegyzés a modellek megbízhatóságáról és a fenti licencmegjegyzések.
 
 ## Előzmények / Changelog
+
+### 120.2.5 — 2026-10-22
+- A natív párbeszédablakok (confirm/prompt/alert) helyett lefordított, oldalon belüli párbeszédpaneleket használ; mobilon: görgethető felső sáv (minden gomb elérhető), érintési célpontok ≥ 24 px, szöveg ≥ 12 px, a bevezetőt már nem takarja az adománygomb; valódi `sw.js` + manifest + ikonok (offline váz az első látogatás után) az érvénytelen blob: service worker helyett; Chrome Androidon kísérleti „Próbáld meg mégis a Qwen2.5 0.5B-vel (~300MB)” lehetőség a teljes tiltás helyett.
 
 ### 120.2.4 — 2026-10-22
 - A „semmi sem hagyja el az eszközt” jelvény (szöveg és súgó) és a „Titkosított másolat” gomb nyelvváltáskor azonnal újrafordítódik, újratöltés nélkül. A rendszerprompt és a példa-chipek szándékosan románul maradnak.

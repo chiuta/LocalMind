@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 120.2.4 · **Última actualización:** 2026-10-22
+**Versión:** 120.2.5 · **Última actualización:** 2026-10-22
 
 Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — véase el archivo LICENSE. La cabecera de `index.html` decía antes tamb
 2026-10-10: verificado en el navegador (0 errores de JS al cargar; al cargar no sale ninguna solicitud de red) y la CSP de la página. Añadidos nombres accesibles, una nota sobre la fiabilidad de los modelos y las notas sobre licencias anteriores.
 
 ## Historial / Changelog
+
+### 120.2.5 — 2026-10-22
+- Los diálogos nativos (confirm/prompt/alert) se sustituyen por diálogos integrados y traducidos; móvil: barra superior desplazable (todos los botones accesibles), zonas táctiles ≥ 24 px, texto ≥ 12 px, la introducción ya no queda tapada por el botón de donación; `sw.js` real + manifiesto + iconos (carcasa sin conexión tras la primera visita) en lugar del service worker blob: no válido; en Chrome Android, opción experimental «Probar de todos modos con Qwen2.5 0.5B (~300MB)» en lugar de un bloqueo total.
 
 ### 120.2.4 — 2026-10-22
 - La insignia «nada sale del dispositivo» (texto y tooltip) y el botón «Copia cifrada» ahora se retraducen al instante al cambiar de idioma, sin recargar. El prompt del sistema y los chips de ejemplo se mantienen a propósito en rumano.

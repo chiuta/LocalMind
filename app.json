@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "slug": "localmind",
-  "name": "LocalMind v120.2.4 — AI în browser",
-  "version": "120.2.4",
+  "name": "LocalMind v120.2.5 — AI în browser",
+  "version": "120.2.5",
   "updated": "2026-10-22",
   "description": "Rulează modele AI local în browser, fără cont și fără telemetrie; modelele se descarcă o singură dată de la Hugging Face. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.",
   "egress": [
@@ -113,8 +113,8 @@
     "lm_warmup_disabled",
     "lm_word_goal"
   ],
-  "sizeBytes": 1252205,
-  "sha256": "38b6449994d223d0d2d5a287cecd281aebc8022393db3d970535704d8184c054",
+  "sizeBytes": 1258724,
+  "sha256": "ab236feb3a2503de6b83e099cf8992b5421419b1b82101c00afd8b763c37e134",
   "csp": {
     "present": true,
     "directives": {
@@ -127,8 +127,9 @@
       "base-uri": "'self'",
       "form-action": "'self'",
       "worker-src": "'self' blob:",
-      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net sha256×5",
-      "connect-src": "'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:"
+      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net sha256×6",
+      "connect-src": "'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:",
+      "manifest-src": "'self'"
     },
     "scriptInline": "hash",
     "connect": "'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:"
@@ -147,7 +148,7 @@
       "de"
     ],
     "pwa": {
-      "manifest": false,
+      "manifest": true,
       "serviceWorker": true
     },
     "modules": [

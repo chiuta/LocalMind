@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 120.2.4 · **Last updated:** 2026-10-22
+**Version:** 120.2.5 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — see the LICENSE file. The `index.html` header used to also say "TRADE-FR
 2026-10-10: verified in the browser (0 JS errors on load; no network requests leave on load) and the CSP in the page. Added accessible names, a note on the reliability of the models and the license notes above.
 
 ## History / Changelog
+
+### 120.2.5 — 2026-10-22
+- Native dialogs (confirm/prompt/alert) replaced by in-page dialogs, translated; mobile: scrollable top bar (all buttons reachable), touch targets ≥ 24 px, text ≥ 12 px, onboarding no longer covered by the donate button; real `sw.js` + manifest + icons (offline shell after the first visit) instead of the invalid blob: service worker; on Chrome Android, an experimental “Try anyway with Qwen2.5 0.5B (~300MB)” option instead of a hard block.
 
 ### 120.2.4 — 2026-10-22
 - The “nothing leaves the device” badge (text and tooltip) and the “Encrypted copy” button now re-translate immediately when the language is changed, without a reload. The system prompt and the example chips intentionally stay in Romanian.
