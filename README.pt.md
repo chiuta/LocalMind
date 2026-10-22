@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 120.2.5 · **Última atualização:** 2026-10-22
+**Versão:** 120.2.6 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — ver o ficheiro LICENSE. O cabeçalho do `index.html` dizia anteriormente
 2026-10-10: verificado no navegador (0 erros de JS ao carregar; ao carregar não sai nenhum pedido de rede) e a CSP da página. Adicionados nomes acessíveis, uma nota sobre a fiabilidade dos modelos e as notas sobre licenças acima.
 
 ## Histórico / Changelog
+
+### 120.2.6 — 2026-10-22
+
+fff-kit 1.1.2: PBKDF2 com 600.000 iterações, proteção anti-clickjacking.
 
 ### 120.2.5 — 2026-10-22
 - Os diálogos nativos (confirm/prompt/alert) foram substituídos por diálogos integrados e traduzidos; telemóvel: barra superior deslizável (todos os botões acessíveis), áreas táteis ≥ 24 px, texto ≥ 12 px, a introdução já não é tapada pelo botão de donativos; `sw.js` real + manifesto + ícones (estrutura offline após a primeira visita) em vez do service worker blob: inválido; no Chrome Android, opção experimental «Tentar mesmo assim com Qwen2.5 0.5B (~300MB)» em vez de um bloqueio total.

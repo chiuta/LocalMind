@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 120.2.5 · **Zuletzt aktualisiert:** 2026-10-22
+**Version:** 120.2.6 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — siehe die Datei LICENSE. Der Header von `index.html` nannte früher auch
 2026-10-10: im Browser geprüft (0 JS-Fehler beim Laden; beim Laden gehen keine Netzwerkanfragen hinaus) sowie die CSP der Seite. Zugängliche Namen, ein Hinweis zur Zuverlässigkeit der Modelle und die obigen Lizenzhinweise hinzugefügt.
 
 ## Verlauf / Changelog
+
+### 120.2.6 — 2026-10-22
+
+fff-kit 1.1.2: PBKDF2 mit 600.000 Iterationen, Schutz vor Clickjacking.
 
 ### 120.2.5 — 2026-10-22
 - Native Dialoge (confirm/prompt/alert) durch übersetzte Dialoge in der Seite ersetzt; mobil: scrollbare obere Leiste (alle Schaltflächen erreichbar), Touch-Ziele ≥ 24 px, Text ≥ 12 px, die Einführung wird nicht mehr vom Spenden-Button verdeckt; echte `sw.js` + Manifest + Icons (Offline-Hülle nach dem ersten Besuch) statt des ungültigen blob:-Service-Workers; unter Chrome Android eine experimentelle Option „Trotzdem mit Qwen2.5 0.5B (~300MB) versuchen“ statt einer vollständigen Sperre.
