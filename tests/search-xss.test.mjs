@@ -8,7 +8,7 @@ let fails = 0, passes = 0; const check = (n, c, x) => { c ? (passes++, console.l
 const b = await chromium.launch({executablePath: "/opt/pw-browsers/chromium-1194/chrome-linux/chrome", args: ["--no-sandbox"]});
 const ctx = await b.newContext({locale: "ro-RO", viewport: {width: 1280, height: 800}, serviceWorkers: "block"}); await ctx.route(/^https?:/, r => r.abort());
 const EVIL = '<img src=x id=pwn1 onerror="window.__x=1">';
-await ctx.addInitScript(evil => { try { localStorage.setItem("lm_onboarded", "1"); localStorage.setItem("lm_conv_list", JSON.stringify([{title: "T<b id=pwnT>x</b>", ts: Date.now(), msgs: 1, data: [{role: "user", content: "salut " + evil + " lume amp lt"}]}])); } catch (e) {} }, EVIL);
+await ctx.addInitScript(evil => { try { localStorage.setItem("localmind.onboarded", "1"); localStorage.setItem("localmind.conv_list", JSON.stringify([{title: "T<b id=pwnT>x</b>", ts: Date.now(), msgs: 1, data: [{role: "user", content: "salut " + evil + " lume amp lt"}]}])); } catch (e) {} }, EVIL);
 const p = await ctx.newPage(); const errs = []; p.on("pageerror", e => errs.push(String(e)));
 await p.goto(FILE); await p.waitForTimeout(3800);
 await p.evaluate(() => window.toggleGlobSearch()); await p.waitForTimeout(300);

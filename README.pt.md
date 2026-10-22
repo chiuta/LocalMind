@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 120.2.11 · **Última atualização:** 2026-10-23
+**Versão:** 120.2.12 · **Última atualização:** 2026-10-23
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -61,7 +61,7 @@ O LocalMind (v120 no título da página) é uma interface de conversa com modelo
 
 ## Privacidade e rede
 
-- **Armazenamento local:** `localStorage` (chaves com o prefixo `lm_`: preferências, conversas guardadas, biblioteca de prompts, memória, orçamento, benchmarks, etc.) e Cache Storage (modelos descarregados pelo transformers.js e os binários do Pyodide/ONNX Runtime verificados e um pequeno service worker para os ficheiros da aplicação). O texto das conversas não é enviado para lado nenhum pela aplicação.
+- **Armazenamento local:** `localStorage` (chaves com o prefixo `localmind.`: preferências, conversas guardadas, biblioteca de prompts, memória, orçamento, benchmarks, etc.) e Cache Storage (modelos descarregados pelo transformers.js e os binários do Pyodide/ONNX Runtime verificados e um pequeno service worker para os ficheiros da aplicação). O texto das conversas não é enviado para lado nenhum pela aplicação.
 - **Rede (anfitriões de terceiros):**
   - `huggingface.co` (e `*.huggingface.co`, `hf.co`): descarregamento de modelos ONNX e pesquisa no catálogo, apenas quando carrega um modelo ou pesquisa modelos.
   - `cdn.jsdelivr.net`: apenas os binários do Pyodide 0.27.0 (`.wasm`, `python_stdlib.zip`, ficheiro lock; os dois scripts são carregados com SRI) e o `.wasm` do ONNX Runtime Web (versão npm fixa), carregados apenas quando necessários (execução de código Python, carregamento de um modelo). Cada ficheiro é verificado com SHA-256 antes de usar e recusado caso contrário; a CSP da página permite exatamente estes URL.
@@ -93,6 +93,10 @@ MIT — ver o ficheiro LICENSE. O cabeçalho do `index.html` dizia anteriormente
 2026-10-10: verificado no navegador (0 erros de JS ao carregar; ao carregar não sai nenhum pedido de rede) e a CSP da página. Adicionados nomes acessíveis, uma nota sobre a fiabilidade dos modelos e as notas sobre licenças acima.
 
 ## Histórico / Changelog
+
+### 120.2.12 — 2026-10-23
+
+- Armazenamento: as chaves passam a ter o prefixo da aplicação (`localmind.*`); os dados existentes são migrados automaticamente no arranque a partir das chaves antigas (`lm_*`) e as cópias `.fff.json` antigas continuam a ser importadas (fff-kit 1.2.0).
 
 ### 120.2.10 — 2026-10-22
 Disposição: a barra superior já não transborda entre 769 e 1500 px (o último botão ficava cortado a 1366 px); campos de texto com pelo menos 24 px de altura; botões de leitura, estrela, voz e respostas rápidas de 44 px com ponteiro grosseiro. Nova auditoria a 360 e 1366 px: nenhum alvo abaixo de 24 px nem texto abaixo de 12 px.

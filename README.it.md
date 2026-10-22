@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 120.2.11 · **Ultimo aggiornamento:** 2026-10-23
+**Versione:** 120.2.12 · **Ultimo aggiornamento:** 2026-10-23
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -57,7 +57,7 @@ LocalMind (v120 nel titolo della pagina) è un'interfaccia di chat con modelli l
 
 ## Privacy e rete
 
-- **Archiviazione locale:** `localStorage` (chiavi con prefisso `lm_`: preferenze, conversazioni salvate, libreria di prompt, memoria, budget, benchmark ecc.) e Cache Storage (modelli scaricati da transformers.js e i binari Pyodide/ONNX Runtime verificati e un piccolo service worker per i file dell'app). Il testo delle conversazioni non viene inviato da nessuna parte dall'app.
+- **Archiviazione locale:** `localStorage` (chiavi con prefisso `localmind.`: preferenze, conversazioni salvate, libreria di prompt, memoria, budget, benchmark ecc.) e Cache Storage (modelli scaricati da transformers.js e i binari Pyodide/ONNX Runtime verificati e un piccolo service worker per i file dell'app). Il testo delle conversazioni non viene inviato da nessuna parte dall'app.
 - **Rete (host di terzi):**
   - `huggingface.co` (e `*.huggingface.co`, `hf.co`): scaricamento dei modelli ONNX e ricerca nel catalogo, solo quando carichi un modello o cerchi modelli.
   - `cdn.jsdelivr.net`: solo i binari di Pyodide 0.27.0 (`.wasm`, `python_stdlib.zip`, file lock; i due script sono caricati con SRI) e il `.wasm` di ONNX Runtime Web (versione npm fissata), caricati solo quando servono (esecuzione di codice Python, caricamento di un modello). Ogni file è verificato con SHA-256 prima dell'uso e rifiutato altrimenti; la CSP nella pagina consente esattamente questi URL.
@@ -89,6 +89,10 @@ MIT — vedi il file LICENSE. L'intestazione di `index.html` diceva in precedenz
 2026-10-10: verificato nel browser (0 errori JS al caricamento; al caricamento non parte alcuna richiesta di rete) e la CSP nella pagina. Aggiunti nomi accessibili, una nota sull'affidabilità dei modelli e le note sulle licenze sopra riportate.
 
 ## Cronologia / Changelog
+
+### 120.2.12 — 2026-10-23
+
+- Archiviazione: le chiavi ora hanno il prefisso dell'app (`localmind.*`); i dati esistenti vengono migrati automaticamente all'avvio dalle vecchie chiavi (`lm_*`) e i vecchi backup `.fff.json` si importano ancora (fff-kit 1.2.0).
 
 ### 120.2.10 — 2026-10-22
 Layout: la barra superiore non esce più dallo schermo tra 769 e 1500 px (l’ultimo pulsante era tagliato a 1366 px); campi di testo alti almeno 24 px; pulsanti lettura, stella, voce e risposte rapide da 44 px su puntatore grossolano. Nuovo audit a 360 e 1366 px: nessun bersaglio sotto 24 px né testo sotto 12 px.

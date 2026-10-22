@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 120.2.11 · **Zuletzt aktualisiert:** 2026-10-23
+**Version:** 120.2.12 · **Zuletzt aktualisiert:** 2026-10-23
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -57,7 +57,7 @@ LocalMind (v120 im Seitentitel) ist eine Chat-Oberfläche für Sprachmodelle, di
 
 ## Datenschutz und Netzwerk
 
-- **Lokaler Speicher:** `localStorage` (Schlüssel mit dem Präfix `lm_`: Einstellungen, gespeicherte Konversationen, Prompt-Bibliothek, Speicher, Budget, Benchmarks usw.) und Cache Storage (von transformers.js heruntergeladene Modelle und die geprüften Pyodide-/ONNX-Runtime-Binärdateien und ein kleiner Service Worker für die App-Dateien). Der Text der Konversationen wird von der App nirgendwohin gesendet.
+- **Lokaler Speicher:** `localStorage` (Schlüssel mit dem Präfix `localmind.`: Einstellungen, gespeicherte Konversationen, Prompt-Bibliothek, Speicher, Budget, Benchmarks usw.) und Cache Storage (von transformers.js heruntergeladene Modelle und die geprüften Pyodide-/ONNX-Runtime-Binärdateien und ein kleiner Service Worker für die App-Dateien). Der Text der Konversationen wird von der App nirgendwohin gesendet.
 - **Netzwerk (Drittanbieter-Hosts):**
   - `huggingface.co` (und `*.huggingface.co`, `hf.co`): Herunterladen der ONNX-Modelle und Suche im Katalog, nur wenn du ein Modell lädst oder nach Modellen suchst.
   - `cdn.jsdelivr.net`: nur die Pyodide-0.27.0-Binärdateien (`.wasm`, `python_stdlib.zip`, Lock-Datei; die beiden Skripte werden mit SRI geladen) und das `.wasm` von ONNX Runtime Web (feste npm-Version), nur bei Bedarf geladen (Ausführung von Python-Code, Laden eines Modells). Jede Datei wird vor der Nutzung per SHA-256 geprüft und sonst abgelehnt; die CSP der Seite erlaubt genau diese URLs.
@@ -89,6 +89,10 @@ MIT — siehe die Datei LICENSE. Der Header von `index.html` nannte früher auch
 2026-10-10: im Browser geprüft (0 JS-Fehler beim Laden; beim Laden gehen keine Netzwerkanfragen hinaus) sowie die CSP der Seite. Zugängliche Namen, ein Hinweis zur Zuverlässigkeit der Modelle und die obigen Lizenzhinweise hinzugefügt.
 
 ## Verlauf / Changelog
+
+### 120.2.12 — 2026-10-23
+
+- Speicher: Die Schlüssel tragen jetzt das App-Präfix (`localmind.*`); vorhandene Daten werden beim Start automatisch von den alten Schlüsseln (`lm_*`) übernommen, und ältere `.fff.json`-Sicherungen lassen sich weiterhin importieren (fff-kit 1.2.0).
 
 ### 120.2.10 — 2026-10-22
 Layout: die obere Leiste läuft zwischen 769 und 1500 px nicht mehr über (die letzte Schaltfläche war bei 1366 px abgeschnitten); Textfelder mindestens 24 px hoch; Vorlese-, Stern-, Sprach- und Schnellantwort-Schaltflächen 44 px bei grobem Zeiger. Erneute Prüfung bei 360 und 1366 px: kein Ziel unter 24 px und kein Text unter 12 px.

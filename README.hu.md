@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 120.2.11 · **Utolsó frissítés:** 2026-10-23
+**Verzió:** 120.2.12 · **Utolsó frissítés:** 2026-10-23
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -57,7 +57,7 @@ A LocalMind (az oldal címében v120) egy csevegőfelület helyben, a böngész�
 
 ## Adatvédelem és hálózat
 
-- **Helyi tárolás:** `localStorage` (az `lm_` előtagú kulcsok: beállítások, mentett beszélgetések, promptkönyvtár, memória, keret, benchmarkok stb.) és Cache Storage (a transformers.js által letöltött modellek és az ellenőrzött Pyodide/ONNX Runtime bináris fájlok és egy kis service worker az alkalmazás fájljaihoz). A beszélgetések szövegét az alkalmazás sehová nem küldi el.
+- **Helyi tárolás:** `localStorage` (az `localmind.` előtagú kulcsok: beállítások, mentett beszélgetések, promptkönyvtár, memória, keret, benchmarkok stb.) és Cache Storage (a transformers.js által letöltött modellek és az ellenőrzött Pyodide/ONNX Runtime bináris fájlok és egy kis service worker az alkalmazás fájljaihoz). A beszélgetések szövegét az alkalmazás sehová nem küldi el.
 - **Hálózat (harmadik felek gazdái):**
   - `huggingface.co` (valamint `*.huggingface.co`, `hf.co`): ONNX-modellek letöltése és keresés a katalógusban, csak amikor modellt töltesz be vagy modelleket keresel.
   - `cdn.jsdelivr.net`: csak a Pyodide 0.27.0 bináris fájljai (`.wasm`, `python_stdlib.zip`, lock fájl; a két szkript SRI-vel töltődik be) és az ONNX Runtime Web `.wasm` (rögzített npm-verzió), csak szükség esetén betöltve (Python-kód futtatása, modell betöltése). Minden fájlt használat előtt SHA-256-tal ellenőriz, eltérés esetén elutasít; az oldal CSP-je pontosan ezeket az URL-eket engedélyezi.
@@ -89,6 +89,10 @@ MIT — lásd a LICENSE fájlt. Az `index.html` fejléce korábban a „TRADE-FR
 2026-10-10: ellenőrizve a böngészőben (0 JS-hiba betöltéskor; betöltéskor nem indul hálózati kérés) és az oldal CSP-je. Hozzáadott hozzáférhető nevek, egy megjegyzés a modellek megbízhatóságáról és a fenti licencmegjegyzések.
 
 ## Előzmények / Changelog
+
+### 120.2.12 — 2026-10-23
+
+- Tárolás: a kulcsok mostantól az alkalmazás előtagját viselik (`localmind.*`); a meglévő adatok indításkor automatikusan átkerülnek a régi kulcsokból (`lm_*`), a régebbi `.fff.json` mentések pedig továbbra is importálhatók (fff-kit 1.2.0).
 
 ### 120.2.10 — 2026-10-22
 Elrendezés: a felső sáv már nem lóg ki 769 és 1500 px között (az utolsó gomb 1366 px-en levágódott); a szövegmezők legalább 24 px magasak; a felolvasás, csillag, hang és gyorsválasz gombok durva mutatónál 44 px-esek. Újabb ellenőrzés 360 és 1366 px-en: nincs 24 px alatti célpont és 12 px alatti szöveg.

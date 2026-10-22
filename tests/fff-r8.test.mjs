@@ -17,7 +17,7 @@ async function open(opts={}){
   p.on('pageerror',e=>errs.push('pageerror '+e.message)); p.on('console',m=>{ if(m.type()==='error'||/Content Security/i.test(m.text())) errs.push('console '+m.text()); });
   p.on('dialog',d=>d.accept());
   await p.addInitScript({content:fs.readFileSync(AXE,'utf8')});
-  await p.addInitScript(({convs,seed})=>{ try{ localStorage.setItem('lm_onboarded','1'); if(seed&&!sessionStorage.getItem('c5seeded')){ localStorage.setItem('lm_conv_list',JSON.stringify(convs)); sessionStorage.setItem('c5seeded','1'); } }catch(e){} },{convs:CONVS,seed:opts.seed!==false});
+  await p.addInitScript(({convs,seed})=>{ try{ localStorage.setItem('localmind.onboarded','1'); if(seed&&!sessionStorage.getItem('c5seeded')){ localStorage.setItem('localmind.conv_list',JSON.stringify(convs)); sessionStorage.setItem('c5seeded','1'); } }catch(e){} },{convs:CONVS,seed:opts.seed!==false});
   await p.goto(URL_); await p.waitForTimeout(3600);
   return {ctx,p,errs,reqs};
 }
@@ -31,9 +31,9 @@ const FAKEERR=/Failed to fetch|net::|NetworkError|ERR_FAILED|Failed to load reso
 { const {ctx,p,errs,reqs}=await open();
   ok(errs.filter(e=>!FAKEERR.test(e)).length===0,'pornire fără erori/CSP: '+errs.join(' | '));
   ok(reqs.length===0,'0 cereri de rețea la pornire: '+reqs.join(','));
-  ok((await p.textContent('#app-version')).includes('v 120.2.11 · 2026-10-23'),'text #app-version');
-  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.2.11'),'meta versiune');
-  ok(await p.evaluate(()=>document.title.includes('120.2.11')),'titlu cu versiunea');
+  ok((await p.textContent('#app-version')).includes('v 120.2.12 · 2026-10-23'),'text #app-version');
+  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.2.12'),'meta versiune');
+  ok(await p.evaluate(()=>document.title.includes('120.2.12')),'titlu cu versiunea');
   ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'fără depășire orizontală');
   const net=await p.textContent('#c5-net'); ok(/Nimic nu pleacă/.test(net),'indicator: '+net);
   await axe(p,'start');
@@ -106,7 +106,7 @@ const FAKEERR=/Failed to fetch|net::|NetworkError|ERR_FAILED|Failed to load reso
   await axe(p,'evaluare goală');
   await p.keyboard.press('Escape');
   // rezultate salvate: tabel, interval, suprapunere, export, ștergere
-  await p.evaluate(()=>{ localStorage.setItem('lm_eval',JSON.stringify({'onnx-community/Qwen3-4B-ONNX':{ts:Date.now(),passed:6,total:8,ttft_ms:420,tps:12.3,tasks:[{id:'arith',ok:true,answer:'391'},{id:'json',ok:false,answer:'{x'}]},'onnx-community/Qwen3-1.7B-ONNX':{ts:Date.now(),passed:5,total:8,ttft_ms:210,tps:25.1,tasks:[]}})); });
+  await p.evaluate(()=>{ localStorage.setItem('localmind.eval',JSON.stringify({'onnx-community/Qwen3-4B-ONNX':{ts:Date.now(),passed:6,total:8,ttft_ms:420,tps:12.3,tasks:[{id:'arith',ok:true,answer:'391'},{id:'json',ok:false,answer:'{x'}]},'onnx-community/Qwen3-1.7B-ONNX':{ts:Date.now(),passed:5,total:8,ttft_ms:210,tps:25.1,tasks:[]}})); });
   await p.evaluate(()=>lmEval.open()); await p.waitForSelector('#c5-ev-out table');
   ok(await p.locator('#c5-ev-out tbody tr').count()===2,'tabel cu 2 modele'); ok((await p.textContent('#c5-ev-out')).includes('6/8'),'scor afișat');
   ok((await p.textContent('#c5-ev-out')).includes('nu se poate spune'),'notă de suprapunere a intervalelor');
@@ -115,18 +115,18 @@ const FAKEERR=/Failed to fetch|net::|NetworkError|ERR_FAILED|Failed to load reso
   const [dl]=await Promise.all([p.waitForEvent('download'),p.click('#c5-ev-out button:has-text("Exportă")')]);
   const j=JSON.parse(fs.readFileSync(await dl.path(),'utf8')); ok(j.format==='localmind-eval'&&Object.keys(j.results).length===2,'export JSON evaluare');
   await p.click('#c5-ev-out button:has-text("Șterge")'); await p.click('dialog.c5-dlg button.c5-pri:has-text("Da")'); await p.waitForTimeout(400);
-  ok(await p.evaluate(()=>localStorage.getItem('lm_eval'))===null,'rezultatele se șterg');
+  ok(await p.evaluate(()=>localStorage.getItem('localmind.eval'))===null,'rezultatele se șterg');
   ok(errs.filter(e=>!FAKEERR.test(e)).length===0,'fără erori: '+errs.join('|'));
   await ctx.close(); }
 
 // 5. copie .fff.json (istoric + evaluări), criptată, import
 { const {ctx,p}=await open();
-  await p.evaluate(()=>localStorage.setItem('lm_eval','{"m":{"ts":1,"passed":3,"total":8,"tasks":[]}}'));
-  const keys=await p.evaluate(()=>Object.keys(FFF.bundle.build().data)); ok(keys.includes('lm_conv_list')&&keys.includes('lm_eval'),'copia conține conversațiile și evaluările: '+keys.join(','));
+  await p.evaluate(()=>localStorage.setItem('localmind.eval','{"m":{"ts":1,"passed":3,"total":8,"tasks":[]}}'));
+  const keys=await p.evaluate(()=>Object.keys(FFF.bundle.build().data)); ok(keys.includes('localmind.conv_list')&&keys.includes('localmind.eval'),'copia conține conversațiile și evaluările: '+keys.join(','));
   const [dl]=await Promise.all([p.waitForEvent('download'),p.evaluate(()=>FFF.bundle.export({encrypt:true,password:'parola-de-test-1'}))]);
   const txt=fs.readFileSync(await dl.path(),'utf8'); ok(!txt.includes('Astronomie')&&JSON.parse(txt).format==='fff-bundle-enc','copia criptată nu conține text clar');
-  await p.evaluate(()=>{ localStorage.removeItem('lm_conv_list'); localStorage.removeItem('lm_eval'); });
-  const back=await p.evaluate(async t=>{ await FFF.bundle.import(new File([t],'x.fff.json'),{password:'parola-de-test-1',confirm:false,reload:false}); return JSON.parse(localStorage.getItem('lm_conv_list')||'[]').length; },txt);
+  await p.evaluate(()=>{ localStorage.removeItem('localmind.conv_list'); localStorage.removeItem('localmind.eval'); });
+  const back=await p.evaluate(async t=>{ await FFF.bundle.import(new File([t],'x.fff.json'),{password:'parola-de-test-1',confirm:false,reload:false}); return JSON.parse(localStorage.getItem('localmind.conv_list')||'[]').length; },txt);
   ok(back===2,'import restaurează conversațiile: '+back);
   await p.evaluate(()=>FFF.label.open()); await p.waitForSelector('dialog');
   await axe(p,'dialog Transparență'); await ctx.close(); }

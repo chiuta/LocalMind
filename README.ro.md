@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 120.2.11 · **Ultima actualizare:** 2026-10-23
+**Versiune:** 120.2.12 · **Ultima actualizare:** 2026-10-23
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -57,7 +57,7 @@ LocalMind (v120 în titlul paginii) este o interfață de chat cu modele de limb
 
 ## Confidențialitate și rețea
 
-- **Stocare locală:** `localStorage` (chei cu prefixul `lm_`: preferințe, conversații salvate, bibliotecă de prompturi, memorie, buget, benchmark-uri etc.) și Cache Storage (modele descărcate de transformers.js și binarele Pyodide/ONNX Runtime verificate și un service worker mic pentru fișierele aplicației). Textul conversațiilor nu este trimis nicăieri de aplicație.
+- **Stocare locală:** `localStorage` (chei cu prefixul `localmind.`: preferințe, conversații salvate, bibliotecă de prompturi, memorie, buget, benchmark-uri etc.) și Cache Storage (modele descărcate de transformers.js și binarele Pyodide/ONNX Runtime verificate și un service worker mic pentru fișierele aplicației). Textul conversațiilor nu este trimis nicăieri de aplicație.
 - **Rețea (hosturi terțe):**
   - `huggingface.co` (și `*.huggingface.co`, `hf.co`): descărcarea modelelor ONNX și căutarea în catalog, doar când încarci un model sau cauți modele.
   - `cdn.jsdelivr.net`: doar binarele Pyodide 0.27.0 (`.wasm`, `python_stdlib.zip`, fișierul lock; cele două scripturi se încarcă cu SRI) și `.wasm`-ul ONNX Runtime Web (versiune npm fixată), încărcate doar când sunt necesare (rulare de cod Python, încărcarea unui model). Fiecare fișier se verifică SHA-256 înainte de folosire și se refuză altfel; CSP-ul din pagină permite exact aceste URL-uri.
@@ -89,6 +89,10 @@ MIT — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRAD
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### 120.2.12 — 2026-10-23
+
+- Stocare: cheile poartă acum prefixul aplicației (`localmind.*`); datele existente se mută automat la pornire din cheile vechi (`lm_*`), iar copiile `.fff.json` mai vechi se importă în continuare (fff-kit 1.2.0).
 
 ### 120.2.10 — 2026-10-22
 Aspect: bara de sus nu mai iese din ecran între 769 și 1500 px (ultimul buton era tăiat la 1366 px); câmpurile text au cel puțin 24 px înălțime; butoanele de citire, stea, voce și răspunsuri rapide au 44 px pe pointer grosier. Re-audit la 360 și 1366 px: nicio țintă sub 24 px și niciun text sub 12 px.
