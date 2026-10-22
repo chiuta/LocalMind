@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 120.2.7 · **Last updated:** 2026-10-22
+**Version:** 120.2.8 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — see the LICENSE file. The `index.html` header used to also say "TRADE-FR
 2026-10-10: verified in the browser (0 JS errors on load; no network requests leave on load) and the CSP in the page. Added accessible names, a note on the reliability of the models and the license notes above.
 
 ## History / Changelog
+
+### 120.2.8 — 2026-10-22
+
+fff-kit 1.1.4: touch targets and minimum text size. Touch targets/text fixed in the app.
 
 ### 120.2.7 — 2026-10-22
 - Security: the global search and the in-conversation search no longer insert the typed query or the message text as HTML (latent DOM-XSS); results are built from text nodes.

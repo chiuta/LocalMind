@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 120.2.7 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 120.2.8 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — lásd a LICENSE fájlt. Az `index.html` fejléce korábban a „TRADE-FR
 2026-10-10: ellenőrizve a böngészőben (0 JS-hiba betöltéskor; betöltéskor nem indul hálózati kérés) és az oldal CSP-je. Hozzáadott hozzáférhető nevek, egy megjegyzés a modellek megbízhatóságáról és a fenti licencmegjegyzések.
 
 ## Előzmények / Changelog
+
+### 120.2.8 — 2026-10-22
+
+fff-kit 1.1.4: érintési célok és minimális szövegméret. Érintési célok/szöveg javítva az alkalmazásban.
 
 ### 120.2.7 — 2026-10-22
 - Biztonság: a globális keresés és a beszélgetésen belüli keresés már nem szúrja be HTML-ként a beírt keresőkifejezést és az üzenetek szövegét (látens DOM-XSS); az eredmények szövegcsomópontokból épülnek fel.

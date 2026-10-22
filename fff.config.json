@@ -1,0 +1,5 @@
+{
+  "cspExceptions": [
+    {"rule": "script-unsafe-eval", "reason": "motorul de inferență local (transformers.js / ONNX Runtime Web, WebGPU + WASM) folosește eval/new Function pentru kernel-urile compilate; fără el modelele nu rulează în browser"}
+  ]
+}

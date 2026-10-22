@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 120.2.7 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 120.2.8 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — vedi il file LICENSE. L'intestazione di `index.html` diceva in precedenz
 2026-10-10: verificato nel browser (0 errori JS al caricamento; al caricamento non parte alcuna richiesta di rete) e la CSP nella pagina. Aggiunti nomi accessibili, una nota sull'affidabilità dei modelli e le note sulle licenze sopra riportate.
 
 ## Cronologia / Changelog
+
+### 120.2.8 — 2026-10-22
+
+fff-kit 1.1.4: aree tattili e testo minimo. Aree tattili/testo corretti nell’app.
 
 ### 120.2.7 — 2026-10-22
 - Sicurezza: la ricerca globale e la ricerca nella conversazione non inseriscono più la query digitata né il testo dei messaggi come HTML (DOM-XSS latente); i risultati sono costruiti con nodi di testo.

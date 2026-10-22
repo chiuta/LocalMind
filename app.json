@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "slug": "localmind",
-  "name": "LocalMind v120.2.7 — AI în browser",
-  "version": "120.2.7",
+  "name": "LocalMind v120.2.8 — AI în browser",
+  "version": "120.2.8",
   "updated": "2026-10-22",
   "description": "Rulează modele AI local în browser, fără cont și fără telemetrie; modelele se descarcă o singură dată de la Hugging Face. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.",
   "egress": [
@@ -113,8 +113,8 @@
     "lm_warmup_disabled",
     "lm_word_goal"
   ],
-  "sizeBytes": 1260135,
-  "sha256": "5086bc53a99bb3035e9dad4e5db6483922c74cbe021d69916f64f4c7bb9d5e06",
+  "sizeBytes": 1283411,
+  "sha256": "e4436fc5967bd06c2ff08968c394831d1e1dbd6248aca2619e2ae32a76aa7506",
   "csp": {
     "present": true,
     "directives": {
@@ -169,5 +169,11 @@
       "search"
     ]
   },
-  "selfSerializing": false
+  "selfSerializing": false,
+  "cspExceptions": [
+    {
+      "rule": "script-unsafe-eval",
+      "reason": "motorul de inferență local (transformers.js / ONNX Runtime Web, WebGPU + WASM) folosește eval/new Function pentru kernel-urile compilate; fără el modelele nu rulează în browser"
+    }
+  ]
 }
