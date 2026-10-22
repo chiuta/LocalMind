@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 120.2.2 · **Zuletzt aktualisiert:** 2026-10-19
+**Version:** 120.2.3 · **Zuletzt aktualisiert:** 2026-10-22
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — siehe die Datei LICENSE. Der Header von `index.html` nannte früher auch
 2026-10-10: im Browser geprüft (0 JS-Fehler beim Laden; beim Laden gehen keine Netzwerkanfragen hinaus) sowie die CSP der Seite. Zugängliche Namen, ein Hinweis zur Zuverlässigkeit der Modelle und die obigen Lizenzhinweise hinzugefügt.
 
 ## Verlauf / Changelog
+
+### 120.2.3 — 2026-10-22
+- Das Panel der Tastenkürzel (Titel, aria-label und alle Zeilen) sowie die Beschriftung der Seitenleiste sind in allen 8 Sprachen vollständig lokalisiert; der Standard-System-Prompt bleibt absichtlich rumänisch.
 
 ### 120.1.1 — 2026-10-18
 - Die Suche in den angehängten Dokumenten (RAG) normalisiert den Text NFD→NFC und ignoriert diakritische Zeichen (ș/ş/s, ă/a; NFD-Text von macOS), und Wörter mit 3 Buchstaben (IMI, RAG) zählen jetzt (Schwelle ≥3 statt >3; „UE“ mit 2 Buchstaben bleibt unter der Schwelle).

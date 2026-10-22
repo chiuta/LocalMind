@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 120.2.2 · **Última atualização:** 2026-10-19
+**Versão:** 120.2.3 · **Última atualização:** 2026-10-22
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — ver o ficheiro LICENSE. O cabeçalho do `index.html` dizia anteriormente
 2026-10-10: verificado no navegador (0 erros de JS ao carregar; ao carregar não sai nenhum pedido de rede) e a CSP da página. Adicionados nomes acessíveis, uma nota sobre a fiabilidade dos modelos e as notas sobre licenças acima.
 
 ## Histórico / Changelog
+
+### 120.2.3 — 2026-10-22
+- o painel de atalhos de teclado (título, aria-label e todas as linhas) e a etiqueta da barra lateral estão totalmente localizados nos 8 idiomas; o prompt de sistema predefinido permanece em romeno, de propósito.
 
 ### 120.1.1 — 2026-10-18
 - A pesquisa nos documentos anexados (RAG) normaliza o texto NFD→NFC e ignora os sinais diacríticos (ș/ş/s, ă/a; texto NFD do macOS), e as palavras de 3 letras (IMI, RAG) passam a contar (limiar ≥3 em vez de >3; «UE», de 2 letras, fica abaixo do limiar).
