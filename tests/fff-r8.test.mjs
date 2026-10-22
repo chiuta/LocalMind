@@ -31,9 +31,9 @@ const FAKEERR=/Failed to fetch|net::|NetworkError|ERR_FAILED|Failed to load reso
 { const {ctx,p,errs,reqs}=await open();
   ok(errs.filter(e=>!FAKEERR.test(e)).length===0,'pornire fără erori/CSP: '+errs.join(' | '));
   ok(reqs.length===0,'0 cereri de rețea la pornire: '+reqs.join(','));
-  ok((await p.textContent('#app-version')).includes('v 120.2.10 · 2026-10-22'),'text #app-version');
-  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.2.10'),'meta versiune');
-  ok(await p.evaluate(()=>document.title.includes('120.2.10')),'titlu cu versiunea');
+  ok((await p.textContent('#app-version')).includes('v 120.2.11 · 2026-10-23'),'text #app-version');
+  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.2.11'),'meta versiune');
+  ok(await p.evaluate(()=>document.title.includes('120.2.11')),'titlu cu versiunea');
   ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'fără depășire orizontală');
   const net=await p.textContent('#c5-net'); ok(/Nimic nu pleacă/.test(net),'indicator: '+net);
   await axe(p,'start');
