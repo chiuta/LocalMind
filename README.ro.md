@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 120.2.3 · **Ultima actualizare:** 2026-10-22
+**Versiune:** 120.2.4 · **Ultima actualizare:** 2026-10-22
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRAD
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### 120.2.4 — 2026-10-22
+- Insigna „nimic nu pleacă din dispozitiv” (text și tooltip) și butonul „Copie criptată” se retraduc acum imediat la schimbarea limbii, fără reload. Promptul de sistem și chip-urile rămân intenționat în română.
 
 ### 120.2.3 — 2026-10-22
 - panoul de scurtături de tastatură (titlu, aria-label și toate rândurile) și eticheta barei laterale sunt localizate complet în cele 8 limbi; promptul de sistem implicit rămâne în română, intenționat.

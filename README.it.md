@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 120.2.3 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 120.2.4 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — vedi il file LICENSE. L'intestazione di `index.html` diceva in precedenz
 2026-10-10: verificato nel browser (0 errori JS al caricamento; al caricamento non parte alcuna richiesta di rete) e la CSP nella pagina. Aggiunti nomi accessibili, una nota sull'affidabilità dei modelli e le note sulle licenze sopra riportate.
 
 ## Cronologia / Changelog
+
+### 120.2.4 — 2026-10-22
+- Il badge «nulla lascia il dispositivo» (testo e tooltip) e il pulsante «Copia cifrata» ora si ritraducono subito al cambio di lingua, senza ricaricare. Il prompt di sistema e i chip di esempio restano volutamente in rumeno.
 
 ### 120.2.3 — 2026-10-22
 - il pannello delle scorciatoie da tastiera (titolo, aria-label e tutte le righe) e l’etichetta della barra laterale sono completamente localizzati nelle 8 lingue; il prompt di sistema predefinito resta in rumeno, volutamente.

@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · **Español** · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versión:** 120.2.3 · **Última actualización:** 2026-10-22
+**Versión:** 120.2.4 · **Última actualización:** 2026-10-22
 
 Idiomas de la interfaz: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — véase el archivo LICENSE. La cabecera de `index.html` decía antes tamb
 2026-10-10: verificado en el navegador (0 errores de JS al cargar; al cargar no sale ninguna solicitud de red) y la CSP de la página. Añadidos nombres accesibles, una nota sobre la fiabilidad de los modelos y las notas sobre licencias anteriores.
 
 ## Historial / Changelog
+
+### 120.2.4 — 2026-10-22
+- La insignia «nada sale del dispositivo» (texto y tooltip) y el botón «Copia cifrada» ahora se retraducen al instante al cambiar de idioma, sin recargar. El prompt del sistema y los chips de ejemplo se mantienen a propósito en rumano.
 
 ### 120.2.3 — 2026-10-22
 - el panel de atajos de teclado (título, aria-label y todas las filas) y la etiqueta de la barra lateral están totalmente localizados en los 8 idiomas; el prompt de sistema predeterminado permanece en rumano, a propósito.

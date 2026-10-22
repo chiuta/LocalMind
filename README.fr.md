@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 120.2.3 · **Dernière mise à jour :** 2026-10-22
+**Version :** 120.2.4 · **Dernière mise à jour :** 2026-10-22
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,9 @@ MIT — voir le fichier LICENSE. L'en-tête de `index.html` mentionnait auparava
 2026-10-10 : vérifié dans le navigateur (0 erreur JS au chargement ; aucune requête réseau ne part au chargement) et la CSP de la page. Ajout de noms accessibles, d'une note sur la fiabilité des modèles et des notes ci-dessus sur les licences.
 
 ## Historique / Changelog
+
+### 120.2.4 — 2026-10-22
+- Le badge « rien ne quitte l’appareil » (texte et infobulle) et le bouton « Copie chiffrée » se retraduisent désormais immédiatement au changement de langue, sans rechargement. Le prompt système et les puces d’exemple restent volontairement en roumain.
 
 ### 120.2.3 — 2026-10-22
 - le panneau des raccourcis clavier (titre, aria-label et toutes les lignes) et l’étiquette de la barre latérale sont entièrement localisés dans les 8 langues ; le prompt système par défaut reste en roumain, volontairement.
