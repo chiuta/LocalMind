@@ -120,3 +120,20 @@ ls -l LocalMind/vendor/transformers/ LocalMind/vendor/pdfjs/
 Test funcțional: deschide pagina, încarcă un model mic (se descarcă o dată, apoi merge
 din cache), trimite un mesaj, încarcă un PDF — toate fără ca importurile de bibliotecă
 să mai atingă jsDelivr (vizibil în tab-ul Network al DevTools).
+
+
+---
+
+## Actualizare 120.2.9 — fără încredere în CDN la runtime
+
+Pe lângă `transformers`, `pdfjs` și `qrcode.min.js` (de mai sus), `vendor/` conține acum și:
+
+```
+vendor/
+├─ katex@0.16.9/               katex.min.js, katex.min.css, fonts/*.woff2, LICENSE (MIT)
+├─ mermaid@11.15.0/            mermaid.min.js, LICENSE (MIT)
+└─ onnxruntime-web@1.26.0-dev.20260416-b7804b056c/
+                               ort-wasm-simd-threaded.asyncify.mjs, ort-wasm-simd-threaded.mjs, LICENSE (MIT)
+```
+
+Artefactele mari (ONNX Runtime `.wasm`, Pyodide) NU sunt în depozit: se descarcă de la URL-uri imuabile și se verifică SHA-256 în pagină. Detalii, versiuni, licențe și sume: `NOTICE.md`.

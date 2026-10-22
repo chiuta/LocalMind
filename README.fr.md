@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 120.2.8 · **Dernière mise à jour :** 2026-10-22
+**Version :** 120.2.10 · **Dernière mise à jour :** 2026-10-22
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -57,20 +57,20 @@ LocalMind (v120 dans le titre de la page) est une interface de discussion avec d
 
 ## Confidentialité et réseau
 
-- **Stockage local :** `localStorage` (clés avec le préfixe `lm_` : préférences, conversations enregistrées, bibliothèque de prompts, mémoire, budget, benchmarks, etc.) et Cache Storage (modèles téléchargés par transformers.js et un petit service worker pour les ressources CDN). Le texte des conversations n'est envoyé nulle part par l'application.
+- **Stockage local :** `localStorage` (clés avec le préfixe `lm_` : préférences, conversations enregistrées, bibliothèque de prompts, mémoire, budget, benchmarks, etc.) et Cache Storage (modèles téléchargés par transformers.js et les binaires Pyodide/ONNX Runtime vérifiés et un petit service worker pour les fichiers de l'application). Le texte des conversations n'est envoyé nulle part par l'application.
 - **Réseau (hôtes tiers) :**
   - `huggingface.co` (et `*.huggingface.co`, `hf.co`) : téléchargement des modèles ONNX et recherche dans le catalogue, uniquement lorsque vous chargez un modèle ou recherchez des modèles.
-  - `cdn.jsdelivr.net` : KaTeX, Mermaid 11.15.0 et Pyodide 0.27.0, chargés uniquement lorsque nécessaire (formules, diagrammes, exécution de code Python). La CSP de la page n'autorise que ces hôtes.
-  - transformers.js et pdf.js sont inclus localement dans le dossier `vendor/` du dépôt.
+  - `cdn.jsdelivr.net` : uniquement les binaires de Pyodide 0.27.0 (`.wasm`, `python_stdlib.zip`, fichier lock ; les deux scripts sont chargés avec SRI) et le `.wasm` d'ONNX Runtime Web (version npm figée), chargés seulement lorsque nécessaire (exécution de code Python, chargement d'un modèle). Chaque fichier est vérifié par SHA-256 avant usage et refusé sinon ; la CSP de la page n'autorise que ces URL exactes.
+  - transformers.js, pdf.js, KaTeX 0.16.9, Mermaid 11.15.0, qrcode.js et les chargeurs d'ONNX Runtime Web sont inclus localement dans le dossier `vendor/` du dépôt (chargés depuis la même origine ; KaTeX et Mermaid avec SRI).
 - L'application affirme « zéro requête réseau pendant l'inférence » : une fois le modèle chargé, la génération s'exécute localement.
 
 ## Avertissement
 
-Les réponses des petits modèles peuvent être erronées, incomplètes ou inventées (« hallucinations ») ; vérifiez-les. L'application ne fournit pas de conseils médicaux, juridiques ou financiers. Les badges « FĂRĂ TELEMETRIE » / « FĂRĂ CONT » (l'infobulle du badge dit la même chose) signifient que l'application n'envoie ni les conversations ni les données d'utilisation à un serveur de l'auteur ; la page contacte toutefois huggingface.co (téléchargement des modèles, recherche) et cdn.jsdelivr.net (KaTeX, Mermaid, Pyodide), comme décrit ci-dessus.
+Les réponses des petits modèles peuvent être erronées, incomplètes ou inventées (« hallucinations ») ; vérifiez-les. L'application ne fournit pas de conseils médicaux, juridiques ou financiers. Les badges « FĂRĂ TELEMETRIE » / « FĂRĂ CONT » (l'infobulle du badge dit la même chose) signifient que l'application n'envoie ni les conversations ni les données d'utilisation à un serveur de l'auteur ; la page contacte toutefois huggingface.co (téléchargement des modèles, recherche) et cdn.jsdelivr.net (Pyodide, ONNX Runtime), comme décrit ci-dessus.
 
 ## Composants tiers
 
-Le dossier `vendor/` contient des copies de bibliothèques avec leurs propres licences, différentes de MIT : pdf.js (Mozilla, Apache-2.0 — l'avis figure dans l'en-tête du fichier), transformers.js 4.2.0 (Hugging Face, Apache-2.0 selon le projet amont ; le fichier minifié ne contient pas l'avis) et `qrcode.min.js` (qrcodejs, MIT selon le projet amont ; utilisé pour générer des codes QR). La licence MIT s'applique au code de l'auteur, non aux composants tiers. Les modèles téléchargés depuis Hugging Face ont leurs propres licences (par ex. Qwen3 sous Apache-2.0, LFM2 sous la licence Liquid AI).
+Le dossier `vendor/` contient des copies de bibliothèques avec leurs propres licences, différentes de MIT : pdf.js (Mozilla, Apache-2.0 — l'avis figure dans l'en-tête du fichier), transformers.js 4.2.0 (Hugging Face, Apache-2.0 selon le projet amont ; le fichier minifié ne contient pas l'avis) et `qrcode.min.js` (qrcodejs, MIT selon le projet amont ; utilisé pour générer des codes QR). La licence MIT s'applique au code de l'auteur, non aux composants tiers. Les modèles téléchargés depuis Hugging Face ont leurs propres licences (par ex. Qwen3 sous Apache-2.0, LFM2 sous la licence Liquid AI). Également dans `vendor/` (voir `NOTICE.md`) : KaTeX 0.16.9 (MIT), Mermaid 11.15.0 (MIT) et les chargeurs d'ONNX Runtime Web (MIT). Pyodide 0.27.0 (MPL-2.0) et les fichiers `.wasm` d'ONNX Runtime ne sont pas dans le dépôt : ils sont téléchargés depuis des URL figées et vérifiés par SHA-256.
 
 ## Exécution en local / hors ligne
 
@@ -89,6 +89,13 @@ MIT — voir le fichier LICENSE. L'en-tête de `index.html` mentionnait auparava
 2026-10-10 : vérifié dans le navigateur (0 erreur JS au chargement ; aucune requête réseau ne part au chargement) et la CSP de la page. Ajout de noms accessibles, d'une note sur la fiabilité des modèles et des notes ci-dessus sur les licences.
 
 ## Historique / Changelog
+
+### 120.2.10 — 2026-10-22
+Mise en page : la barre du haut ne déborde plus entre 769 et 1500 px (le dernier bouton était coupé à 1366 px) ; champs texte d’au moins 24 px de haut ; boutons lecture, étoile, voix et réponses rapides de 44 px sur pointeur grossier. Nouvel audit à 360 et 1366 px : aucune cible sous 24 px ni texte sous 12 px.
+
+### 120.2.9 — 2026-10-22
+- Sécurité : plus aucun code n'est chargé depuis un CDN à l'exécution. KaTeX 0.16.9 (JS, CSS, polices woff2) et Mermaid 11.15.0 passent dans `vendor/` (même origine, SRI), de même que les chargeurs d'ONNX Runtime Web. Le `.wasm` d'ONNX Runtime (23,5 Mo, ou 12,9 Mo sous Safari) et Pyodide 0.27.0 (`.wasm` 10,1 Mo, stdlib, lock) restent hors du dépôt : ils sont récupérés depuis des URL immuables figées et vérifiés par SHA-256 avant usage (sinon refusés ; puis conservés dans Cache Storage et revérifiés à chaque lecture) ; `pyodide.js` et `pyodide.asm.js` se chargent avec SRI.
+- CSP : `cdn.jsdelivr.net` retiré de `style-src`/`font-src` ; `script-src` et `connect-src` ne listent que les fichiers exacts. Environ 4 Mo ajoutés au dépôt (voir `NOTICE.md`). Les modèles de Hugging Face restent non figés (des données, pas du code).
 
 ### 120.2.8 — 2026-10-22
 
@@ -141,5 +148,5 @@ Alexio — Alexandru-Ionuț Chiuță, contact : alexio@trom.tf
 
 ## Résumé
 
-LocalMind est une interface de discussion dans le navigateur pour de petits modèles de langage (Qwen3, LFM2) exécutés via transformers.js et WebGPU, avec RAG sur des documents locaux, ramification des conversations, exports et un panneau d'audit réseau. Les modèles sont téléchargés une seule fois depuis huggingface.co ; KaTeX, Mermaid et Pyodide se chargent à la demande depuis cdn.jsdelivr.net ; transformers.js et pdf.js sont embarqués localement. Les réglages et les discussions sont conservés dans localStorage (clés `lm_`). L'interface est en roumain.
+LocalMind est une interface de discussion dans le navigateur pour de petits modèles de langage (Qwen3, LFM2) exécutés via transformers.js et WebGPU, avec RAG sur des documents locaux, ramification des conversations, exports et un panneau d'audit réseau. Les modèles sont téléchargés une seule fois depuis huggingface.co ; Pyodide et le `.wasm` d'ONNX Runtime se chargent à la demande depuis des URL figées de cdn.jsdelivr.net et sont vérifiés par SHA-256 ; transformers.js, pdf.js, KaTeX et Mermaid sont embarqués localement. Les réglages et les discussions sont conservés dans localStorage (clés `lm_`). L'interface est en roumain.
 

@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · **Italiano** · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versione:** 120.2.8 · **Ultimo aggiornamento:** 2026-10-22
+**Versione:** 120.2.10 · **Ultimo aggiornamento:** 2026-10-22
 
 Lingue dell'interfaccia: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -57,20 +57,20 @@ LocalMind (v120 nel titolo della pagina) è un'interfaccia di chat con modelli l
 
 ## Privacy e rete
 
-- **Archiviazione locale:** `localStorage` (chiavi con prefisso `lm_`: preferenze, conversazioni salvate, libreria di prompt, memoria, budget, benchmark ecc.) e Cache Storage (modelli scaricati da transformers.js e un piccolo service worker per le risorse CDN). Il testo delle conversazioni non viene inviato da nessuna parte dall'app.
+- **Archiviazione locale:** `localStorage` (chiavi con prefisso `lm_`: preferenze, conversazioni salvate, libreria di prompt, memoria, budget, benchmark ecc.) e Cache Storage (modelli scaricati da transformers.js e i binari Pyodide/ONNX Runtime verificati e un piccolo service worker per i file dell'app). Il testo delle conversazioni non viene inviato da nessuna parte dall'app.
 - **Rete (host di terzi):**
   - `huggingface.co` (e `*.huggingface.co`, `hf.co`): scaricamento dei modelli ONNX e ricerca nel catalogo, solo quando carichi un modello o cerchi modelli.
-  - `cdn.jsdelivr.net`: KaTeX, Mermaid 11.15.0 e Pyodide 0.27.0, caricati solo quando servono (formule, diagrammi, esecuzione di codice Python). La CSP nella pagina consente solo questi host.
-  - transformers.js e pdf.js sono inclusi in locale nella cartella `vendor/` del repository.
+  - `cdn.jsdelivr.net`: solo i binari di Pyodide 0.27.0 (`.wasm`, `python_stdlib.zip`, file lock; i due script sono caricati con SRI) e il `.wasm` di ONNX Runtime Web (versione npm fissata), caricati solo quando servono (esecuzione di codice Python, caricamento di un modello). Ogni file è verificato con SHA-256 prima dell'uso e rifiutato altrimenti; la CSP nella pagina consente esattamente questi URL.
+  - transformers.js, pdf.js, KaTeX 0.16.9, Mermaid 11.15.0, qrcode.js e i loader di ONNX Runtime Web sono inclusi in locale nella cartella `vendor/` del repository (caricati dalla stessa origine; KaTeX e Mermaid con SRI).
 - L'app dichiara «zero richieste di rete durante l'inferenza»: dopo il caricamento del modello, la generazione gira in locale.
 
 ## Avvertenza
 
-Le risposte dei modelli piccoli possono essere sbagliate, incomplete o inventate («allucinazioni»); verificale. L'app non offre consigli medici, legali o finanziari. I badge «FĂRĂ TELEMETRIE» / «FĂRĂ CONT» (il tooltip del badge dice lo stesso) significano che l'app non invia le conversazioni né i dati di utilizzo a un server dell'autore; la pagina contatta tuttavia huggingface.co (scaricamento dei modelli, ricerca) e cdn.jsdelivr.net (KaTeX, Mermaid, Pyodide), come descritto sopra.
+Le risposte dei modelli piccoli possono essere sbagliate, incomplete o inventate («allucinazioni»); verificale. L'app non offre consigli medici, legali o finanziari. I badge «FĂRĂ TELEMETRIE» / «FĂRĂ CONT» (il tooltip del badge dice lo stesso) significano che l'app non invia le conversazioni né i dati di utilizzo a un server dell'autore; la pagina contatta tuttavia huggingface.co (scaricamento dei modelli, ricerca) e cdn.jsdelivr.net (Pyodide, ONNX Runtime), come descritto sopra.
 
 ## Componenti di terzi
 
-La cartella `vendor/` contiene copie di librerie con licenze proprie, diverse da MIT: pdf.js (Mozilla, Apache-2.0 — l'avviso è nell'intestazione del file), transformers.js 4.2.0 (Hugging Face, Apache-2.0 secondo il progetto a monte; il file minificato non contiene l'avviso) e `qrcode.min.js` (qrcodejs, MIT secondo il progetto a monte; usato per generare codici QR). La licenza MIT si applica al codice dell'autore, non ai componenti di terzi. I modelli scaricati da Hugging Face hanno le proprie licenze (ad es. Qwen3 sotto Apache-2.0, LFM2 sotto la licenza Liquid AI).
+La cartella `vendor/` contiene copie di librerie con licenze proprie, diverse da MIT: pdf.js (Mozilla, Apache-2.0 — l'avviso è nell'intestazione del file), transformers.js 4.2.0 (Hugging Face, Apache-2.0 secondo il progetto a monte; il file minificato non contiene l'avviso) e `qrcode.min.js` (qrcodejs, MIT secondo il progetto a monte; usato per generare codici QR). La licenza MIT si applica al codice dell'autore, non ai componenti di terzi. I modelli scaricati da Hugging Face hanno le proprie licenze (ad es. Qwen3 sotto Apache-2.0, LFM2 sotto la licenza Liquid AI). Sempre in `vendor/` (vedi `NOTICE.md`): KaTeX 0.16.9 (MIT), Mermaid 11.15.0 (MIT) e i loader di ONNX Runtime Web (MIT). Pyodide 0.27.0 (MPL-2.0) e i file `.wasm` di ONNX Runtime non sono nel repository: vengono scaricati da URL fissati e verificati con SHA-256.
 
 ## Esecuzione in locale / offline
 
@@ -89,6 +89,13 @@ MIT — vedi il file LICENSE. L'intestazione di `index.html` diceva in precedenz
 2026-10-10: verificato nel browser (0 errori JS al caricamento; al caricamento non parte alcuna richiesta di rete) e la CSP nella pagina. Aggiunti nomi accessibili, una nota sull'affidabilità dei modelli e le note sulle licenze sopra riportate.
 
 ## Cronologia / Changelog
+
+### 120.2.10 — 2026-10-22
+Layout: la barra superiore non esce più dallo schermo tra 769 e 1500 px (l’ultimo pulsante era tagliato a 1366 px); campi di testo alti almeno 24 px; pulsanti lettura, stella, voce e risposte rapide da 44 px su puntatore grossolano. Nuovo audit a 360 e 1366 px: nessun bersaglio sotto 24 px né testo sotto 12 px.
+
+### 120.2.9 — 2026-10-22
+- Sicurezza: a runtime non si carica più alcun codice da una CDN. KaTeX 0.16.9 (JS, CSS, font woff2) e Mermaid 11.15.0 passano in `vendor/` (stessa origine, SRI), così come i loader di ONNX Runtime Web. Il `.wasm` di ONNX Runtime (23,5 MB, o 12,9 MB su Safari) e Pyodide 0.27.0 (`.wasm` 10,1 MB, stdlib, lock) restano fuori dal repository: vengono scaricati da URL immutabili fissati e verificati con SHA-256 prima dell'uso (altrimenti rifiutati; poi conservati in Cache Storage e riverificati a ogni lettura); `pyodide.js` e `pyodide.asm.js` si caricano con SRI.
+- CSP: `cdn.jsdelivr.net` rimosso da `style-src`/`font-src`; `script-src` e `connect-src` elencano solo i file esatti. Circa 4 MB aggiunti al repository (vedi `NOTICE.md`). I modelli di Hugging Face restano non fissati (dati, non codice).
 
 ### 120.2.8 — 2026-10-22
 
@@ -141,4 +148,4 @@ Alexio — Alexandru-Ionuț Chiuță, contatto: alexio@trom.tf
 
 ## Riepilogo
 
-LocalMind è un'interfaccia di chat nel browser per piccoli modelli linguistici (Qwen3, LFM2) eseguiti tramite transformers.js e WebGPU, con RAG su documenti locali, ramificazione delle conversazioni, esportazioni e un pannello di audit della rete. I modelli vengono scaricati una sola volta da huggingface.co; KaTeX, Mermaid e Pyodide si caricano su richiesta da cdn.jsdelivr.net; transformers.js e pdf.js sono inclusi localmente. Impostazioni e chat risiedono in localStorage (chiavi `lm_`). L'interfaccia è in rumeno.
+LocalMind è un'interfaccia di chat nel browser per piccoli modelli linguistici (Qwen3, LFM2) eseguiti tramite transformers.js e WebGPU, con RAG su documenti locali, ramificazione delle conversazioni, esportazioni e un pannello di audit della rete. I modelli vengono scaricati una sola volta da huggingface.co; Pyodide e il `.wasm` di ONNX Runtime si caricano su richiesta da URL fissati di cdn.jsdelivr.net e sono verificati con SHA-256; transformers.js, pdf.js, KaTeX e Mermaid sono inclusi localmente. Impostazioni e chat risiedono in localStorage (chiavi `lm_`). L'interfaccia è in rumeno.

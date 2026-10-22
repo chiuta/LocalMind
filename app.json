@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "slug": "localmind",
-  "name": "LocalMind v120.2.8 — AI în browser",
-  "version": "120.2.8",
+  "name": "LocalMind v120.2.10 — AI în browser",
+  "version": "120.2.10",
   "updated": "2026-10-22",
   "description": "Rulează modele AI local în browser, fără cont și fără telemetrie; modelele se descarcă o singură dată de la Hugging Face. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.",
   "egress": [
@@ -34,10 +34,7 @@
       "host": "cdn.jsdelivr.net",
       "via": [
         "csp:connect-src",
-        "csp:font-src",
-        "csp:script-src",
-        "csp:style-src",
-        "src="
+        "csp:script-src"
       ]
     },
     {
@@ -113,26 +110,26 @@
     "lm_warmup_disabled",
     "lm_word_goal"
   ],
-  "sizeBytes": 1283411,
-  "sha256": "e4436fc5967bd06c2ff08968c394831d1e1dbd6248aca2619e2ae32a76aa7506",
+  "sizeBytes": 1290696,
+  "sha256": "67a8732ca33b11a6203f89c330746086fe8cb736c95ca0c0452a7a9c87b786f2",
   "csp": {
     "present": true,
     "directives": {
       "default-src": "'self'",
       "img-src": "'self' data: blob:",
-      "style-src": "'self' 'unsafe-inline' https://cdn.jsdelivr.net",
-      "font-src": "'self' data: https://cdn.jsdelivr.net",
+      "style-src": "'self' 'unsafe-inline'",
+      "font-src": "'self' data:",
       "media-src": "'self' blob: data:",
       "object-src": "'none'",
       "base-uri": "'self'",
       "form-action": "'self'",
       "worker-src": "'self' blob:",
-      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net sha256×6",
-      "connect-src": "'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:",
+      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.js https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js sha256×6",
+      "connect-src": "'self' https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm https://cdn.jsdelivr.net/pyodide/v0.27.0/full/python_stdlib.zip https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide-lock.json https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.asyncify.wasm https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.wasm https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:",
       "manifest-src": "'self'"
     },
     "scriptInline": "hash",
-    "connect": "'self' https://cdn.jsdelivr.net https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:"
+    "connect": "'self' https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm https://cdn.jsdelivr.net/pyodide/v0.27.0/full/python_stdlib.zip https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide-lock.json https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.asyncify.wasm https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.wasm https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:"
   },
   "features": {
     "export": true,
@@ -160,7 +157,7 @@
     ]
   },
   "kit": {
-    "version": "1.1.4",
+    "version": "1.2.0",
     "modules": [
       "core",
       "label",

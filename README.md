@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 120.2.8 · **Last updated:** 2026-10-22
+**Version:** 120.2.10 · **Last updated:** 2026-10-22
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -57,20 +57,20 @@ LocalMind (v120 in the page title) is a chat interface with language models that
 
 ## Privacy and network
 
-- **Local storage:** `localStorage` (keys with the prefix `lm_`: preferences, saved conversations, prompt library, memory, budget, benchmarks etc.) and Cache Storage (models downloaded by transformers.js and a small service worker for CDN resources). The text of the conversations is not sent anywhere by the app.
+- **Local storage:** `localStorage` (keys with the prefix `lm_`: preferences, saved conversations, prompt library, memory, budget, benchmarks etc.) and Cache Storage (models downloaded by transformers.js and the verified Pyodide/ONNX Runtime binaries and a small service worker for the app's files). The text of the conversations is not sent anywhere by the app.
 - **Network (third-party hosts):**
   - `huggingface.co` (and `*.huggingface.co`, `hf.co`): downloading ONNX models and searching the catalog, only when you load a model or search for models.
-  - `cdn.jsdelivr.net`: KaTeX, Mermaid 11.15.0 and Pyodide 0.27.0, loaded only when needed (formulas, diagrams, running Python code). The CSP in the page allows only these hosts.
-  - transformers.js and pdf.js are included locally in the `vendor/` folder of the repository.
+  - `cdn.jsdelivr.net`: only the Pyodide 0.27.0 binaries (`.wasm`, `python_stdlib.zip`, lock file; the two scripts are loaded with SRI) and the ONNX Runtime Web `.wasm` (pinned npm version), loaded only when needed (running Python code, loading a model). Each file is SHA-256 verified before use and refused otherwise; the CSP in the page allows exactly these URLs.
+  - transformers.js, pdf.js, KaTeX 0.16.9, Mermaid 11.15.0, qrcode.js and the ONNX Runtime Web loaders are included locally in the `vendor/` folder of the repository (loaded from the same origin; KaTeX and Mermaid with SRI).
 - The app states "zero network requests during inference": after the model is loaded, generation runs locally.
 
 ## Disclaimer
 
-The answers of small models can be wrong, incomplete or made up ("hallucinations"); verify them. The app does not provide medical, legal or financial advice. The "FĂRĂ TELEMETRIE" / "FĂRĂ CONT" badges (the badge tooltip says the same) mean that the app does not send conversations or usage data to a server of the author; the page does, however, contact huggingface.co (model download, search) and cdn.jsdelivr.net (KaTeX, Mermaid, Pyodide), as described above.
+The answers of small models can be wrong, incomplete or made up ("hallucinations"); verify them. The app does not provide medical, legal or financial advice. The "FĂRĂ TELEMETRIE" / "FĂRĂ CONT" badges (the badge tooltip says the same) mean that the app does not send conversations or usage data to a server of the author; the page does, however, contact huggingface.co (model download, search) and cdn.jsdelivr.net (Pyodide, ONNX Runtime), as described above.
 
 ## Third-party components
 
-The `vendor/` folder contains copies of libraries with their own licenses, different from MIT: pdf.js (Mozilla, Apache-2.0 — the notice is in the file header), transformers.js 4.2.0 (Hugging Face, Apache-2.0 according to the upstream project; the minified file does not contain the notice) and `qrcode.min.js` (qrcodejs, MIT according to the upstream project; used to generate QR codes). The MIT license applies to the author's code, not to the third-party components. The models downloaded from Hugging Face have their own licenses (e.g. Qwen3 under Apache-2.0, LFM2 under the Liquid AI license).
+The `vendor/` folder contains copies of libraries with their own licenses, different from MIT: pdf.js (Mozilla, Apache-2.0 — the notice is in the file header), transformers.js 4.2.0 (Hugging Face, Apache-2.0 according to the upstream project; the minified file does not contain the notice) and `qrcode.min.js` (qrcodejs, MIT according to the upstream project; used to generate QR codes). The MIT license applies to the author's code, not to the third-party components. The models downloaded from Hugging Face have their own licenses (e.g. Qwen3 under Apache-2.0, LFM2 under the Liquid AI license). Also in `vendor/` (see `NOTICE.md`): KaTeX 0.16.9 (MIT), Mermaid 11.15.0 (MIT) and the ONNX Runtime Web loaders (MIT). Pyodide 0.27.0 (MPL-2.0) and the ONNX Runtime `.wasm` files are not in the repository: they are downloaded from pinned URLs and verified by SHA-256.
 
 ## Running locally / offline
 
@@ -89,6 +89,13 @@ MIT — see the LICENSE file. The `index.html` header used to also say "TRADE-FR
 2026-10-10: verified in the browser (0 JS errors on load; no network requests leave on load) and the CSP in the page. Added accessible names, a note on the reliability of the models and the license notes above.
 
 ## History / Changelog
+
+### 120.2.10 — 2026-10-22
+Layout: the top bar no longer overflows between 769 and 1500 px (the last button was cut off at 1366 px); text fields at least 24 px high; read, star, voice and quick-reply buttons 44 px on coarse pointers. Re-audit at 360 and 1366 px: no target under 24 px and no text under 12 px.
+
+### 120.2.9 — 2026-10-22
+- Security: no code is trusted from a CDN at runtime any more. KaTeX 0.16.9 (JS, CSS, woff2 fonts) and Mermaid 11.15.0 moved to `vendor/` (same origin, SRI); the ONNX Runtime Web loaders too. The ONNX Runtime `.wasm` (23.5 MB, or 12.9 MB on Safari) and Pyodide 0.27.0 (`.wasm` 10.1 MB, stdlib, lock) stay out of the repository: they are fetched from pinned immutable URLs and SHA-256 verified before use (refused otherwise, then kept in Cache Storage and re-verified on every read); `pyodide.js` and `pyodide.asm.js` load with SRI.
+- CSP: `cdn.jsdelivr.net` removed from `style-src`/`font-src`; `script-src` and `connect-src` list only the exact files. Added about 4 MB to the repository (see `NOTICE.md`). Models from Hugging Face stay unpinned (data, not code).
 
 ### 120.2.8 — 2026-10-22
 
@@ -141,4 +148,4 @@ Alexio — Alexandru-Ionuț Chiuță, contact: alexio@trom.tf
 
 ## English summary
 
-LocalMind is a browser-based chat UI for small language models (Qwen3, LFM2) running via transformers.js and WebGPU, with RAG over local documents, conversation branching, exports and a network audit panel. Models are downloaded once from huggingface.co; KaTeX, Mermaid and Pyodide load on demand from cdn.jsdelivr.net; transformers.js and pdf.js are vendored locally. Settings and chats live in localStorage (`lm_` keys). UI is Romanian.
+LocalMind is a browser-based chat UI for small language models (Qwen3, LFM2) running via transformers.js and WebGPU, with RAG over local documents, conversation branching, exports and a network audit panel. Models are downloaded once from huggingface.co; Pyodide and the ONNX Runtime `.wasm` load on demand from pinned cdn.jsdelivr.net URLs and are SHA-256 verified; transformers.js, pdf.js, KaTeX and Mermaid are vendored locally. Settings and chats live in localStorage (`lm_` keys). UI is Romanian.

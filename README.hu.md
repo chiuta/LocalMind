@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 120.2.8 · **Utolsó frissítés:** 2026-10-22
+**Verzió:** 120.2.10 · **Utolsó frissítés:** 2026-10-22
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -57,20 +57,20 @@ A LocalMind (az oldal címében v120) egy csevegőfelület helyben, a böngész�
 
 ## Adatvédelem és hálózat
 
-- **Helyi tárolás:** `localStorage` (az `lm_` előtagú kulcsok: beállítások, mentett beszélgetések, promptkönyvtár, memória, keret, benchmarkok stb.) és Cache Storage (a transformers.js által letöltött modellek és egy kis service worker a CDN-erőforrásokhoz). A beszélgetések szövegét az alkalmazás sehová nem küldi el.
+- **Helyi tárolás:** `localStorage` (az `lm_` előtagú kulcsok: beállítások, mentett beszélgetések, promptkönyvtár, memória, keret, benchmarkok stb.) és Cache Storage (a transformers.js által letöltött modellek és az ellenőrzött Pyodide/ONNX Runtime bináris fájlok és egy kis service worker az alkalmazás fájljaihoz). A beszélgetések szövegét az alkalmazás sehová nem küldi el.
 - **Hálózat (harmadik felek gazdái):**
   - `huggingface.co` (valamint `*.huggingface.co`, `hf.co`): ONNX-modellek letöltése és keresés a katalógusban, csak amikor modellt töltesz be vagy modelleket keresel.
-  - `cdn.jsdelivr.net`: KaTeX, Mermaid 11.15.0 és Pyodide 0.27.0, csak szükség esetén betöltve (képletek, diagramok, Python-kód futtatása). Az oldal CSP-je csak ezeket a gazdákat engedélyezi.
-  - A transformers.js és a pdf.js helyben, a tároló `vendor/` mappájában található.
+  - `cdn.jsdelivr.net`: csak a Pyodide 0.27.0 bináris fájljai (`.wasm`, `python_stdlib.zip`, lock fájl; a két szkript SRI-vel töltődik be) és az ONNX Runtime Web `.wasm` (rögzített npm-verzió), csak szükség esetén betöltve (Python-kód futtatása, modell betöltése). Minden fájlt használat előtt SHA-256-tal ellenőriz, eltérés esetén elutasít; az oldal CSP-je pontosan ezeket az URL-eket engedélyezi.
+  - A transformers.js, a pdf.js, a KaTeX 0.16.9, a Mermaid 11.15.0, a qrcode.js és az ONNX Runtime Web betöltői helyben, a tároló `vendor/` mappájában találhatók (ugyanabból az origóból töltődnek; a KaTeX és a Mermaid SRI-vel).
 - Az alkalmazás kijelenti: „nulla hálózati kérés a következtetés közben”: a modell betöltése után a generálás helyben fut.
 
 ## Felelősségkizárás
 
-A kis modellek válaszai tévesek, hiányosak vagy kitaláltak lehetnek („hallucinációk”); ellenőrizd őket. Az alkalmazás nem ad orvosi, jogi vagy pénzügyi tanácsot. A „FĂRĂ TELEMETRIE” / „FĂRĂ CONT” jelvények (a jelvény buboréksúgója ugyanezt mondja) arra vonatkoznak, hogy az alkalmazás nem küld beszélgetéseket vagy használati adatokat a szerző szerverére; az oldal azonban kapcsolatba lép a huggingface.co-val (modellletöltés, keresés) és a cdn.jsdelivr.net-tel (KaTeX, Mermaid, Pyodide), a fent leírtak szerint.
+A kis modellek válaszai tévesek, hiányosak vagy kitaláltak lehetnek („hallucinációk”); ellenőrizd őket. Az alkalmazás nem ad orvosi, jogi vagy pénzügyi tanácsot. A „FĂRĂ TELEMETRIE” / „FĂRĂ CONT” jelvények (a jelvény buboréksúgója ugyanezt mondja) arra vonatkoznak, hogy az alkalmazás nem küld beszélgetéseket vagy használati adatokat a szerző szerverére; az oldal azonban kapcsolatba lép a huggingface.co-val (modellletöltés, keresés) és a cdn.jsdelivr.net-tel (Pyodide, ONNX Runtime), a fent leírtak szerint.
 
 ## Harmadik féltől származó komponensek
 
-A `vendor/` mappa saját, az MIT-től eltérő licenccel rendelkező könyvtárak másolatait tartalmazza: pdf.js (Mozilla, Apache-2.0 — a közlemény a fájl fejlécében van), transformers.js 4.2.0 (Hugging Face, Apache-2.0 az upstream projekt szerint; a minifikált fájl nem tartalmazza a közleményt) és `qrcode.min.js` (qrcodejs, MIT az upstream projekt szerint; QR-kódok előállítására használják). Az MIT licenc a szerző kódjára vonatkozik, nem a harmadik féltől származó komponensekre. A Hugging Face-ről letöltött modelleknek saját licencük van (pl. a Qwen3 Apache-2.0 alatt, az LFM2 a Liquid AI licence alatt).
+A `vendor/` mappa saját, az MIT-től eltérő licenccel rendelkező könyvtárak másolatait tartalmazza: pdf.js (Mozilla, Apache-2.0 — a közlemény a fájl fejlécében van), transformers.js 4.2.0 (Hugging Face, Apache-2.0 az upstream projekt szerint; a minifikált fájl nem tartalmazza a közleményt) és `qrcode.min.js` (qrcodejs, MIT az upstream projekt szerint; QR-kódok előállítására használják). Az MIT licenc a szerző kódjára vonatkozik, nem a harmadik féltől származó komponensekre. A Hugging Face-ről letöltött modelleknek saját licencük van (pl. a Qwen3 Apache-2.0 alatt, az LFM2 a Liquid AI licence alatt). Szintén a `vendor/` mappában (lásd `NOTICE.md`): KaTeX 0.16.9 (MIT), Mermaid 11.15.0 (MIT) és az ONNX Runtime Web betöltői (MIT). A Pyodide 0.27.0 (MPL-2.0) és az ONNX Runtime `.wasm` fájljai nincsenek a tárolóban: rögzített URL-ekről töltődnek le, és SHA-256-tal ellenőrzöttek.
 
 ## Helyi / offline futtatás
 
@@ -89,6 +89,13 @@ MIT — lásd a LICENSE fájlt. Az `index.html` fejléce korábban a „TRADE-FR
 2026-10-10: ellenőrizve a böngészőben (0 JS-hiba betöltéskor; betöltéskor nem indul hálózati kérés) és az oldal CSP-je. Hozzáadott hozzáférhető nevek, egy megjegyzés a modellek megbízhatóságáról és a fenti licencmegjegyzések.
 
 ## Előzmények / Changelog
+
+### 120.2.10 — 2026-10-22
+Elrendezés: a felső sáv már nem lóg ki 769 és 1500 px között (az utolsó gomb 1366 px-en levágódott); a szövegmezők legalább 24 px magasak; a felolvasás, csillag, hang és gyorsválasz gombok durva mutatónál 44 px-esek. Újabb ellenőrzés 360 és 1366 px-en: nincs 24 px alatti célpont és 12 px alatti szöveg.
+
+### 120.2.9 — 2026-10-22
+- Biztonság: futásidőben már semmilyen kód nem töltődik be CDN-ről. A KaTeX 0.16.9 (JS, CSS, woff2 betűtípusok) és a Mermaid 11.15.0 a `vendor/` mappába került (ugyanaz az origó, SRI), az ONNX Runtime Web betöltői is. Az ONNX Runtime `.wasm` (23,5 MB, Safarin 12,9 MB) és a Pyodide 0.27.0 (`.wasm` 10,1 MB, stdlib, lock) a tárolón kívül marad: rögzített, megváltoztathatatlan URL-ekről töltődnek le, és használat előtt SHA-256-tal ellenőrzöttek (különben elutasítva; utána a Cache Storage-ban maradnak, és minden olvasáskor újra ellenőrzöttek); a `pyodide.js` és a `pyodide.asm.js` SRI-vel töltődik.
+- CSP: a `cdn.jsdelivr.net` kikerült a `style-src`/`font-src`-ből; a `script-src` és a `connect-src` csak a pontos fájlokat sorolja fel. Kb. 4 MB került a tárolóba (lásd `NOTICE.md`). A Hugging Face-modellek rögzítetlenek maradnak (adat, nem kód).
 
 ### 120.2.8 — 2026-10-22
 
@@ -140,4 +147,4 @@ fff-kit 1.1.2: PBKDF2 600 000 iterációval, clickjacking elleni védelem.
 Alexio — Alexandru-Ionuț Chiuță, elérhetőség: alexio@trom.tf
 
 ## Összefoglaló
-A LocalMind böngészőalapú csevegőfelület kis nyelvi modellekhez (Qwen3, LFM2), amelyek transformers.js-szel és WebGPU-val futnak, helyi dokumentumokra épülő RAG-gal, beszélgetés-elágaztatással, exportokkal és hálózatiaudit-panellel. A modellek egyszer töltődnek le a huggingface.co címről; a KaTeX, a Mermaid és a Pyodide igény szerint töltődik be a cdn.jsdelivr.net címről; a transformers.js és a pdf.js helyben van csomagolva. A beállítások és a csevegések a localStorage-ban élnek (`lm_` kulcsok). A felület román nyelvű.
+A LocalMind böngészőalapú csevegőfelület kis nyelvi modellekhez (Qwen3, LFM2), amelyek transformers.js-szel és WebGPU-val futnak, helyi dokumentumokra épülő RAG-gal, beszélgetés-elágaztatással, exportokkal és hálózatiaudit-panellel. A modellek egyszer töltődnek le a huggingface.co címről; a Pyodide és az ONNX Runtime `.wasm` igény szerint, rögzített cdn.jsdelivr.net URL-ekről töltődik be, és SHA-256-tal ellenőrzött; a transformers.js, a pdf.js, a KaTeX és a Mermaid helyben van csomagolva. A beállítások és a csevegések a localStorage-ban élnek (`lm_` kulcsok). A felület román nyelvű.
