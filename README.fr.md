@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · **Français** · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version :** 120.2.12 · **Dernière mise à jour :** 2026-10-23
+**Version :** 120.2.13 · **Dernière mise à jour :** 2026-10-23
 
 Langues de l'interface : **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — voir le fichier LICENSE. L'en-tête de `index.html` mentionnait auparava
 2026-10-10 : vérifié dans le navigateur (0 erreur JS au chargement ; aucune requête réseau ne part au chargement) et la CSP de la page. Ajout de noms accessibles, d'une note sur la fiabilité des modèles et des notes ci-dessus sur les licences.
 
 ## Historique / Changelog
+
+### 120.2.13 — 2026-10-23
+
+- Corrections : une clé `localStorage` corrompue (`templates`, `personas`, `expanders`) interrompait tout le module au démarrage ; les noms/descriptions de personas étaient insérés en HTML (désormais texte) ; Markdown du chat : les formules `$$…$$` affichaient « KD0 » et étaient altérées dans les blocs de code, `_`/`*` dans le code inline et les URL devenaient de l’italique, un caractère NUL faisait échouer le chargement d’une conversation ; « $5 et $10 » n’est plus traité comme des maths ; les conversations enregistrées rendent KaTeX.
 
 ### 120.2.12 — 2026-10-23
 
