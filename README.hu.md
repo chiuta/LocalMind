@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 120.2.12 · **Utolsó frissítés:** 2026-10-23
+**Verzió:** 120.2.13 · **Utolsó frissítés:** 2026-10-23
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — lásd a LICENSE fájlt. Az `index.html` fejléce korábban a „TRADE-FR
 2026-10-10: ellenőrizve a böngészőben (0 JS-hiba betöltéskor; betöltéskor nem indul hálózati kérés) és az oldal CSP-je. Hozzáadott hozzáférhető nevek, egy megjegyzés a modellek megbízhatóságáról és a fenti licencmegjegyzések.
 
 ## Előzmények / Changelog
+
+### 120.2.13 — 2026-10-23
+
+- Javítások: egy sérült `localStorage` kulcs (`templates`, `personas`, `expanders`) indításkor leállította az egész modult; a persona-nevek/leírások HTML-ként kerültek be (most szöveg); chat-Markdown: a `$$…$$` képletek „KD0”-t mutattak és kódblokkban sérültek, a `_`/`*` a soron belüli kódban és URL-ekben dőlt betű lett, egy NUL karakter miatt egy beszélgetés betöltése meghiúsult; a „$5 és $10” már nem számít képletnek; a mentett beszélgetések KaTeX-et renderelnek.
 
 ### 120.2.12 — 2026-10-23
 

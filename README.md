@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 120.2.12 · **Last updated:** 2026-10-23
+**Version:** 120.2.13 · **Last updated:** 2026-10-23
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — see the LICENSE file. The `index.html` header used to also say "TRADE-FR
 2026-10-10: verified in the browser (0 JS errors on load; no network requests leave on load) and the CSP in the page. Added accessible names, a note on the reliability of the models and the license notes above.
 
 ## History / Changelog
+
+### 120.2.13 — 2026-10-23
+
+- Fixes: a corrupted `localStorage` key (`templates`, `personas`, `expanders`) aborted the whole module at start-up (many functions undefined); persona names/descriptions from storage were inserted as HTML (now text); chat Markdown: `$$…$$` display math showed a stray "KD0" placeholder and was mangled inside code blocks, `_`/`*` in inline code and URLs became italics, a NUL character in a message made loading a conversation fail; `$5 and $10` is no longer treated as math; saved conversations now render KaTeX.
 
 ### 120.2.12 — 2026-10-23
 

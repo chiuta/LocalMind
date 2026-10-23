@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · **Deutsch** · [Magyar](README.hu.md)
 
-**Version:** 120.2.12 · **Zuletzt aktualisiert:** 2026-10-23
+**Version:** 120.2.13 · **Zuletzt aktualisiert:** 2026-10-23
 
 Oberflächensprachen: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — siehe die Datei LICENSE. Der Header von `index.html` nannte früher auch
 2026-10-10: im Browser geprüft (0 JS-Fehler beim Laden; beim Laden gehen keine Netzwerkanfragen hinaus) sowie die CSP der Seite. Zugängliche Namen, ein Hinweis zur Zuverlässigkeit der Modelle und die obigen Lizenzhinweise hinzugefügt.
 
 ## Verlauf / Changelog
+
+### 120.2.13 — 2026-10-23
+
+- Korrekturen: Ein beschädigter `localStorage`-Schlüssel (`templates`, `personas`, `expanders`) brach beim Start das ganze Modul ab; Namen/Beschreibungen von Personas wurden als HTML eingefügt (jetzt Text); Chat-Markdown: `$$…$$`-Formeln zeigten „KD0“ und wurden in Codeblöcken verfälscht, `_`/`*` in Inline-Code und URLs wurden kursiv, ein NUL-Zeichen ließ das Laden einer Unterhaltung scheitern; „$5 und $10“ gilt nicht mehr als Formel; gespeicherte Unterhaltungen rendern KaTeX.
 
 ### 120.2.12 — 2026-10-23
 

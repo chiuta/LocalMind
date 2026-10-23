@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 120.2.12 · **Última atualização:** 2026-10-23
+**Versão:** 120.2.13 · **Última atualização:** 2026-10-23
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -93,6 +93,10 @@ MIT — ver o ficheiro LICENSE. O cabeçalho do `index.html` dizia anteriormente
 2026-10-10: verificado no navegador (0 erros de JS ao carregar; ao carregar não sai nenhum pedido de rede) e a CSP da página. Adicionados nomes acessíveis, uma nota sobre a fiabilidade dos modelos e as notas sobre licenças acima.
 
 ## Histórico / Changelog
+
+### 120.2.13 — 2026-10-23
+
+- Correções: uma chave `localStorage` corrompida (`templates`, `personas`, `expanders`) interrompia todo o módulo no arranque; nomes/descrições de personalidades eram inseridos como HTML (agora texto); Markdown do chat: as fórmulas `$$…$$` mostravam «KD0» e eram alteradas em blocos de código, `_`/`*` em código em linha e URL passavam a itálico, um carácter NUL fazia falhar o carregamento de uma conversa; «$5 e $10» já não é tratado como matemática; as conversas guardadas renderizam KaTeX.
 
 ### 120.2.12 — 2026-10-23
 

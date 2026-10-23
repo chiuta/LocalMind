@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 120.2.12 · **Ultima actualizare:** 2026-10-23
+**Versiune:** 120.2.13 · **Ultima actualizare:** 2026-10-23
 
 Limbile interfeței: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -89,6 +89,10 @@ MIT — vezi fișierul LICENSE. Antetul `index.html` spunea anterior și „TRAD
 2026-10-10: verificat în browser (0 erori JS la încărcare; la încărcare nu pleacă cereri de rețea) și CSP-ul din pagină. Adăugate nume accesibile, o notă despre fiabilitatea modelelor și notele de mai sus despre licențe.
 
 ## Istoric / Changelog
+
+### 120.2.13 — 2026-10-23
+
+- Remedieri: o cheie `localStorage` coruptă (`templates`, `personas`, `expanders`) oprea tot modulul la pornire (multe funcții nedefinite); numele/descrierile personalităților din stocare erau inserate ca HTML (acum text); Markdown în chat: matematica `$$…$$` afișa un marcaj „KD0” și era alterată în blocurile de cod, `_`/`*` din cod inline și URL deveneau italice, un caracter NUL într-un mesaj făcea ca încărcarea conversației să eșueze; „$5 și $10” nu mai e tratat ca matematică; conversațiile salvate randează acum KaTeX.
 
 ### 120.2.12 — 2026-10-23
 
