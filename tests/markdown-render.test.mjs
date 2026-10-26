@@ -1,7 +1,7 @@
 // LocalMind — randarea Markdown a răspunsurilor (prin încărcarea unei conversații salvate): cod inline/URL neatinse de emfază, $$ din cod, matematică KaTeX,
 // marcaj NUL fals, XSS de bază. Rulare: node tests/markdown-render.test.mjs [index.html]   (NODE_PW=cale/package.json, CHROME=cale/chromium)
 import {createRequire} from "module"; import path from "path"; import fs from "fs"; import http from "http"; import {fileURLToPath} from "url";
-const require = createRequire(process.env.NODE_PW || "/home/claude/pw/package.json"); const {chromium} = require("playwright");
+const require = createRequire(process.env.PW_ROOT || process.env.NODE_PW || import.meta.url); const {chromium} = require("playwright");
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(process.argv[2] ? path.dirname(process.argv[2]) : path.join(HERE, ".."));
 // KaTeX din vendor/ are atribut integrity: pe file:// Chromium îl refuză (cere CORS), deci servim prin http://127.0.0.1 (ca pe GitHub Pages)

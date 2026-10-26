@@ -1,7 +1,7 @@
 // LocalMind — chei localStorage corupte nu mai opresc inițializarea modulului (templates/personas/expanders erau parsate fără try/catch la nivel superior)
 // și numele/descrierea personalităților din localStorage nu se inserează ca HTML. Rulare: node tests/storage-corruption.test.mjs [index.html]
 import {createRequire} from "module"; import path from "path"; import {fileURLToPath} from "url";
-const require = createRequire(process.env.NODE_PW || "/home/claude/pw/package.json"); const {chromium} = require("playwright");
+const require = createRequire(process.env.PW_ROOT || process.env.NODE_PW || import.meta.url); const {chromium} = require("playwright");
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const FILE = "file://" + path.resolve(process.argv[2] || path.join(HERE, "..", "index.html"));
 let fails = 0, passes = 0; const check = (n, c, x) => { c ? (passes++, console.log("  ok  " + n)) : (fails++, console.log("FAIL  " + n + (x !== undefined ? "  -> " + JSON.stringify(x).slice(0, 300) : ""))); };
