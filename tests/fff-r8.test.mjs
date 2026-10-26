@@ -1,12 +1,19 @@
 // Teste pentru funcțiile noi din LocalMind 120.1.0 (runda 8). Rulează: node tests/fff-r8.test.mjs
 // Rețea blocată. Nu se încarcă niciun model (nu există rețea/fișiere de model în test): scorarea evaluării se verifică
 // cu răspunsuri-fixtură furnizate de test (nu apar în aplicație); generarea reală prin `pipe` NU este exersată aici.
+// [fff-portable] axe-core: FFF_AXE / AXE_PATH, apoi pachetul `axe-core` (npm i -D axe-core). Dacă lipsește: undefined (testele cu axe pică cu mesaj clar).
+import {createRequire as __fffCR} from 'node:module';
+const __fffAxe = () => { try { return __fffCR(import.meta.url).resolve('axe-core/axe.min.js'); } catch { return undefined; } };
+// [fff-portable] versiunea/data/kitul aplicației se citesc din app.json (nu mai sunt hard-codate în teste)
+import {readFileSync as __fffRF} from 'node:fs';
+const __FFF_APP = JSON.parse(__fffRF(new URL('../app.json', import.meta.url), 'utf8'));
+const __fffRe = (s) => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 import {createRequire} from "module"; import {fileURLToPath} from "url"; import path from "path"; import fs from "fs";
-const require=createRequire("/opt/node-tools/package.json"); const {chromium}=require("playwright");
+const require=createRequire(process.env.PW_ROOT || import.meta.url); const {chromium}=require("playwright");
 const here=path.dirname(fileURLToPath(import.meta.url)); const URL_='file://'+path.resolve(here,'../index.html');
-const AXE=process.env.FFF_AXE||'/tmp/claude-0/-home-claude/78529928-3825-51c3-b9bd-0e81655ab6bc/scratchpad/sweep/node_modules/axe-core/axe.min.js';
+const AXE=process.env.FFF_AXE||__fffAxe();
 let pass=0,fail=0; const ok=(c,m)=>{ if(c){pass++;} else {fail++; console.log('FAIL:',m);} };
-const browser=await chromium.launch({executablePath:"/opt/pw-browsers/chromium"});
+const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH || undefined});
 const CONVS=[
  {title:'Grădinărit',ts:Date.now()-86400000,msgs:2,data:[{role:'user',content:'Cum plantez roșii în grădină? Scrie-mi pe test.user@example.com'},{role:'assistant',content:'Roșiile se plantează după ultimul îngheț, la 50 cm distanță.'}]},
  {title:'Astronomie',ts:Date.now(),msgs:2,data:[{role:'user',content:'Ce este o eclipsă solară? IBAN-ul meu RO49AAAA1B31007593840000'},{role:'assistant',content:'O eclipsă solară apare când Luna se află între Soare și Pământ.'}]}];
@@ -31,9 +38,9 @@ const FAKEERR=/Failed to fetch|net::|NetworkError|ERR_FAILED|Failed to load reso
 { const {ctx,p,errs,reqs}=await open();
   ok(errs.filter(e=>!FAKEERR.test(e)).length===0,'pornire fără erori/CSP: '+errs.join(' | '));
   ok(reqs.length===0,'0 cereri de rețea la pornire: '+reqs.join(','));
-  ok((await p.textContent('#app-version')).includes('v 120.2.14 · 2026-10-26'),'text #app-version');
-  ok(await p.evaluate(()=>document.querySelector('meta[name=application-version]').content==='120.2.14'),'meta versiune');
-  ok(await p.evaluate(()=>document.title.includes('120.2.14')),'titlu cu versiunea');
+  ok((await p.textContent('#app-version')).includes(`v ${__FFF_APP.version} · ${__FFF_APP.updated}`),'text #app-version');
+  ok(await p.evaluate((__FFF_APP)=>document.querySelector('meta[name=application-version]').content===__FFF_APP.version, __FFF_APP),'meta versiune');
+  ok(await p.evaluate((__FFF_APP)=>document.title.includes(__FFF_APP.version), __FFF_APP),'titlu cu versiunea');
   ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'fără depășire orizontală');
   const net=await p.textContent('#c5-net'); ok(/Nimic nu pleacă/.test(net),'indicator: '+net);
   await axe(p,'start');

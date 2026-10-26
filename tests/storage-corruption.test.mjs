@@ -5,7 +5,7 @@ const require = createRequire(process.env.NODE_PW || "/home/claude/pw/package.js
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const FILE = "file://" + path.resolve(process.argv[2] || path.join(HERE, "..", "index.html"));
 let fails = 0, passes = 0; const check = (n, c, x) => { c ? (passes++, console.log("  ok  " + n)) : (fails++, console.log("FAIL  " + n + (x !== undefined ? "  -> " + JSON.stringify(x).slice(0, 300) : ""))); };
-const b = await chromium.launch({executablePath: process.env.CHROME || "/opt/pw-browsers/chromium", args: ["--no-sandbox"]});
+const b = await chromium.launch({executablePath: process.env.CHROMIUM_PATH || process.env.CHROME || undefined, args: ["--no-sandbox"]});
 async function open(store) {
   const ctx = await b.newContext({locale: "ro-RO", viewport: {width: 1280, height: 800}, serviceWorkers: "block"}); await ctx.route(/^https?:/, r => r.abort());
   await ctx.addInitScript(s => { try { localStorage.setItem("localmind.onboarded", "1"); for (const k in s) localStorage.setItem(k, s[k]); } catch (e) {} }, store);

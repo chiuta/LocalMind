@@ -10,7 +10,7 @@ const srv = http.createServer((q, s) => { const f = path.join(ROOT, decodeURICom
 await new Promise(r => srv.listen(0, "127.0.0.1", r));
 const FILE = "http://127.0.0.1:" + srv.address().port + "/" + path.basename(process.argv[2] || "index.html");
 let fails = 0, passes = 0; const check = (n, c, x) => { c ? (passes++, console.log("  ok  " + n)) : (fails++, console.log("FAIL  " + n + (x !== undefined ? "  -> " + JSON.stringify(x).slice(0, 400) : ""))); };
-const b = await chromium.launch({executablePath: process.env.CHROME || "/opt/pw-browsers/chromium", args: ["--no-sandbox"]});
+const b = await chromium.launch({executablePath: process.env.CHROMIUM_PATH || process.env.CHROME || undefined, args: ["--no-sandbox"]});
 async function render(content) {
   const ctx = await b.newContext({locale: "ro-RO", viewport: {width: 1280, height: 800}, serviceWorkers: "block"}); await ctx.route(/^https?:\/\/(?!127\.0\.0\.1)/, r => r.abort());
   await ctx.addInitScript(c => { try { localStorage.setItem("localmind.onboarded", "1"); localStorage.setItem("localmind.conv_list", JSON.stringify([{title: "T", ts: Date.now(), msgs: 2, data: [{role: "user", content: "salut"}, {role: "assistant", content: c}]}])); } catch (e) {} }, content);
