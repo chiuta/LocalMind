@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 120.2.14 · **Last updated:** 2026-10-26
+**Version:** 121.0.0 · **Last updated:** 2026-10-26
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -18,6 +18,7 @@ LocalMind (v120 in the page title) is a chat interface with language models that
 
 ## Features
 
+- **Personal memory (121):** under 🗂 Conversations → 🧠 Memory, conversations saved on the device are indexed locally (word tf-idf + fragment matching, diacritic-tolerant), searchable and, optionally (off by default), added as context (max 3 snippets, 1200 characters, marked "not instructions") to the system prompt. It can be exported (JSON), a single conversation can be forgotten, or all memory deleted. Search does NOT use an embeddings model: it is approximate and can miss synonyms.
 - Preset models: Qwen3 0.6B, LFM2 1.2B, Qwen3 1.7B, Qwen3 4B (sizes shown in the interface: ~550 MB, ~700 MB, ~1.3 GB, ~2.5 GB), plus "Descoperă modele ONNX" (Discover ONNX models; search in the Hugging Face catalog) and a curated collection.
 - Streaming chat, conversation history, branches/snapshots, merging two branches, comparing two models, bookmarks, search within a conversation.
 - Style and system prompt presets (Chat, Science, Code, Creative, Romanian, Math, Translation, Summary, Socratic etc.), parameters (temperature, Top-P, repetition penalty, max tokens), variables `{{date}}`, `{{time}}`, `{{model}}`, `{{name}}`.

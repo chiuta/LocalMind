@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · **Magyar**
 
-**Verzió:** 120.2.14 · **Utolsó frissítés:** 2026-10-26
+**Verzió:** 121.0.0 · **Utolsó frissítés:** 2026-10-26
 
 A felület nyelvei: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -18,6 +18,7 @@ A LocalMind (az oldal címében v120) egy csevegőfelület helyben, a böngész�
 
 ## Funkciók
 
+- **Personal memory (121):** under 🗂 Conversations → 🧠 Memory, conversations saved on the device are indexed locally (word tf-idf + fragment matching, diacritic-tolerant), searchable and, optionally (off by default), added as context (max 3 snippets, 1200 characters, marked "not instructions") to the system prompt. It can be exported (JSON), a single conversation can be forgotten, or all memory deleted. Search does NOT use an embeddings model: it is approximate and can miss synonyms.
 - Előre megadott modellek: Qwen3 0.6B, LFM2 1.2B, Qwen3 1.7B, Qwen3 4B (a felületen megjelenített méretek: ~550 MB, ~700 MB, ~1,3 GB, ~2,5 GB), valamint a „Descoperă modele ONNX” (ONNX-modellek felfedezése; keresés a Hugging Face katalógusában) és egy válogatott gyűjtemény.
 - Streaming csevegés, beszélgetési előzmények, ágak/pillanatképek, két ág egyesítése, két modell összehasonlítása, könyvjelzők, keresés a beszélgetésben.
 - Stílus- és rendszerprompt-előbeállítások (Chat, Tudomány, Kód, Kreatív, Román, Matek, Fordítás, Összefoglaló, Szókratészi stb.), paraméterek (temperature, Top-P, ismétlési büntetés, max tokens), `{{date}}`, `{{time}}`, `{{model}}`, `{{name}}` változók.
