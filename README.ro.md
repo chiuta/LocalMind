@@ -2,9 +2,11 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.1.0 · **Ultima actualizare:** 2026-10-27
+**Versiune:** 2.2.0 · **Ultima actualizare:** 2026-10-27
 
 **Notă de versionare:** din 2.0.0 aplicația folosește SemVer. Numărul anterior era **v121** (linia 120.x/121.0.0); „anterior: v121” este consemnat în [CHANGELOG.md](CHANGELOG.md). Secțiunile mai vechi din istoricul de mai jos păstrează numerele vechi.
+
+**Nou în 2.2.0:** după încărcarea unui model, aplicația arată **dimensiunea măsurată la propria descărcare** (suma totalurilor de fișier raportate de transformers.js, păstrată local); dimensiunile din listă rămân estimări neverificate.
 
 **Stare:** funcțională. Mesajul despre WebGPU/CPU și notele despre dimensiuni sunt noi; **dimensiunile de descărcare sunt estimări, „de verificat”** (vezi tabelul).
 

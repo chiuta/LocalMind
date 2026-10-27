@@ -49,6 +49,6 @@ console.log("F) traducere (engleză, franceză)");
   ok(/WebGPU indisponible/.test(n.text) && /Raison : le navigateur n’expose pas WebGPU/.test(n.text), "FR", n.text); await ctx.close(); }
 console.log("G) versiuni coerente");
 { const app = JSON.parse(fs.readFileSync(path.join(ROOT, "app.json"), "utf8")); const html = fs.readFileSync(path.join(ROOT, "index.html"), "utf8");
-  ok(app.version === "2.1.0" && /<title>LocalMind v2\.1\.0 /.test(html) && /name="application-version" content="2\.1\.0"/.test(html) && /v 2\.1\.0 · 2026-10-27/.test(html), "titlu, meta, subsol și app.json: 2.1.0");
+  const V = app.version, VR = V.replace(/\./g, "\\."); ok(/^\d+\.\d+\.\d+$/.test(V) && new RegExp("<title>LocalMind v" + VR + " ").test(html) && new RegExp('name="application-version" content="' + VR + '"').test(html) && new RegExp("v " + VR + " · 2026-10-27").test(html), "titlu, meta, subsol și app.json au aceeași versiune (" + V + ")");
   ok(!/v120\.2\.13|v121\.0\.0/.test(html), "nu mai rămân v120.2.13 / v121.0.0 în aplicație"); }
 await browser.close(); console.log(fail ? "EȘEC: " + fail : "TOATE OK"); process.exit(fail ? 1 : 0);
