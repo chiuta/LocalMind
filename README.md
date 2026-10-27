@@ -2,7 +2,13 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 121.0.0 · **Last updated:** 2026-10-26
+**Version:** 2.1.0 · **Last updated:** 2026-10-27
+
+**Versioning note:** from 2.0.0 the app uses SemVer. The previous number was **v121** (the line 120.x/121.0.0); "previous: v121" is recorded in [CHANGELOG.md](CHANGELOG.md). Older sections of the history below keep the old numbers.
+
+**Status:** functional. The WebGPU/CPU notice and the size notes are new; the **download sizes are estimates, "to be verified"** (see the table).
+
+**Offline:** partial. The app and its libraries (`vendor/`) run locally; a model is downloaded once from huggingface.co and then generation is local. The first load of a model, the ONNX Runtime `.wasm` and Pyodide (if used) need the network; opened from `file://` the models do not load (use a local server).
 
 Interface languages: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -14,7 +20,7 @@ An AI assistant that runs in the browser (transformers.js + WebGPU), with no acc
 
 ## What it is
 
-LocalMind (v120 in the page title) is a chat interface with language models that run locally in the browser, through transformers.js v4.2.0 (WebGPU, with a CPU/WASM fallback where applicable). You choose a model, press "Încarcă Modelul" (Load the Model), and the model is downloaded once from Hugging Face and stays in the browser cache. The interface is in Romanian, and the app displays "FĂRĂ TELEMETRIE" (NO TELEMETRY) and "FĂRĂ CONT" (NO ACCOUNT) badges (in earlier versions: "ZERO TELEMETRY" / "NO ACCOUNT"; reworded to be precise — see "Disclaimer").
+LocalMind (version in the title and in the footer: 2.1.0) is a chat interface with language models that run locally in the browser, through transformers.js v4.2.0 (WebGPU, with a CPU/WASM fallback where applicable). You choose a model, press "Încarcă Modelul" (Load the Model), and the model is downloaded once from Hugging Face and stays in the browser cache. The interface is in Romanian, and the app displays "FĂRĂ TELEMETRIE" (NO TELEMETRY) and "FĂRĂ CONT" (NO ACCOUNT) badges (in earlier versions: "ZERO TELEMETRY" / "NO ACCOUNT"; reworded to be precise — see "Disclaimer").
 
 ## Features
 
@@ -29,6 +35,26 @@ LocalMind (v120 in the page title) is a chat interface with language models that
 - Voice dictation and text-to-speech (browser APIs, where available), keyboard with shortcuts.
 - "Audit Rețea" (Network Audit): a panel that counts the network requests made during inference.
 - Themes (light/dark, night), Simple mode, accessibility (text size, dyslexia).
+
+## Which model, how much is downloaded, and what happens without WebGPU
+
+Read from the code of `index.html` (not measured in this review: the Hugging Face servers were not reachable from the review environment, so **no size below was verified** and all are marked "to be verified").
+
+- **Engine:** transformers.js 4.2.0 (vendored in `vendor/`), `pipeline('text-generation', model, {device, dtype: 'q4f16'})`: the quantised weights `model_q4f16.onnx` of `onnx-community` repositories are downloaded from `huggingface.co` the first time a model is loaded, and kept in the browser cache (Cache Storage). The 🗑 button on a model card clears that model's cache. The **preselected model is Qwen3 4B** (the largest of the four).
+- **Preset models:**
+
+| Model (Hugging Face id) | Size on the model card | Size in "Discover ONNX models" | Without WebGPU (per the code) |
+|---|---|---|---|
+| Qwen3 0.6B (`onnx-community/Qwen3-0.6B-ONNX`) | ~550 MB | ~350 MB | runs on CPU/WASM |
+| LFM2 1.2B (`onnx-community/LFM2-1.2B-ONNX`) | ~700 MB | ~750 MB | **does not run** (flagged `gpuOnly`: needs WebGPU); the app warns before loading |
+| Qwen3 1.7B (`onnx-community/Qwen3-1.7B-ONNX`) | ~1.3 GB | ~1.1 GB | runs on CPU/WASM |
+| Qwen3 4B (`onnx-community/Qwen3-4B-ONNX`) | ~2.5 GB | ~2.5 GB | listed as "needs GPU" in Discover; may be too large for CPU/WASM |
+
+  The two size columns **disagree** for three models (the card text and the Discover list were written separately): **the real size is to be verified**; while downloading, the progress bar shows the actual bytes. The Discover list also offers Llama 3.2 1B (~700 MB), Llama 3.2 3B (~2.0 GB), Qwen2.5 1.5B (~900 MB), Qwen2.5 0.5B (~300 MB), with the same caveat.
+- **Device choice** (`detectDevice`): Chrome on Android is **blocked** (the app explains that the per-tab memory limit is too low and suggests Samsung Internet or Firefox); other Android browsers are **forced to CPU/WASM**; iOS below 18 is forced to CPU/WASM; elsewhere WebNN is tried first, then WebGPU (an adapter must be found), otherwise **CPU/WASM**. If loading fails, the app retries down the chain WebNN → WebGPU → WASM.
+- **Without WebGPU (new in 2.1.0):** a notice appears under the "Load the Model" button: it says that WebGPU is unavailable, **why** (no `navigator.gpu`, no compatible graphics adapter, insecure context, Android or iOS<18 policy, or the blocked Chrome-on-Android case), that models run on the CPU (slower), that LFM2 1.2B cannot run, that Qwen3 0.6B is the suggested start and that Qwen3 4B may be too large (to be checked on your device). The notice disappears when WebGPU/WebNN is available. The same texts exist in the 8 interface languages (translations not natively verified). The CPU/WASM path is described by the code and was **not benchmarked** here.
+- A note under the button also states that the sizes are estimates, that the files are in q4f16 format and come from huggingface.co once.
+- Tests: `node tests/webgpu-note.test.mjs` simulates the presence/absence of `navigator.gpu` and several user agents; no model is loaded.
 
 ## New features (120.1.0)
 
