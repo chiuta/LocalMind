@@ -111,8 +111,8 @@
     "localmind.warmup_disabled",
     "localmind.word_goal"
   ],
-  "sizeBytes": 1386192,
-  "sha256": "8de7ea31710efe5c6d5886b329c7954fbd9b071b4e0064344fc97b482e72bfd8",
+  "sizeBytes": 1526626,
+  "sha256": "0db17c8465319503b9d13187d388c54556f1956f2672cd85b55c1a880078fa97",
   "csp": {
     "present": true,
     "directives": {
@@ -155,6 +155,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge",
       "pii",
       "search"
@@ -168,6 +172,10 @@
       "dialog",
       "label",
       "bundle",
+      "qr",
+      "p2p",
+      "sync",
+      "history",
       "bridge",
       "pii",
       "search"
