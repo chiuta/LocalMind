@@ -1,4 +1,4 @@
-// Teste 2.2.0: dimensiunea MĂSURATĂ la descărcare (suma `total` raportată de progress_callback), păstrată local; nicio dimensiune inventată.
+// Teste 2.3.0: dimensiunea MĂSURATĂ la descărcare (suma `total` raportată de progress_callback), păstrată local; nicio dimensiune inventată.
 // Nu se descarcă niciun model (rețea blocată): evenimentele de progres sunt simulate direct prin window.lmSz. Rulează: node tests/measured-size.test.mjs
 import {createRequire} from "module"; import {fileURLToPath} from "url"; import path from "path";
 const require = createRequire(process.env.PW_ROOT || import.meta.url); const {chromium} = require("playwright");
