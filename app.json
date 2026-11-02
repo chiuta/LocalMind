@@ -111,8 +111,8 @@
     "localmind.warmup_disabled",
     "localmind.word_goal"
   ],
-  "sizeBytes": 1386149,
-  "sha256": "fd25ee9b88e5f01c6a52d2ba7ba577e8b1fdbd44e4d1630d3a2598869aa8beef",
+  "sizeBytes": 1386192,
+  "sha256": "8de7ea31710efe5c6d5886b329c7954fbd9b071b4e0064344fc97b482e72bfd8",
   "csp": {
     "present": true,
     "directives": {
