@@ -1,5 +1,9 @@
 # Jurnal de modificări
 
+## 2.3.1 — 2026-11-03
+
+- Corectat: modelele Llama 3.2 1B și 3B au fost redenumite la sursă (`onnx-community/Llama-3.2-1B-Instruct-ONNX`, `…-3B-Instruct-ONNX`); lista de modele, verificarea de integritate și comenzile rapide Alt+4/Alt+5 folosesc numele noi (cele vechi nu se mai descărcau). Descoperit de monitorizarea surselor (issue #16 din hub).
+
 ## 2.3.0 — 2026-11-02 (reîmprospătare kit)
 
 - Nou (kit): **Sincronizare între dispozitive** (`FFF.sync`) — în dialogul «Transparență» (clic pe versiune → Copie de siguranță): conectezi două dispozitive direct (WebRTC, cod/QR, fără server și fără cont) și își schimbă datele aplicației; cea mai recentă valoare câștigă, secretele (chei API, parole) nu se trimit, ștergerile nu se propagă. Aplicarea trece prin importul kitului (confirmare, chei permise, rollback).

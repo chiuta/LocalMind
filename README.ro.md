@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.3.0 · **Ultima actualizare:** 2026-11-02
+**Versiune:** 2.3.1 · **Ultima actualizare:** 2026-11-03
 
 **Notă de versionare:** din 2.0.0 aplicația folosește SemVer. Numărul anterior era **v121** (linia 120.x/121.0.0); „anterior: v121” este consemnat în [CHANGELOG.md](CHANGELOG.md). Secțiunile mai vechi din istoricul de mai jos păstrează numerele vechi.
 
