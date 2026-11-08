@@ -1,9 +1,9 @@
 {
   "schema": 1,
   "slug": "localmind",
-  "name": "LocalMind v2.3.2 — AI în browser",
-  "version": "2.3.2",
-  "updated": "2026-11-07",
+  "name": "LocalMind v2.3.3 — AI în browser",
+  "version": "2.3.3",
+  "updated": "2026-11-08",
   "description": "Rulează modele AI local în browser, fără cont și fără telemetrie; modelele se descarcă o singură dată de la Hugging Face. Modul Simplu, 8 modele ONNX, 12 preseturi, Pomodoro, soundscape, export Obsidian/Logseq. Trade-free.",
   "egress": [
     {
@@ -111,8 +111,8 @@
     "localmind.warmup_disabled",
     "localmind.word_goal"
   ],
-  "sizeBytes": 1528359,
-  "sha256": "4e86c1b2cacd5864873e24c04019c681f8153bafb25de2cb2f7856dc1ed5c0e4",
+  "sizeBytes": 1542044,
+  "sha256": "5f9f2e27d42527602bdac01f13bf337a92abfe4dd56779d0a94f3b993db143d0",
   "csp": {
     "present": true,
     "directives": {
@@ -153,6 +153,7 @@
       "core",
       "store",
       "dialog",
+      "exit",
       "label",
       "bundle",
       "qr",
@@ -165,11 +166,12 @@
     ]
   },
   "kit": {
-    "version": "1.2.1",
+    "version": "1.3.0",
     "modules": [
       "core",
       "store",
       "dialog",
+      "exit",
       "label",
       "bundle",
       "qr",
