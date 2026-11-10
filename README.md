@@ -2,7 +2,7 @@
 
 **English** · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Version:** 2.3.3 · **Last updated:** 2026-11-08
+**Version:** 2.3.4 · **Last updated:** 2026-11-10
 
 **Versioning note:** from 2.0.0 the app uses SemVer. The previous number was **v121** (the line 120.x/121.0.0); "previous: v121" is recorded in [CHANGELOG.md](CHANGELOG.md). Older sections of the history below keep the old numbers.
 
