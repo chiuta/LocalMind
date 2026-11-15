@@ -1,5 +1,9 @@
 # Jurnal de modificări
 
+## 2.3.8 — 2026-11-15
+
+- Nou: texturi fractale hiper-detaliate (fff-texturi 1.1.2) — fundalul și suprafețele mari (carduri, panouri, antete, butoane; filele și dialogurile ascunse la încărcare, când se deschid) primesc un material generat local (WebGL2, fără rețea și fără imagini), care se repetă fără cusătură; culorile aplicației rămân ale ei. Se oprește din dialogul „Transparență” sau cu `?notex=1`.
+
 ## 2.3.1 — 2026-11-03
 
 - Corectat: modelele Llama 3.2 1B și 3B au fost redenumite la sursă (`onnx-community/Llama-3.2-1B-Instruct-ONNX`, `…-3B-Instruct-ONNX`); lista de modele, verificarea de integritate și comenzile rapide Alt+4/Alt+5 folosesc numele noi (cele vechi nu se mai descărcau). Descoperit de monitorizarea surselor (issue #16 din hub).
