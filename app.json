@@ -59,6 +59,7 @@
     "serviceWorker",
     "localStorage",
     "Web Crypto",
+    "WebGL",
     "WebGPU",
     "Worker",
     "BroadcastChannel"
@@ -111,8 +112,8 @@
     "localmind.warmup_disabled",
     "localmind.word_goal"
   ],
-  "sizeBytes": 1580863,
-  "sha256": "100a4e45c21573bed5fab4e01bc670a755d7485a25d54bbdc7602e7f4638d8c5",
+  "sizeBytes": 1632902,
+  "sha256": "fb2a84afad6cee981ffd4403f05b4899876a5b9de26feefe78cd8d7fd9093dba",
   "csp": {
     "present": true,
     "directives": {
@@ -125,7 +126,7 @@
       "base-uri": "'self'",
       "form-action": "'self'",
       "worker-src": "'self' blob:",
-      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.js https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js sha256×7",
+      "script-src": "'self' 'unsafe-eval' 'wasm-unsafe-eval' blob: https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.js https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.js sha256×8",
       "connect-src": "'self' https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide.asm.wasm https://cdn.jsdelivr.net/pyodide/v0.27.0/full/python_stdlib.zip https://cdn.jsdelivr.net/pyodide/v0.27.0/full/pyodide-lock.json https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.asyncify.wasm https://cdn.jsdelivr.net/npm/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/dist/ort-wasm-simd-threaded.wasm https://huggingface.co https://*.huggingface.co https://cdn-lfs.huggingface.co https://cdn-lfs-us-1.huggingface.co https://hf.co https://*.hf.co blob: data:",
       "manifest-src": "'self'"
     },
