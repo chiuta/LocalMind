@@ -2,7 +2,7 @@
 
 [English](README.md) · [Română](README.ro.md) · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · **Português** · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versão:** 2.4.3 · **Última atualização:** 2026-11-20
+**Versão:** 2.4.4 · **Última atualização:** 2026-11-20
 
 Idiomas da interface: **Română, English, Français, Italiano, Español, Português (PT), Deutsch, Magyar**
 
@@ -66,7 +66,7 @@ O LocalMind (v120 no título da página) é uma interface de conversa com modelo
 - **Rede (anfitriões de terceiros):**
   - `huggingface.co` (e `*.huggingface.co`, `hf.co`): descarregamento de modelos ONNX e pesquisa no catálogo, apenas quando carrega um modelo ou pesquisa modelos.
   - `cdn.jsdelivr.net`: apenas os binários do Pyodide 0.27.0 (`.wasm`, `python_stdlib.zip`, ficheiro lock; os dois scripts são carregados com SRI) e o `.wasm` do ONNX Runtime Web (versão npm fixa), carregados apenas quando necessários (execução de código Python, carregamento de um modelo). Cada ficheiro é verificado com SHA-256 antes de usar e recusado caso contrário; a CSP da página permite exatamente estes URL.
-  - O transformers.js, o pdf.js, o KaTeX 0.16.9, o Mermaid 11.15.0, o qrcode.js e os carregadores do ONNX Runtime Web estão incluídos localmente na pasta `vendor/` do repositório (carregados da mesma origem; KaTeX e Mermaid com SRI).
+  - O transformers.js, o pdf.js, o KaTeX 0.16.47, o Mermaid 11.15.0, o qrcode.js e os carregadores do ONNX Runtime Web estão incluídos localmente na pasta `vendor/` do repositório (carregados da mesma origem; KaTeX e Mermaid com SRI).
 - A aplicação afirma «zero pedidos de rede na inferência»: depois de o modelo ser carregado, a geração corre localmente.
 
 ## Aviso
@@ -75,7 +75,7 @@ As respostas dos modelos pequenos podem ser erradas, incompletas ou inventadas (
 
 ## Componentes de terceiros
 
-A pasta `vendor/` contém cópias de bibliotecas com licenças próprias, diferentes de MIT: pdf.js (Mozilla, Apache-2.0 — o aviso está no cabeçalho do ficheiro), transformers.js 4.2.0 (Hugging Face, Apache-2.0 segundo o projeto de origem; o ficheiro minificado não contém o aviso) e `qrcode.min.js` (qrcodejs, MIT segundo o projeto de origem; usado para gerar códigos QR). A licença MIT aplica-se ao código do autor, não aos componentes de terceiros. Os modelos descarregados do Hugging Face têm as suas próprias licenças (p. ex., Qwen3 sob Apache-2.0, LFM2 sob a licença da Liquid AI). Também em `vendor/` (ver `NOTICE.md`): KaTeX 0.16.9 (MIT), Mermaid 11.15.0 (MIT) e os carregadores do ONNX Runtime Web (MIT). O Pyodide 0.27.0 (MPL-2.0) e os ficheiros `.wasm` do ONNX Runtime não estão no repositório: são descarregados de URL fixos e verificados com SHA-256.
+A pasta `vendor/` contém cópias de bibliotecas com licenças próprias, diferentes de MIT: pdf.js (Mozilla, Apache-2.0 — o aviso está no cabeçalho do ficheiro), transformers.js 4.2.0 (Hugging Face, Apache-2.0 segundo o projeto de origem; o ficheiro minificado não contém o aviso) e `qrcode.min.js` (qrcodejs, MIT segundo o projeto de origem; usado para gerar códigos QR). A licença MIT aplica-se ao código do autor, não aos componentes de terceiros. Os modelos descarregados do Hugging Face têm as suas próprias licenças (p. ex., Qwen3 sob Apache-2.0, LFM2 sob a licença da Liquid AI). Também em `vendor/` (ver `NOTICE.md`): KaTeX 0.16.47 (MIT), Mermaid 11.15.0 (MIT) e os carregadores do ONNX Runtime Web (MIT). O Pyodide 0.27.0 (MPL-2.0) e os ficheiros `.wasm` do ONNX Runtime não estão no repositório: são descarregados de URL fixos e verificados com SHA-256.
 
 ## Execução local / offline
 

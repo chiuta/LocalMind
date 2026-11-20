@@ -13,13 +13,13 @@ Copii bit-cu-bit ale fișierelor din pachetele npm cu versiune fixată (același
 | [pdf.js](https://mozilla.github.io/pdf.js/) 4.4.168 (modul) | `vendor/pdfjs/pdf.min.mjs` | Apache-2.0 | `895c72c332dbd608a07ae54003e5e42741c566ade52ddbd2a00c8e57ffa35d9d` |
 | pdf.js 4.4.168 (worker) | `vendor/pdfjs/pdf.worker.min.mjs` | Apache-2.0 | `a7cf858ab0bbe21a00ef438c24a4ef5833c3d05935a294382c8d0773a8958f50` |
 | [qrcodejs](https://github.com/davidshimjs/qrcodejs) | `vendor/qrcode.min.js` | MIT | `c541ef06327885a8415bca8df6071e14189b4855336def4f36db54bde8484f36` |
-| [KaTeX](https://katex.org/) 0.16.9 (JS) | `vendor/katex@0.16.9/katex.min.js` | MIT | `dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae` |
-| KaTeX 0.16.9 (CSS; fonturile `fonts/*.woff2` sunt aceleași ca în pachetul npm) | `vendor/katex@0.16.9/katex.min.css` | MIT | `505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3` |
+| [KaTeX](https://katex.org/) 0.16.47 (JS) | `vendor/katex@0.16.47/katex.min.js` | MIT | `a29d2961d3146de5949d78ac7c1a9d93ae54955bad22a6db4fbe836e88e8bf48` |
+| KaTeX 0.16.47 (CSS; fonturile `fonts/*.woff2` sunt aceleași ca în pachetul npm) | `vendor/katex@0.16.47/katex.min.css` | MIT | `0289a02cf451a44dd73add683a09644252363871ac11713a647b732cee8b1ee3` |
 | [Mermaid](https://mermaid.js.org/) 11.15.0 | `vendor/mermaid@11.15.0/mermaid.min.js` | MIT | `70137e77bb273bb2ef972b86e8b0400cca8be53cb25bfc45911a186dc98665de` |
 | onnxruntime-web 1.26.0-dev.20260416-b7804b056c (încărcător JS, build asyncify — Chrome/Firefox/Edge) | `vendor/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/ort-wasm-simd-threaded.asyncify.mjs` | MIT | `5959c6733039619c9af710d8e1bae8d6e84402787990637be987c2b1bd6c5fa9` |
 | onnxruntime-web 1.26.0-dev.20260416-b7804b056c (încărcător JS — Safari) | `vendor/onnxruntime-web@1.26.0-dev.20260416-b7804b056c/ort-wasm-simd-threaded.mjs` | MIT | `5f2cd914554830762579c372d0211614c1e3f40ab3f6c0cfcf0900343229071d` |
 
-Fonturile KaTeX (`vendor/katex@0.16.9/fonts/*.woff2`, 20 de fișiere, ~296 KB; licență SIL OFL 1.1, vezi `vendor/katex@0.16.9/LICENSE` și pagina KaTeX) sunt doar în format woff2; formatele woff/ttf din CSS-ul upstream nu sunt incluse (toate browserele actuale folosesc woff2).
+Fonturile KaTeX (`vendor/katex@0.16.47/fonts/*.woff2`, 20 de fișiere, ~296 KB; licență SIL OFL 1.1, vezi `vendor/katex@0.16.47/LICENSE` și pagina KaTeX) sunt doar în format woff2; formatele woff/ttf din CSS-ul upstream nu sunt incluse (toate browserele actuale folosesc woff2).
 
 ## Descărcate la cerere de la URL-uri imuabile, cu SHA-256 fixat în cod (verificate înainte de folosire; refuzate la nepotrivire)
 

@@ -2,7 +2,7 @@
 
 [English](README.md) · **Română** · [Français](README.fr.md) · [Italiano](README.it.md) · [Español](README.es.md) · [Português](README.pt.md) · [Deutsch](README.de.md) · [Magyar](README.hu.md)
 
-**Versiune:** 2.4.3 · **Ultima actualizare:** 2026-11-20
+**Versiune:** 2.4.4 · **Ultima actualizare:** 2026-11-20
 
 **Notă de versionare:** din 2.0.0 aplicația folosește SemVer. Numărul anterior era **v121** (linia 120.x/121.0.0); „anterior: v121” este consemnat în [CHANGELOG.md](CHANGELOG.md). Secțiunile mai vechi din istoricul de mai jos păstrează numerele vechi.
 
@@ -90,7 +90,7 @@ Citit din codul din `index.html` (nemăsurat în această recenzie: serverele Hu
 - **Rețea (hosturi terțe):**
   - `huggingface.co` (și `*.huggingface.co`, `hf.co`): descărcarea modelelor ONNX și căutarea în catalog, doar când încarci un model sau cauți modele.
   - `cdn.jsdelivr.net`: doar binarele Pyodide 0.27.0 (`.wasm`, `python_stdlib.zip`, fișierul lock; cele două scripturi se încarcă cu SRI) și `.wasm`-ul ONNX Runtime Web (versiune npm fixată), încărcate doar când sunt necesare (rulare de cod Python, încărcarea unui model). Fiecare fișier se verifică SHA-256 înainte de folosire și se refuză altfel; CSP-ul din pagină permite exact aceste URL-uri.
-  - transformers.js, pdf.js, KaTeX 0.16.9, Mermaid 11.15.0, qrcode.js și încărcătoarele ONNX Runtime Web sunt incluse local în folderul `vendor/` din repository (încărcate din aceeași origine; KaTeX și Mermaid cu SRI).
+  - transformers.js, pdf.js, KaTeX 0.16.47, Mermaid 11.15.0, qrcode.js și încărcătoarele ONNX Runtime Web sunt incluse local în folderul `vendor/` din repository (încărcate din aceeași origine; KaTeX și Mermaid cu SRI).
 - Aplicația afirmă „zero cereri de rețea în inferență”: după ce modelul este încărcat, generarea rulează local.
 
 ## Avertisment
@@ -99,7 +99,7 @@ Răspunsurile modelelor mici pot fi greșite, incomplete sau inventate („haluc
 
 ## Componente terțe
 
-Folderul `vendor/` conține copii ale unor biblioteci cu licențe proprii, diferite de MIT: pdf.js (Mozilla, Apache-2.0 — notificarea este în antetul fișierului), transformers.js 4.2.0 (Hugging Face, Apache-2.0 conform proiectului upstream; fișierul minificat nu conține notificarea) și `qrcode.min.js` (qrcodejs, MIT conform proiectului upstream; folosit la generarea de coduri QR). Licența MIT se aplică codului autorului, nu componentelor terțe. Modelele descărcate de la Hugging Face au licențele lor (de ex. Qwen3 sub Apache-2.0, LFM2 sub licența Liquid AI). Tot în `vendor/` (vezi `NOTICE.md`): KaTeX 0.16.9 (MIT), Mermaid 11.15.0 (MIT) și încărcătoarele ONNX Runtime Web (MIT). Pyodide 0.27.0 (MPL-2.0) și fișierele `.wasm` ONNX Runtime nu sunt în repository: se descarcă de la URL-uri fixate și se verifică SHA-256.
+Folderul `vendor/` conține copii ale unor biblioteci cu licențe proprii, diferite de MIT: pdf.js (Mozilla, Apache-2.0 — notificarea este în antetul fișierului), transformers.js 4.2.0 (Hugging Face, Apache-2.0 conform proiectului upstream; fișierul minificat nu conține notificarea) și `qrcode.min.js` (qrcodejs, MIT conform proiectului upstream; folosit la generarea de coduri QR). Licența MIT se aplică codului autorului, nu componentelor terțe. Modelele descărcate de la Hugging Face au licențele lor (de ex. Qwen3 sub Apache-2.0, LFM2 sub licența Liquid AI). Tot în `vendor/` (vezi `NOTICE.md`): KaTeX 0.16.47 (MIT), Mermaid 11.15.0 (MIT) și încărcătoarele ONNX Runtime Web (MIT). Pyodide 0.27.0 (MPL-2.0) și fișierele `.wasm` ONNX Runtime nu sunt în repository: se descarcă de la URL-uri fixate și se verifică SHA-256.
 
 ## Rulare locală / offline
 

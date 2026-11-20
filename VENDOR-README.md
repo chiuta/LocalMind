@@ -130,7 +130,7 @@ Pe lângă `transformers`, `pdfjs` și `qrcode.min.js` (de mai sus), `vendor/` c
 
 ```
 vendor/
-├─ katex@0.16.9/               katex.min.js, katex.min.css, fonts/*.woff2, LICENSE (MIT)
+├─ katex@0.16.47/              katex.min.js, katex.min.css, fonts/*.woff2, LICENSE (MIT)
 ├─ mermaid@11.15.0/            mermaid.min.js, LICENSE (MIT)
 └─ onnxruntime-web@1.26.0-dev.20260416-b7804b056c/
                                ort-wasm-simd-threaded.asyncify.mjs, ort-wasm-simd-threaded.mjs, LICENSE (MIT)
